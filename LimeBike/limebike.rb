@@ -6,6 +6,7 @@ class ItemCounter
   end
 
   def process_ride(ride)
+    #maybe make a hash that says which rides are active in each intervals, then merge those items later.
     @rides[[ride[:start_time], ride[:end_time]]] = ride[:items]
   end
 
