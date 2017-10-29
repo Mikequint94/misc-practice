@@ -18,7 +18,7 @@ class ItemCounter
 
   def print_items_per_interval()
     finish_processing
-    @rides.each do |ride|
+    @rides[1..-1].each do |ride|
       start_time = format_times(ride[:start_time])
       end_time = format_times(ride[:end_time])
       items = format_items(ride[:items])
@@ -33,31 +33,33 @@ class ItemCounter
     until @ride_start.empty?
       if @ride_start[0].keys[0] < @ride_end[0].keys[0]
         shift_starting = @ride_start.shift
+        shift_ending ||= shift_starting
+        current_items += shift_ending.values[0]
       else
         shift_starting = @ride_end.shift
+        shift_ending ||= shift_starting
+        current_items -= shift_ending.values[0]
       end
-      if defined?(shift_ending)
-        @rides.push({start_time: shift_ending.keys[0], end_time: shift_starting.keys[0], items: current_items + shift_ending.values[0]})
-      end
+      @rides.push(start_time: shift_ending.keys[0], end_time: shift_starting.keys[0], items: current_items)
       if @ride_start.length > 0
         if @ride_start[0].keys[0] < @ride_end[0].keys[0]
           shift_ending = @ride_start.shift
-          item_status = "add"
+          # current_items += shift_starting.values[0]
         else
           shift_ending = @ride_end.shift
-          item_status = "remove"
         end
       else
         shift_ending = @ride_end.shift
-        item_status = "remove"
       end
-      @rides.push({start_time: shift_starting.keys[0], end_time: shift_ending.keys[0], items: current_items + shift_starting.values[0]})
+      @rides.push(start_time: shift_starting.keys[0], end_time: shift_ending.keys[0], items: current_items)
     end
     until @ride_end.empty?
       shift_starting = @ride_end.shift
-      @rides.push({start_time: shift_ending.keys[0], end_time: shift_starting.keys[0], items: current_items + shift_starting.values[0]})
+      current_items -= shift_starting.values[0]
+      @rides.push(start_time: shift_ending.keys[0], end_time: shift_starting.keys[0], items: current_items)
       shift_ending = @ride_end.shift
-      @rides.push({start_time: shift_starting.keys[0], end_time: shift_ending.keys[0], items: current_items + shift_starting.values[0]})
+      current_items -= shift_ending.values[0]
+      @rides.push(start_time: shift_starting.keys[0], end_time: shift_ending.keys[0], items: current_items)
     end
   end
 
