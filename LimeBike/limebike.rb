@@ -17,8 +17,8 @@ class ItemCounter
     #assuming that all rides will be processed then print items happens just once.
     #Therefore sorting only happens once
     #compared to all the inserts so its less time consuming
-    @ride_start.push(ride[:start_time] => @ride_number)
-    @ride_end.push(ride[:end_time] => @ride_number)
+    @ride_start.push([ride[:start_time], @ride_number])
+    @ride_end.push([ride[:end_time], @ride_number])
     @items[@ride_number] = ride[:items]
     @ride_number +=1
   end
@@ -37,25 +37,25 @@ class ItemCounter
     # debugger
     @ride_start = @ride_start.sort_by {|ride| ride.keys}
     @ride_end = @ride_end.sort_by {|ride| ride.keys}
-    shift_starting = @ride_start.shift
-    current_items = [shift_starting.values]
+    interval_start = @ride_start.shift
+    current_items = [interval_start.values]
     until @ride_start.empty?
       if @ride_start[0].keys[0] < @ride_end[0].keys[0]
-        shift_ending = @ride_start.shift
+        interval_end = @ride_start.shift
         item_operator = :+
       else
-        shift_ending = @ride_end.shift
+        interval_end = @ride_end.shift
         item_operator = :-
       end
-      @rides.push(start_time: shift_starting.keys[0], end_time: shift_ending.keys[0], items: current_items)
-      shift_starting = shift_ending
-      current_items = current_items.send(item_operator, [shift_starting.values])
+      @rides.push(start_time: interval_start.keys[0], end_time: interval_end.keys[0], items: current_items) unless current_items.empty? || (interval_start.keys[0] == interval_end.keys[0])
+      interval_start = interval_end
+      current_items = current_items.send(item_operator, [interval_start.values])
     end
     until @ride_end.empty?
-      shift_ending = @ride_end.shift
-      @rides.push(start_time: shift_starting.keys[0], end_time: shift_ending.keys[0], items: current_items)
-      shift_starting = shift_ending
-      current_items -= [shift_starting.values]
+      interval_end = @ride_end.shift
+      @rides.push(start_time: interval_start.keys[0], end_time: interval_end.keys[0], items: current_items) unless current_items.empty? || (interval_start.keys[0] == interval_end.keys[0])
+      interval_start = interval_end
+      current_items -= [interval_start.values]
     end
   end
 
@@ -91,10 +91,16 @@ end
 ride1 = {start_time: 700, end_time: 730, items: ["apple", "apple", "brownie"]}
 ride2 = {start_time: 710, end_time: 800, items: ["apple", "carrot", "carrot", "carrot"]}
 ride3 = {start_time: 720, end_time: 745, items: ["apple", "brownie", "brownie", "diamond", "diamond", "diamond", "diamond"]}
+ride4 = {start_time: 830, end_time: 900, items: ["pear", "peach", "brownie", "diamond"]}
+ride5 = {start_time: 830, end_time: 930, items: ["apple"]}
+ride6 = {start_time: 820, end_time: 830, items: ["plum","plum","plum"]}
 
 counter = ItemCounter.new
 counter.process_ride(ride3)
 counter.process_ride(ride2)
 counter.process_ride(ride1)
+counter.process_ride(ride4)
+counter.process_ride(ride5)
+counter.process_ride(ride6)
 
 counter.print_items_per_interval
