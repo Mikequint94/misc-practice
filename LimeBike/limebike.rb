@@ -17,7 +17,6 @@ class ItemCounter
     #assuming that all rides will be processed then print items happens just once.
     #Therefore sorting only happens once
     #compared to all the inserts so its less time consuming
-
     @ride_start.push(ride[:start_time] => @ride_number)
     @ride_end.push(ride[:end_time] => @ride_number)
     @items[@ride_number] = ride[:items]
