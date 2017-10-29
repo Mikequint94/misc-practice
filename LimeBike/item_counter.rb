@@ -1,25 +1,19 @@
-require 'byebug'
-
 class ItemCounter
 
   def initialize
-    #ride_start an array of starttimes and items
     @ride_start = []
     @ride_end = []
-    #rides a hash of start, end, and items
     @rides = []
-    #items an array of hashes to save space and time by not repeating, just referencing
     @items = {}
+
     @ride_number = 1
   end
 
   def process_ride(ride)
-    #assuming that all rides will be processed then print items happens just once.
-    #Therefore sorting only happens once
-    #compared to all the inserts so its less time consuming
     @ride_start.push([ride[:start_time], @ride_number])
     @ride_end.push([ride[:end_time], @ride_number])
     @items[@ride_number] = ride[:items]
+
     @ride_number +=1
   end
 
@@ -34,12 +28,12 @@ class ItemCounter
   end
 
   def finish_processing
-    # debugger
     @ride_start.sort!
     @ride_end.sort!
     interval_start = @ride_start.shift
     current_items = [interval_start[1]]
     until @ride_start.empty?
+      #compare earliest start and end times
       if @ride_start[0][0] < @ride_end[0][0]
         interval_end = @ride_start.shift
         item_operator = :+
@@ -47,13 +41,17 @@ class ItemCounter
         interval_end = @ride_end.shift
         item_operator = :-
       end
-      @rides.push(start_time: interval_start[0], end_time: interval_end[0], items: current_items) unless current_items.empty? || (interval_start[0] == interval_end[0])
+      unless current_items.empty? || (interval_start[0] == interval_end[0])
+        @rides.push(start_time: interval_start[0], end_time: interval_end[0], items: current_items)
+      end
       interval_start = interval_end
       current_items = current_items.send(item_operator, [interval_start[1]])
     end
     until @ride_end.empty?
       interval_end = @ride_end.shift
-      @rides.push(start_time: interval_start[0], end_time: interval_end[0], items: current_items) unless current_items.empty? || (interval_start[0] == interval_end[0])
+      unless current_items.empty? || (interval_start[0] == interval_end[0])
+        @rides.push(start_time: interval_start[0], end_time: interval_end[0], items: current_items)
+      end
       interval_start = interval_end
       current_items -= [interval_start[1]]
     end
@@ -61,9 +59,8 @@ class ItemCounter
 
   def format_times(time)
     time = time.to_s
-    if time.length == 3
-      time = "0" + time
-    end
+    time = "0" + time if time.length == 3
+    
     return time[0..1] + ":" + time[2..3]
   end
 
