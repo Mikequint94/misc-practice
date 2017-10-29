@@ -1,22 +1,33 @@
 class ItemCounter
 
   def initialize
-    #rides a hash of times and items
+    #ride_start an array of starttimes and items
+    @ride_start = []
+    @ride_end = []
+    #rides a hash of start, end, and items
     @rides = {}
   end
 
   def process_ride(ride)
-    #maybe make a hash that says which rides are active in each intervals, then merge those items later.
-    @rides[[ride[:start_time], ride[:end_time]]] = ride[:items]
+    #assuming that all rides will be processed then print items happens just once.
+    #Therefore sorting only happens once
+    #compared to all the inserts so its less time consuming
+    @ride_start.push({[ride[:start_time]] => ride[:items]})
+    @ride_end.push({[ride[:end_time]] => ride[:items]})
   end
 
   def print_items_per_interval()
-    @rides.each do |ride|
-      start_time = format_times(ride[0][0])
-      end_time = format_times(ride[0][1])
-      items = format_items(ride[1])
-      p "#{start_time}-#{end_time} -> #{items}"
-    end
+    finish_processing
+    # @rides.each do |ride|
+    #   start_time = format_times(ride[0][0])
+    #   end_time = format_times(ride[0][1])
+    #   items = format_items(ride[1])
+    #   p "#{start_time}-#{end_time} -> #{items}"
+    # end
+  end
+
+  def finish_processing
+    p @rides_start
   end
 
   def format_times(time)
