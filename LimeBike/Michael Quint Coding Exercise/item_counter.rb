@@ -45,6 +45,7 @@ class ItemCounter
         @rides.push(start_time: interval_start[0], end_time: interval_end[0], items: current_items)
       end
       interval_start = interval_end
+      # add or subtract items based on whether the ride is starting or ending
       current_items = current_items.send(item_operator, [interval_start[1]])
     end
     until @ride_end.empty?
@@ -60,7 +61,7 @@ class ItemCounter
   def format_times(time)
     time = time.to_s
     time = "0" + time if time.length == 3
-    
+
     return time[0..1] + ":" + time[2..3]
   end
 
@@ -84,20 +85,35 @@ class ItemCounter
 
 end
 
+# Testing
 
+# tested for excluding time intervals without any items
+# tested for excluding duplicate intervals
 ride1 = {start_time: 700, end_time: 730, items: ["apple", "apple", "brownie"]}
 ride2 = {start_time: 710, end_time: 800, items: ["apple", "carrot", "carrot", "carrot"]}
 ride3 = {start_time: 720, end_time: 745, items: ["apple", "brownie", "brownie", "diamond", "diamond", "diamond", "diamond"]}
 ride4 = {start_time: 830, end_time: 900, items: ["pear", "peach", "brownie", "diamond"]}
 ride5 = {start_time: 830, end_time: 930, items: ["apple"]}
 ride6 = {start_time: 820, end_time: 830, items: ["plum","plum","plum"]}
+ride7 = {start_time: 820, end_time: 830, items: ["plum","plum","plum"]}
 
 counter = ItemCounter.new
+# tested for processing in non-linear order
 counter.process_ride(ride3)
 counter.process_ride(ride2)
 counter.process_ride(ride1)
 counter.process_ride(ride4)
 counter.process_ride(ride5)
 counter.process_ride(ride6)
+counter.process_ride(ride7)
 
 counter.print_items_per_interval
+
+# "07:00-07:10 -> 2 apples, 1 brownie"
+# "07:10-07:20 -> 3 apples, 1 brownie, 3 carrots"
+# "07:20-07:30 -> 4 apples, 3 brownies, 3 carrots, 4 diamonds"
+# "07:30-07:45 -> 2 apples, 3 carrots, 2 brownies, 4 diamonds"
+# "07:45-08:00 -> 1 apple, 3 carrots"
+# "08:20-08:30 -> 6 plums"
+# "08:30-09:00 -> 1 pear, 1 peach, 1 brownie, 1 diamond, 1 apple"
+# "09:00-09:30 -> 1 apple"
