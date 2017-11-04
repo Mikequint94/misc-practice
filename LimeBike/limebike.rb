@@ -87,7 +87,6 @@ class ItemCounter
 
 end
 
-
 ride1 = {start_time: 700, end_time: 730, items: ["apple", "apple", "brownie"]}
 ride2 = {start_time: 710, end_time: 800, items: ["apple", "carrot", "carrot", "carrot"]}
 ride3 = {start_time: 720, end_time: 745, items: ["apple", "brownie", "brownie", "diamond", "diamond", "diamond", "diamond"]}
