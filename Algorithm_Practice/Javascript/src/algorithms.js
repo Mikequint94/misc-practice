@@ -15,7 +15,6 @@ Algorithms.digitalRoot = function (number) {
     let newNumber = Math.floor(number / 10) + number % 10;
     return Algorithms.digitalRoot(newNumber)
   }
-
 };
 
 // Write a function that takes a message and an increment amount and outputs the same letters shifted by that amount in the alphabet.
