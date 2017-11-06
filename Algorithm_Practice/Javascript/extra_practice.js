@@ -1,6 +1,6 @@
-let cache = {1: 1, 2: 2};
 
 function fibonacci(n) {
+  let cache = {1: 1, 2: 2};
   if (n < 3) {
     console.log(cache[n]);
   } else {
