@@ -162,12 +162,18 @@ end
 # Return a set.
 def pair_sum(array, k)
   set = Set.new
-  (0...array.length - 1).each do |i|
-    (i+1...array.length).each do |j|
-      set.add([array[i],array[j]]) if array[i]+array[j] == k && array[i] <= array[j]
-      set.add([array[j],array[i]]) if array[i]+array[j] == k && array[i] > array[j]
+  hash = Hash.new
+  array.each do |el|
+    hash[el] = true
+  end
+  array.each do |el|
+    if hash[k-el] == true
+      smallest = [el, k - el].min
+      set.add([smallest, k-smallest])
+      hash[el] = false
     end
   end
+
   set
 end
 

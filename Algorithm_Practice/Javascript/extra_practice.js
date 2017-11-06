@@ -68,7 +68,7 @@ function Product3Ints(array) {
 
 // You have a list of integers, and for each index you want to find the product of every integer except the integer at that index.
 
-function ProductsExceptMe(array){
+function productsExceptMe(array){
   let productsBefore = 1;
   let results = [];
   array.forEach(function(el, idx){
@@ -86,4 +86,4 @@ function ProductsExceptMe(array){
   console.log(results);
 }
 
-ProductsExceptMe([3,1,2,1,-3,-5]);
+productsExceptMe([3,1,2,1,-3,-5]);
