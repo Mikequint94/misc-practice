@@ -87,3 +87,18 @@ function productsExceptMe(array){
 }
 
 productsExceptMe([3,1,2,1,-3,-5]);
+
+function uniqueEntries(array) {
+  let entries = new Set();
+  let results = [];
+
+  array.forEach((el) => {
+    if (!entries.has(el)) {
+      results.push(el);
+      entries.add(el);
+    }
+  });
+  return results;
+}
+
+uniqueEntries([2,3,52,234,23,23,3,"3","df"]);

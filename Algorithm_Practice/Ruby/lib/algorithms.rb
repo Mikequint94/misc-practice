@@ -196,17 +196,48 @@ end
 # Implement Merge Sort
 # Hint: This typically involves a helper function.
 def merge_sort(array)
+  return array if array.length < 2
+  mdpt = array.length / 2
+  left_sorted = merge_sort(array.take(mdpt))
+  right_sorted = merge_sort(array.drop(mdpt))
+
+  merge(left_sorted, right_sorted)
 
 end
 
 def merge(left, right)
+  sorted = []
+  until left.empty? || right.empty?
+    case left <=> right
+    when -1 || 0
+      sorted << left.shift
+    else
+      sorted << right.shift
+    end
+  end
+  sorted.concat(left)
+  sorted.concat(right)
+
+  sorted
+
 
 end
 
 # Implement binary search.
 # Return nil if the target isn't found.
 def binary_search(array, target)
+  return nil unless array.include?(target)
+  midpt = array.length / 2
+  pivot = array[midpt]
 
+  case pivot <=> target
+  when 0
+    return midpt
+  when 1
+    return binary_search(array[0...midpt], target)
+  when -1
+    return binary_search(array[(midpt + 1) ..-1], target) + midpt + 1
+  end
 end
 
 # You are given a list of numbers in an array.
