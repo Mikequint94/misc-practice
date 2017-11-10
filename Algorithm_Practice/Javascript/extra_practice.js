@@ -15,7 +15,7 @@ function fibonacci(n) {
 
 function MergeMeetings(meetings) {
   // meetings = meetings.sort()
-  let SortedMeetings = meetings.sort(function(a,b){return a[0] > b[0];});
+  let SortedMeetings = meetings.sort((a,b) => {return a[0] > b[0];});
 
   for (let i = 0; i < (meetings.length - 1); i++){
     if (SortedMeetings[i+1][0] <= SortedMeetings[i][1]){
@@ -28,7 +28,7 @@ function MergeMeetings(meetings) {
 }
 
 
-// merge_meetings([[0,2],[1,5],[10,11],[12,13],[5,6]])
+// MergeMeetings([[0,2],[1,5],[10,11],[12,13],[5,6]])
 
 // Given a list of integers, find the highest product you can get from three of the integers.
 
@@ -71,7 +71,7 @@ function Product3Ints(array) {
 function productsExceptMe(array){
   let productsBefore = 1;
   let results = [];
-  array.forEach(function(el, idx){
+  array.forEach((el, idx) => {
     results[idx] = productsBefore;
     productsBefore *= el;
   });
