@@ -9,7 +9,9 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={food} className="App-logo" alt="logo" />
+          <img src={logo} className="App-logo" alt="logo" />
+          <img src={food} className="App-logo-reverse" alt="logo" />
+          <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">Welcome to Mikes Menu</h1>
         </header>
         <MenuIndex/>
