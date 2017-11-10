@@ -1,18 +1,7 @@
 import React, { Component } from 'react';
 
 class MenuIndexItem extends Component {
-  // constructor(props){
-  //   super(props);
-  //   this.state = {showIngredients: false};
-  // }
 
-  // toggleIngredients(){
-  //   if (this.state.showIngredients){
-  //     this.setState({showIngredients: false});
-  //   } else {
-  //     this.setState({showIngredients: true});
-  //   }
-  // }
   render() {
     let ingredients;
     if (this.props.show === this.props.item.name) {

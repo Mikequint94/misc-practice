@@ -6,8 +6,6 @@ class MenuIndex extends Component {
   constructor(){
     super();
     this.state={showIngredients: ""};
-
-    // this.showIngredients = this.showIngredients.bind(this);
   }
 
   showIngredients(name){
@@ -28,7 +26,9 @@ class MenuIndex extends Component {
     return (
       <div>
         <h1> Here are the menu items of the day</h1>
-        <h2> Click each item to view ingredients </h2>
+        <div className="instructions">
+          <h2> Click each item to view ingredients </h2>
+        </div>
         <ul>{items}</ul>
       </div>
     );
