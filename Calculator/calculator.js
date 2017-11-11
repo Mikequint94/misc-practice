@@ -10,38 +10,46 @@ const calculate = (string) => {
        numbers.push(currentNumber.join(""));
        currentNumber = [];
      }
-     if  (isNum) {
+     if (isNum) {
        currentNumber.push(ch);
-     } else if (["*","/"].includes(ch)) {
-       operators.push(ch);
-       isNum = true;
      } else {
        operators.push(ch);
        isNum = true;
      }
-   });
+   })
    numbers.push(currentNumber.join(""));
    currentNumber = [];
    console.log(numbers, operators);
    let sum = 0;
-   let num1 = parseInt(numbers.shift());
+   let num1;
    let num2;
    let operator;
 
-   while (operators.length > 0) {
-     num2 = parseInt(numbers.shift());
-     operator = operators.shift();
-    if (operator === "+") {
-      num1 = num1 + num2;
-    } else if (operator === "-") {
-      num1 = num1 - num2;
-    } else if (operator === "*") {
-      num1 = num1 * num2;
-    } else{
-      num1 = num1 / num2;
+  operators.forEach((operator, index) => {
+     if (operator === "*") {
+      numbers[index] = parseInt(numbers[index]) * parseInt(numbers[index+1]);
+      numbers.splice(index+1, 1);
+      operators.splice(index,1);
+    } else if (operator === "/") {
+      numbers[index] = parseInt(numbers[index]) / parseInt(numbers[index+1]);
+      numbers.splice(index+1, 1);
+      operators.splice(index,1);
     }
-   }
-   console.log(num1);
+  })
+     console.log(numbers, operators);
+  operators.forEach((operator, index) => {
+    if (operator === "+") {
+      numbers[index+1] = parseInt(numbers[index]) + parseInt(numbers[index+1]);
+      // numbers.splice(index+1, 1);
+      // operators.splice(index,1);
+    } else if (operator === "-") {
+      numbers[index + 1] = parseInt(numbers[index]) - parseInt(numbers[index+1]);
+      // numbers.splice(index+1, 1);
+      // operators.splice(index,1);
+    }
+  })
+   console.log(numbers.pop());
+  // console.log(num1)
 };
 
-calculate("3+3+-2--12+3+2*2");
+calculate("3+3+-2--12+3+2*2")
