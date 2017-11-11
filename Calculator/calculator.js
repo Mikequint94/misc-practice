@@ -16,15 +16,13 @@ const calculate = (string) => {
        operators.push(ch);
        isNum = true;
      }
-   })
+   });
    numbers.push(currentNumber.join(""));
    currentNumber = [];
    console.log(numbers, operators);
    let sum = 0;
    let num1;
    let num2;
-   let operator;
-
   operators.forEach((operator, index) => {
      if (operator === "*") {
       numbers[index] = parseInt(numbers[index]) * parseInt(numbers[index+1]);
@@ -35,7 +33,7 @@ const calculate = (string) => {
       numbers.splice(index+1, 1);
       operators.splice(index,1);
     }
-  })
+  });
      console.log(numbers, operators);
   operators.forEach((operator, index) => {
     if (operator === "+") {
@@ -47,9 +45,9 @@ const calculate = (string) => {
       // numbers.splice(index+1, 1);
       // operators.splice(index,1);
     }
-  })
+  });
    console.log(numbers.pop());
   // console.log(num1)
 };
 
-calculate("3+3+-2--12+3+2*2")
+calculate("3+3+-2--12+3+2*2");
