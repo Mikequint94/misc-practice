@@ -244,19 +244,44 @@ end
 # Replace all the numbers with the product of all other numbers.
 # Do this in O(n) time without using division.
 def productify(array)
-
+  products_before = 1
+  results = []
+  array.each do |num|
+    results << products_before
+    products_before *= num
+  end
+  products_after = 1
+  array.each_with_index do |num, idx|
+    results[array.length - idx - 1] *= products_after
+    products_after *= array[array.length - idx - 1]
+  end
+  results
 end
 
 # Write a function that takes an array and returns all of its subsets.
 def subsets(array)
-
+  return [[]] if array.empty?
+  prev_subs = subsets(array.drop(1))
+  current_subs = []
+  prev_subs.each do |sub|
+    current_subs << sub + [array[0]]
+  end
+  prev_subs + current_subs
 end
 
 # Return the indices of the start/end of the longest palindrome in the string.
 # You could reverse the string and compare it to the original, but that is slow.
 # Instead, you should be able to solve the problem with O(1) memory.
 def longest_palindrome(string)
-
+    search = string.length
+    while search > 0
+      start_idx = 0
+      while start_idx + search <= string.length
+        return [start_idx, start_idx+ search - 1] if is_palindrome?(string[start_idx,search])
+        start_idx += 1
+      end
+      search -= 1
+    end
 end
 
 # Given two arrays, find the intersection of both sets.
@@ -264,7 +289,19 @@ end
 # Use sorting to solve in O(nlog(n)).
 # Next, improve this to O(n) time (maybe use a non-array datastructure).
 def fast_intersection(array_one, array_two)
-
+  set1 = Set.new
+  set2 = Set.new
+  array_one.each do |n|
+    set1.add(n)
+  end
+  array_two.each do |n|
+    set2.add(n)
+  end
+  results = []
+  set1.each do |n|
+    results << n if set2.include?(n)
+  end
+  results
 end
 
 # Write a function that takes two arrays of integers
@@ -272,13 +309,23 @@ end
 # Don't generate all subsets of both arrays, which would be exponential time.
 # Instead, directly generate the subsets of both.
 def common_subsets(array_one, array_two)
-
+  intersection = fast_intersection(array_one, array_two)
+  return subsets(intersection)
 end
 
 # You are given an array and index.
 # Find if it's possible to reach 0 by starting at the index.
 # You can only move left or right by the distance found at array[index].
-def can_win?(array, index)
+def can_win?(array, index, visited = Array.new(array.length){false})
+    return true if index == 0
+    visited[index] = true
+    if (index + array[index] >=0) && visited[index+array[index]] == false
+      return true if can_win?(array, index + array[index], visited)
+    end
+    if (index - array[index] >=0) && visited[index-array[index]] == false
+      return true if can_win?(array, index - array[index], visited)
+    end
+    return false
 
 end
 
@@ -286,13 +333,26 @@ end
 # "Sort" this array in O(n) time.
 # Hint: You should be able to do this without looking at the input.
 def sort1(array)
-
+  (1..array.length).to_a
 end
 
 # Assume an array of length n with numbers in the range 1..N (N >= n).
 # Sort this array in O(n + N) time.
 # You may use O(N) memory.
 def sort2(array, max_value)
+  set = Set.new
+  array.each do |n|
+    set.add(n)
+  end
+  max_n = 0
+  array.each_index do |idx|
+    until set.include?(max_n)
+      max_n +=1
+    end
+    array[idx] = max_n
+  end
+  array
+
 
 end
 
@@ -302,7 +362,10 @@ end
 # Hint: Do not compare any two strings.
 # All strings contain only lowercase letters without whitespace or punctuation.
 def sort3(array, length)
-
+  # k = 0
+  # (a..z).each do |ch|
+  #   array.each do |word|
+  #
 end
 
 # Given an array, write a function that will return a random index of the array.
@@ -310,13 +373,24 @@ end
 # Probability of i should be the ith element divided by the sum of all elements.
 def weighted_random_index(array)
 
+
 end
 
 # Given an array, move all zeros to the end.
 # The order of non-zero elements does not matter.
 # Try to accomplish this in O(n) time and O(1) space.
 def move_zeros(array)
-
+  num_zeroes = 0
+  array.each_with_index do |n, idx|
+    if n == 0 && idx < array.length - num_zeroes
+      while array[-1 -num_zeroes] == 0
+        num_zeroes +=1
+      end
+      array[idx], array[-1 - num_zeroes] = array[-1 - num_zeroes], array[idx]
+      num_zeroes +=1
+    end
+  end
+  array
 end
 
 # Implement the 'look and say' function.
@@ -324,6 +398,19 @@ end
 # The output describes the count of the elements in the input.
 
 def look_and_say(array)
+  current_num = array.shift
+  current_count = 1
+  results = []
+  array.each do |n|
+    if current_num == n
+      current_count +=1
+    else
+      results << [current_count, current_num]
+      current_count = 1
+      current_num = n
+    end
+  end
+  results << [current_count, current_num]
 
 end
 
@@ -331,12 +418,34 @@ end
 # Tell me what number is missing?
 # How could you solve the problem in O(n), and also O(1) space?
 def sum_upon_sums(array)
+  total_sum = array.length * (array.length + 1) / 2
+  missing_num = total_sum - array.reduce(:+)
 
 end
 
 # Implement a stack with a max method that returns the maximum value.
 # It should run in O(1) time.
 class MaxStack
+
+  def initialize
+    @stack = []
+
+  end
+
+  def push(num)
+    @max ||= num
+    @max = num if num > @max
+    @stack.push(num)
+  end
+
+  def pop(num)
+    @stack.pop(num)
+    
+  end
+
+  def max
+    @max
+  end
 
 end
 
