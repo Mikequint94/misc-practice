@@ -432,9 +432,12 @@ class MaxStack
   end
 
   def push(num)
-    @current_max ||= num
-    @current_max = num if num > @current_max
-    @stack.push([num, current_max])
+    if @stack.empty?
+      @current_max = num
+    else
+      @current_max = num if num > max
+    end
+    @stack.push([num, @current_max])
   end
 
   def pop
