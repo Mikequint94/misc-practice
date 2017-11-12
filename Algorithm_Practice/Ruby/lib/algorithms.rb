@@ -429,22 +429,20 @@ class MaxStack
 
   def initialize
     @stack = []
-
   end
 
   def push(num)
-    @max ||= num
-    @max = num if num > @max
-    @stack.push(num)
+    @current_max ||= num
+    @current_max = num if num > @current_max
+    @stack.push([num, current_max])
   end
 
-  def pop(num)
-    @stack.pop(num)
-    
+  def pop
+    @stack.pop
   end
 
   def max
-    @max
+    @stack[-1][1]
   end
 
 end
