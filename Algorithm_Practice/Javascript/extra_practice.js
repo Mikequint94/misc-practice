@@ -15,7 +15,7 @@ function fibonacci(n) {
 
 function MergeMeetings(meetings) {
   // meetings = meetings.sort()
-  let SortedMeetings = meetings.sort((a,b) => {return a[0] > b[0];});
+  let SortedMeetings = meetings.sort((a,b) => {return a[0] - b[0];});
 
   for (let i = 0; i < (meetings.length - 1); i++){
     if (SortedMeetings[i+1][0] <= SortedMeetings[i][1]){
