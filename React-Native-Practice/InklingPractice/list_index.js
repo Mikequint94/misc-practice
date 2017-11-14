@@ -10,8 +10,10 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableHighlight
+  TouchableHighlight,
+  TextInput
 } from 'react-native';
+
 import SeedList from './seed';
 import ListIndexItem from './list_index_item';
 
@@ -21,9 +23,9 @@ export default class ListIndex extends Component<{}> {
   };
   constructor() {
     super();
-    this.state = {open: ""};
+    this.state = {open: "", text: ""};
   }
-  
+
   handleTap(title) {
     if (this.state.open === title) {
       this.setState({open: ""})
@@ -31,16 +33,37 @@ export default class ListIndex extends Component<{}> {
       this.setState({open: title});
     }
   }
+
+  searchList(text) {
+
+  }
+
   render() {
-    let items = SeedList.map(
-      (item) => 
+    let SeedsShown;
+    if (this.state.text === "") {
+      SeedsShown = SeedList;
+    } else {
+      SeedsShown = SeedList.filter(
+        (item) => {return item.title.slice(0,this.state.text.length) === this.state.text})
+    }
+    let items = SeedsShown.map(
+      (item) =>
       <TouchableHighlight underlayColor="white" onPress={this.handleTap.bind(this, item.title)}>
         <View>
           <ListIndexItem key={"item" + item.title} open={this.state.open} item={item}/>
         </View>
-      </TouchableHighlight>)
+      </TouchableHighlight>);
+    let searchBar = (
+      <TextInput
+        style={{width: 300, height: 40, borderColor: 'gray', borderWidth: 1}}
+        onChangeText={(text) =>
+          this.setState({text})}
+        value={this.state.text}
+      />
+    );
     return (
       <View style={styles.container}>
+      {searchBar}
         <Text style={styles.welcome}>
           Here are the Lists
         </Text>
@@ -48,7 +71,7 @@ export default class ListIndex extends Component<{}> {
           Click an item to see the steps
         </Text>
         {items}
-      
+
       </View>
     );
   }
