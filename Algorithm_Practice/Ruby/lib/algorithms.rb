@@ -501,12 +501,24 @@ end
 # Return whether the third is an interleaving of the first two.
 # Interleaving means it contains the same characters and preserves their order.
 def is_shuffle?(string_one, string_two, string_three)
-
+  string_one = string_one.split("")
+  string_two = string_two.split("")
+  string_three.each_char do |ch|
+    if string_one[0] == ch
+      string_one = string_one.drop(1)
+    elsif string_two[0] == ch
+      string_two = string_two.drop(1)
+    else
+      return false
+    end
+  end
+  true
+      
 end
 
 # Write a function that takes an integer and returns it in binary form.
 def binary(integer)
-
+  
 end
 
 # Write a recursive function that takes a number and returns its factorial.
