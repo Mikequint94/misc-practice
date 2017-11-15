@@ -362,17 +362,37 @@ end
 # Hint: Do not compare any two strings.
 # All strings contain only lowercase letters without whitespace or punctuation.
 def sort3(array, length)
-  # k = 0
-  # (a..z).each do |ch|
-  #   array.each do |word|
-  #
+  (length-1).downto(0) do |idx|
+    buckets = Array.new(26) {[]}
+    array.each do |string|
+      letter = string[idx]
+      buckets[letter.ord - "a".ord] << string
+    end
+    
+    array = []
+    buckets.each do |bucket|
+      bucket.each do |string|
+        array << string
+      end
+    end
+  end
+  array
 end
 
 # Given an array, write a function that will return a random index of the array.
 # The chance of returning a given index will vary with the value of the element.
 # Probability of i should be the ith element divided by the sum of all elements.
 def weighted_random_index(array)
-
+  total = array.reduce(:+)
+  rand_value = rand(total)
+  
+  array.each_with_index do |value, idx|
+    if rand_value <= value
+      return idx
+    else
+      rand_value -= value
+    end
+  end
 
 end
 
@@ -486,7 +506,18 @@ end
 # Write a function that takes such a hash.
 # Return an array of strings with the path to each file in the hash.
 def file_list(hash)
-
+  result = []
+  hash.each do |k, v|
+    if v == true
+      result << k
+    else
+      nested = file_list(v)
+      nested.each do |file|
+        result << "#{k}/#{file}"
+      end
+    end
+  end
+  result
 end
 
 # Assume an array of non-negative integers.
@@ -494,7 +525,7 @@ end
 # Given these two arrays, find which element is missing in the second array.
 # Do this in linear time with constant memory use.
 def find_missing_number(array_one, array_two)
-
+  return array_one.reduce(:+) - array_two.reduce(:+)
 end
 
 # Create a function that takes three strings.
