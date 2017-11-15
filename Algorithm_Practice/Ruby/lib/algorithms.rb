@@ -511,12 +511,19 @@ end
 
 # Write a recursive function that takes a number and returns its factorial.
 def recursive_factorial(number)
-
+  return 1 if number < 2
+  return number * recursive_factorial(number - 1)
 end
 
 # Write an iterative function that takes a number and returns its factorial.
 def iterative_factorial(number)
-
+  result = 1
+  return result if number < 2
+  while number > 1
+    result *= number
+    number -= 1
+  end
+  return result
 end
 
 # Write a method that takes an array and returns all its permutations.
