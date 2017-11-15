@@ -201,5 +201,4 @@ Algorithms.matrixRegionSum = function (matrix, topLeftCoords, bottomRightCoords)
   }
   return sum;
 };
-
 })();
