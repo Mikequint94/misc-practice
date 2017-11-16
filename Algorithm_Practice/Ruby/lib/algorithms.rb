@@ -56,7 +56,6 @@ end
 def sum_rec(numbers)
   return numbers[0] if numbers.length == 1
   return numbers[0] + sum_rec(numbers[1..-1])
-
 end
 
 # Write a function that takes n, the length of the sequence.
@@ -68,8 +67,6 @@ def fibs(n)
     cache[num] = cache[num-1] << (cache[num-1][-2] + cache[num-1][-1])
   end
   return cache[n]
-
-
 end
 
 # Write a function that takes a string.
@@ -96,7 +93,6 @@ def valid_ip?(string)
     return false unless el.to_i.between?(0,255)
   end
   return true
-
 end
 
 # Implement the Folding Cipher.
@@ -125,7 +121,6 @@ end
 # You can solve this trivially in O(n**2) time by considering all subarrays.
 # Try to solve it in O(n) time with O(1) memory.
 def lcs(array)
-  #[4, -1, 5, 6, -13, 2]
   largest = 0
   current_sum = 0
   array.each do |n|
@@ -173,7 +168,6 @@ def pair_sum(array, k)
       hash[el] = false
     end
   end
-
   set
 end
 
@@ -189,8 +183,6 @@ def matrix_region_sum(matrix, top_left_coords, bottom_right_coords)
     end
   end
   sum
-
-
 end
 
 # Implement Merge Sort
@@ -202,7 +194,6 @@ def merge_sort(array)
   right_sorted = merge_sort(array.drop(mdpt))
 
   merge(left_sorted, right_sorted)
-
 end
 
 def merge(left, right)
@@ -219,8 +210,6 @@ def merge(left, right)
   sorted.concat(right)
 
   sorted
-
-
 end
 
 # Implement binary search.
@@ -352,8 +341,6 @@ def sort2(array, max_value)
     array[idx] = max_n
   end
   array
-
-
 end
 
 # Say I give you an array of n strings, each of length k.
@@ -368,7 +355,7 @@ def sort3(array, length)
       letter = string[idx]
       buckets[letter.ord - "a".ord] << string
     end
-    
+
     array = []
     buckets.each do |bucket|
       bucket.each do |string|
@@ -385,7 +372,7 @@ end
 def weighted_random_index(array)
   total = array.reduce(:+)
   rand_value = rand(total)
-  
+
   array.each_with_index do |value, idx|
     if rand_value <= value
       return idx
@@ -431,7 +418,6 @@ def look_and_say(array)
     end
   end
   results << [current_count, current_num]
-
 end
 
 # I give you a scrambled list of n unique integers between 0 and n.
@@ -467,7 +453,6 @@ class MaxStack
   def max
     @stack[-1][1]
   end
-
 end
 
 # Implement a queue using stacks.
@@ -480,19 +465,18 @@ class StackQueue
   def initialize
     @in, @out = [], []
   end
-  
+
   def enqueue(value)
     @in << value
   end
-  
+
   def dequeue
     if @out.empty?
       @out.push(@in.pop) until @in.empty?
     end
-    
+
     @out.pop
   end
-
 end
 
 # Take an array, and a window size w.
@@ -506,11 +490,11 @@ class MinMaxStack
   def initialize
     @entries = []
   end
-  
+
   def length
     @entries.length
   end
-  
+
   def push(value)
     if @entries.empty?
       @entries << {value: value, min: value, max: value}
@@ -520,18 +504,17 @@ class MinMaxStack
       }
     end
   end
-  
+
   def pop
     @entries.pop[:value]
   end
-  
+
   def max
     @entries.empty? ? nil : @entries.last[:max]
   end
   def min
     @entries.empty? ? nil : @entries.last[:min]
   end
-
 end
 
 class MinMaxStackQueue
@@ -542,50 +525,49 @@ class MinMaxStackQueue
   def enqueue(value)
     @in.push(value)
   end
-  
+
   def dequeue
     if @out.length == 0
       @out.push(@in.pop) until @in.length == 0
     end
-    
     @out.pop
   end
-  
+
   def length
     @in.length + @out.length
   end
-  
+
   def max
     maxes = []
     maxes << @in.max if @in.length > 0
     maxes << @out.max if @out.length > 0
-    
+
     maxes.max
   end
   def min
     mins = []
     mins << @in.min if @in.length > 0
     mins << @out.min if @out.length > 0
-    
+
     mins.min
   end
 end
 
 def windowed_max_range(array, w)
   max_range = nil
-  
+
   q = MinMaxStackQueue.new
   array.each do |el|
     q.enqueue(el)
     if max_range.nil? || (q.max - q.min) > max_range
       max_range = q.max - q.min
     end
-    
+
     if q.length == w
       q.dequeue
     end
   end
-  
+
   max_range
 
 end
@@ -635,7 +617,7 @@ def is_shuffle?(string_one, string_two, string_three)
     end
   end
   true
-      
+
 end
 
 # Write a function that takes an integer and returns it in binary form.
@@ -646,7 +628,7 @@ def binary(integer)
     result.unshift(integer % 2)
     integer /= 2
   end
-  
+
   result.join
 end
 
@@ -669,7 +651,7 @@ end
 # Write a method that takes an array and returns all its permutations.
 def permutations(array)
   return [array] if array.length < 2
-  
+
   first = array.first
   perms = permutations(array.drop(1))
   result = []
