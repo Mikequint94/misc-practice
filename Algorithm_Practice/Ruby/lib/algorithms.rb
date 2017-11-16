@@ -641,7 +641,7 @@ end
 # Write a function that takes an integer and returns it in binary form.
 def binary(integer)
   result = []
-  return 0 if integer == 0
+  return "0" if integer == 0
   until integer == 0
     result.unshift(integer % 2)
     integer /= 2
@@ -659,7 +659,6 @@ end
 # Write an iterative function that takes a number and returns its factorial.
 def iterative_factorial(number)
   result = 1
-  return result if number < 2
   while number > 1
     result *= number
     number -= 1
@@ -669,5 +668,15 @@ end
 
 # Write a method that takes an array and returns all its permutations.
 def permutations(array)
-
+  return [array] if array.length < 2
+  
+  first = array.first
+  perms = permutations(array.drop(1))
+  result = []
+  perms.each do |perm|
+    (0..perm.length).each do |idx|
+      result << perm[0...idx] + [first] + perm[idx..-1]
+    end
+  end
+  result
 end
