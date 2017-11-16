@@ -477,6 +477,21 @@ end
 # In terms of ammortized time, dequeue should be O(1).
 # Prove that your solution accomplishes this.
 class StackQueue
+  def initialize
+    @in, @out = [], []
+  end
+  
+  def enqueue(value)
+    @in << value
+  end
+  
+  def dequeue
+    if @out.empty?
+      @out.push(@in.pop) until @in.empty?
+    end
+    
+    @out.pop
+  end
 
 end
 
@@ -557,6 +572,21 @@ class MinMaxStackQueue
 end
 
 def windowed_max_range(array, w)
+  max_range = nil
+  
+  q = MinMaxStackQueue.new
+  array.each do |el|
+    q.enqueue(el)
+    if max_range.nil? || (q.max - q.min) > max_range
+      max_range = q.max - q.min
+    end
+    
+    if q.length == w
+      q.dequeue
+    end
+  end
+  
+  max_range
 
 end
 
