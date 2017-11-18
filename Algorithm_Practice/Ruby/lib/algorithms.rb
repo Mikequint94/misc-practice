@@ -628,7 +628,6 @@ def binary(integer)
     result.unshift(integer % 2)
     integer /= 2
   end
-
   result.join
 end
 
