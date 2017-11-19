@@ -1,6 +1,6 @@
 html {
   font-size: 10px;
-  background: url(http://i.imgur.com/b9r5sEL.jpg) bottom center;
+  background: url(https://peopledotcom.files.wordpress.com/2016/08/nick-kroll-435-4.jpg?w=435) bottom center;
   background-size: cover;
 }
 body,html {
@@ -16,6 +16,17 @@ body,html {
   align-items: center;
   justify-content: center;
 }
+.keys2 {
+  display: flex;
+  flex: 1;
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+}
+.bumpdown{
+  position: relative ;
+  top: -560px;
+}
 
 .key {
   border: .4rem solid black;
@@ -23,7 +34,7 @@ body,html {
   margin: 1rem;
   font-size: 1.5rem;
   padding: 1rem .5rem;
-  transition: all .07s ease;
+  transition: all .17s ease;
   width: 10rem;
   text-align: center;
   color: white;
@@ -32,7 +43,7 @@ body,html {
 }
 
 .playing {
-  transform: scale(1.1);
+  transform: scale(1.2);
   border-color: #ffc600;
   box-shadow: 0 0 1rem #ffc600;
 }
