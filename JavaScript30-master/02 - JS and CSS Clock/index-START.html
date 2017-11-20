@@ -101,8 +101,8 @@
       const minutes = now.getMinutes();
       const minutesDegrees = minutes * 6;
       const hours = now.getHours();
-      const hoursDegrees = hours * 6;
-      
+      const hoursDegrees = hours * 15;
+
       secondHand.style.transform = `rotate(${secondsDegrees + 90}deg)`;
       minuteHand.style.transform = `rotate(${minutesDegrees + 90}deg)`;
       hourHand.style.transform = `rotate(${hoursDegrees + 90}deg)`;
