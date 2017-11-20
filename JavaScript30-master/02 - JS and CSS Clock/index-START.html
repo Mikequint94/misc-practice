@@ -7,14 +7,17 @@
 <body>
 
 
-    <div class="clock">
+  <div class="clock">
       <div class="clock-face">
         <div class="hand hour-hand"></div>
         <div class="hand min-hand"></div>
         <div class="hand second-hand"></div>
       </div>
     </div>
+  </div>
 
+  <div class="dot">
+  </div>
 
   <style>
     html {
@@ -48,7 +51,17 @@
         inset 0 0 10px black,
         0 0 10px rgba(0,0,0,0.2);
     }
-
+    .dot{
+      width: 2rem;
+      height: 2rem;
+      background: black;
+      border:10px solid magenta;
+      border-radius:50%;
+      margin:100px auto;
+      position: relative;
+      right: 240px;
+    }
+    
     .clock-face {
       position: relative;
       width: 100%;
@@ -59,15 +72,45 @@
     .hand {
       width:50%;
       height:6px;
-      background:black;
+      background: #0f8bd7;
       position: absolute;
       top:50%;
+      transform-origin: 100%;
+      transform: rotate(90deg);
+      transition: all 0.4s;
+      transition-timing-function: cubic-bezier(0.63, 0.2, 0.51, 1.58);
+    }
+    .min-hand{
+      background: lime;
+    }
+    .hour-hand{
+      background: aqua;
     }
 
   </style>
 
   <script>
-
+  
+  const secondHand = document.querySelector('.second-hand');
+  const minuteHand = document.querySelector('.min-hand');
+  const hourHand = document.querySelector('.hour-hand');
+    function setDate() {
+      const now = new Date();
+      const seconds = now.getSeconds();
+      const secondsDegrees = seconds * 6;
+      const minutes = now.getMinutes();
+      const minutesDegrees = minutes * 6;
+      const hours = now.getHours();
+      const hoursDegrees = hours * 6;
+      
+      secondHand.style.transform = `rotate(${secondsDegrees + 90}deg)`;
+      minuteHand.style.transform = `rotate(${minutesDegrees + 90}deg)`;
+      hourHand.style.transform = `rotate(${hoursDegrees + 90}deg)`;
+    }
+    
+    setInterval(setDate, 1000);
+    
+    
 
   </script>
 </body>
