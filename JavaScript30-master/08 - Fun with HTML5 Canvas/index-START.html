@@ -8,34 +8,59 @@
   <div class="customize">
     <div class="color-picker">
       <label for="base">Color:</label>
-      <input id="base" type="color" name="base" value="#ffc600">
+      <input id="base" type="color" name="base" value="#00ff00">
     </div>
     <div class="volume-select">
       <label for="volume">Thickness:</label>
-      <input id="volume" type="range" name="thickness" min="1" max="99" value="50">
+      <input id="volume" type="range" name="thickness" min="1" max="99" value="20">
     </div>
+  </div>
+  <div class="right">
+    <button onclick="savePic()">Save</button>
+    <br/>
+    <label for="funmode">Fun Mode:</label>
+    <input id="funmode" type="checkbox">
   </div>
   
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
+function savePic() {
+  let image = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");  // here is the most important part because if you dont replace you will get a DOM 18 exception.
+
+  window.location.href=image;
+  // let myImage = canvas.toDataURL("image/png");
+  // console.log(myImage);
+}
 
 const canvas = document.querySelector('#draw');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 let drawColor = 'lime';
-let thickness = 5;
+let thickness = 20;
 ctx.lineJoin = 'round';
 ctx.lineCap = 'round';
 
 let lastX;
 let lastY;
 let isDrawing = false;
+let funMode = false;
+let hue = 0;
 
 function draw(e) {
   if (!isDrawing) return;
+  // console.log(funMode);
+  if (funMode) {
+    drawColor = `hsl(${hue}, 100%, 50%)`;
+    if (Math.random() >= 0.5) {
+      thickness += 5;
+    } else {
+      thickness -= 5;
+    }
+    hue++;
+  }
   ctx.strokeStyle = drawColor;
-  // console.log(thickness);
+  console.log(thickness);
   ctx.lineWidth = thickness;
   ctx.beginPath();
   ctx.moveTo(lastX, lastY);
@@ -54,23 +79,32 @@ canvas.addEventListener('mouseout', () => isDrawing = false);
 
 const inputs = document.querySelectorAll('.customize input');
   function handleUpdate() {
-    // console.log(this.name);
+    
     if (this.name === 'thickness') {
-      console.log(this);
-      thickness = this.value;
+      thickness = parseInt(this.value);
+    } else if (this.id === 'funmode'){
+      funMode = !funMode;
     } else {
       drawColor = this.value;
     }
   }
 inputs.forEach((input) => {
   input.addEventListener('change', handleUpdate);
-  input.addEventListener('mousemove', handleUpdate);
+  // input.addEventListener('mousemove', handleUpdate);
 })
+document.querySelector('.right input').addEventListener('click', handleUpdate);
 </script>
 
 <style>
   html, body {
     margin:0;
+  }
+  .customize{
+    position: absolute;
+  }
+  .right{
+    
+    float: right;
   }
 </style>
 
