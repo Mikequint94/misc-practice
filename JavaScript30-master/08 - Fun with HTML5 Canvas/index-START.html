@@ -5,6 +5,17 @@
   <title>HTML5 Canvas</title>
 </head>
 <body>
+  <div class="customize">
+    <div class="color-picker">
+      <label for="base">Color:</label>
+      <input id="base" type="color" name="base" value="#ffc600">
+    </div>
+    <div class="volume-select">
+      <label for="volume">Thickness:</label>
+      <input id="volume" type="range" name="thickness" min="1" max="99" value="50">
+    </div>
+  </div>
+  
 <canvas id="draw" width="800" height="800"></canvas>
 <script>
 
@@ -12,7 +23,8 @@ const canvas = document.querySelector('#draw');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-ctx.strokeStyle = '#BADASS';
+let drawColor = 'lime';
+let thickness = 5;
 ctx.lineJoin = 'round';
 ctx.lineCap = 'round';
 
@@ -22,7 +34,9 @@ let isDrawing = false;
 
 function draw(e) {
   if (!isDrawing) return;
-  console.log(e);
+  ctx.strokeStyle = drawColor;
+  // console.log(thickness);
+  ctx.lineWidth = thickness;
   ctx.beginPath();
   ctx.moveTo(lastX, lastY);
   ctx.lineTo(e.offsetX, e.offsetY);
@@ -37,6 +51,21 @@ canvas.addEventListener('mousedown', (e) => {
 canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('mouseup', () => isDrawing = false);
 canvas.addEventListener('mouseout', () => isDrawing = false);
+
+const inputs = document.querySelectorAll('.customize input');
+  function handleUpdate() {
+    // console.log(this.name);
+    if (this.name === 'thickness') {
+      console.log(this);
+      thickness = this.value;
+    } else {
+      drawColor = this.value;
+    }
+  }
+inputs.forEach((input) => {
+  input.addEventListener('change', handleUpdate);
+  input.addEventListener('mousemove', handleUpdate);
+})
 </script>
 
 <style>
