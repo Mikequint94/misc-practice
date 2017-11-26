@@ -102,16 +102,14 @@
 const boxes = document.querySelectorAll('.inbox input');
 // console.log(boxes);
 let lastBox;
-boxes.forEach(
-  (box) => {
+boxes.forEach((box) => {
     box.addEventListener(('click'), selectBoxes);
   });
   
 function selectBoxes(e) {
   let inBetween = false; 
   if (e.shiftKey && this.checked) {
-    boxes.forEach(
-      checkbox => {
+    boxes.forEach(checkbox => {
         if (checkbox === this || checkbox === lastBox) {
           inBetween = !inBetween
         }
