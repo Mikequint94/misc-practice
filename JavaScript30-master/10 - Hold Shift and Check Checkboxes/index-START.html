@@ -99,20 +99,30 @@
   </div>
 
 <script>
-const boxes = document.querySelectorAll('.inbox .item');
+const boxes = document.querySelectorAll('.inbox input');
 // console.log(boxes);
-let currentBox;
-let idx = 0;
+let lastBox;
 boxes.forEach(
   (box) => {
-    box.addEventListener(('click'), selectBoxes.bind(this, idx));
-    idx++;
+    box.addEventListener(('click'), selectBoxes);
   });
   
-function selectBoxes(index) {
-  if (!currentBox){
-    currentBox = index;
-  } 
+function selectBoxes(e) {
+  let inBetween = false; 
+  if (e.shiftKey && this.checked) {
+    boxes.forEach(
+      checkbox => {
+        if (checkbox === this || checkbox === lastBox) {
+          inBetween = !inBetween
+        }
+        if (inBetween) {
+          checkbox.checked = true;
+        }
+      }
+    )
+  }
+  lastBox = this;
+
 }
 </script>
 </body>
