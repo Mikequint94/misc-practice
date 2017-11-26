@@ -99,6 +99,21 @@
   </div>
 
 <script>
+const boxes = document.querySelectorAll('.inbox .item');
+// console.log(boxes);
+let currentBox;
+let idx = 0;
+boxes.forEach(
+  (box) => {
+    box.addEventListener(('click'), selectBoxes.bind(this, idx));
+    idx++;
+  });
+  
+function selectBoxes(index) {
+  if (!currentBox){
+    currentBox = index;
+  } 
+}
 </script>
 </body>
 </html>
