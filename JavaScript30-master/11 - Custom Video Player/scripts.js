@@ -41,6 +41,7 @@ function scrub(e) {
     video.currentTime = e.layerX/640 * video.duration;
   }
 }
+
 let mousedown = false;
 progress.addEventListener('click', scrub);
 window.addEventListener('mousedown', ()=> mousedown = true);
