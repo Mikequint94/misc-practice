@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>Key Detection</title>
-  <!-- <script type="text/javascript" src="http://www.cornify.com/js/cornify.js"></script> -->
 </head>
 <body>
   <h1>Whats the secret code?</h1>
@@ -21,6 +20,11 @@ window.addEventListener('keyup', e => {
     text.innerHTML = "YOU GOT IT!"
     text.style.color = "blue"
     text.style.fontSize = '100px'
+    setTimeout(()=>{
+      text.innerHTML="Whats the secret code?";
+      text.style.color = "black"
+      text.style.fontSize = '40px'
+    }, 3000);
   }
 })
 </script>
