@@ -14,7 +14,7 @@ app.use(express.static(__dirname + '/public'))
 app.get('/', function(request, response) {
   response.render('index.html');
 })
-let bodyText;
+let plantData;
 const options = { method: 'POST',
   url: 'https://aurorasolar-monitoring-task.herokuapp.com/plant_overview',
   headers: 
@@ -27,18 +27,18 @@ const options = { method: 'POST',
 
 fetch(options, (error, response, body) => {
   if (error) throw new Error(error);
-  bodyText = JSON.parse(body);
+  plantData = JSON.parse(body);
 });
 app.get('/plant_overview', function(req, res) {
-    res.json(bodyText);
+    res.json(plantData);
 })
 app.get('/component_list', (req, res) => {
   let components = [];
-  bodyText.forEach(entity => components.push({type: entity.type, name: entity.device_name}));
+  plantData.forEach(entity => components.push({type: entity.type, name: entity.device_name}));
   res.json(components);
 })
 app.get(`/channel_list/:component`, (req, res) => {
-  let componentChannels = bodyText.filter(
+  let componentChannels = plantData.filter(
     entity => entity.device_name == req.params.component
   );
   res.json(componentChannels[0]);

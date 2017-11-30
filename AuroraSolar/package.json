@@ -1,7 +1,7 @@
 {
-  "name": "node-js-sample",
+  "name": "aurora-solar-monitoring-system",
   "version": "0.2.0",
-  "description": "A sample Node.js app using Express 4",
+  "description": "A basic application to fetch data from Aurora Solar databases for use in system monitoring.",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
@@ -16,16 +16,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/heroku/node-js-sample"
+    "url": "https://github.com/Mikequint94/misc-practice/tree/master/AuroraSolar"
   },
   "keywords": [
     "node",
     "heroku",
     "express"
   ],
-  "author": "Mark Pundsack",
-  "contributors": [
-    "Zeke Sikelianos <zeke@sikelianos.com> (http://zeke.sikelianos.com)"
-  ],
-  "license": "MIT"
+  "author": "Michael Quint"
 }

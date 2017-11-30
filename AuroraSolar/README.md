@@ -1,6 +1,6 @@
 # Solar Installation Application
 
-##### A basic application to fetch data from Aurora Solar databases.
+##### A basic application to fetch data from Aurora Solar databases for use in system monitoring.
 
 To setup, simply run
   `npm install` followed by 
@@ -19,4 +19,4 @@ Another feature of data point fetching is that if you leave the device name blan
 
 ## Future Directions
 
-If I had more time with this application I would of course style the page better.  I would also add more data analysis logic such as being able to calculate the average value of multiple data points.
+If I had more time with this application I would better style the page.  I would also add more data analysis logic such as being able to calculate the average value of multiple data points.
