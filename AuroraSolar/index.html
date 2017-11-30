@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Aurora Solar Installation Data</title>
+</head>
+<body>
+  <div>
+    <!-- <button onclick="fetchPlantOverview()">Fetch Plant Overview</button> -->
+    <button onclick="fetchComponentList()">Fetch Component List</button>
+    <h3>Search by Component</h3>
+    <input id="componentInput"></input>
+    <button onclick="fetchChannelList()">Fetch Channel List</button>
+    
+    <h3>Get Data for given device name and channel name</h3>
+    Device:<input id="deviceInput"></input>
+    Channel:<input id="channelInput"></input>
+    <button id="fetchDataButton" onclick="fetchDataPoint()">Fetch Data Point</button>
+    <h3 id="dataPoint"></h3>
+    <div class="content">
+      <div class="components">
+        <h1 class="title">Click the buttons above to learn more about your plant</h1>
+      </div>
+      </br>
+      
+      <div class="information">
+        <h2></h2>
+        <ul></ul>
+      </div>
+    </div>
+    
+      
+  </div>
+
+<script>
+  const plantComponents = document.querySelector('.components');
+  const searchTitle = document.querySelector('.title');
+  
+  const componentInformation = document.querySelector('.information ul');
+  const componentTitle = document.querySelector('.information h2');
+  
+  const componentInput = document.getElementById('componentInput');
+  const deviceInput = document.getElementById('deviceInput');
+  const channelInput = document.getElementById('channelInput');
+  const dataPoint = document.getElementById('dataPoint');
+  const fetchDataButton = document.getElementById('fetchDataButton');
+  
+  function fetchPlantOverview() {
+    fetch('/plant_overview')
+      .then(data => data.json())
+      .then(data => console.log(data));
+  }
+  function fetchComponentList() {
+    fetch('/component_list')
+      .then(data => data.json())
+      .then(data => showPlantOverview(data));
+  }
+
+  function showPlantOverview(data) {
+    searchTitle.innerHTML = "All Components"
+    data.map(entity => {
+      let name = document.createElement('li');
+      name.innerHTML = `Name: ${entity.name}`;
+      name.onclick = ()=> {
+        deviceInput.value = entity.name;
+        fetchChannelList(entity.name);
+      }
+      plantComponents.appendChild(name);
+    })
+  }
+  
+  function fetchChannelList(component) {
+    if (!component) {
+      component = componentInput.value;
+    }
+    fetch(`/channel_list/${component}`)
+      .then(data => data.json())
+      .then(data => showComponentInfo(data))
+  }
+  
+  function showComponentInfo(data) {
+    componentInformation.innerHTML = "";
+    componentTitle.innerHTML = `${data.type} ID: ${data.device_id} Channel List`
+    data.channels.map(channel => {
+      let row = document.createElement('li');
+      row.onclick = ()=> {
+        channelInput.value = channel.name;
+        fetchDataButton.click();
+      }
+      row.innerHTML = `Name: ${channel.name}, Unit: ${channel.unit}`;
+      componentInformation.appendChild(row);
+    })
+  }
+  
+  function fetchDataPoint() {
+    dataPoint.innerHTML = "Loading..."
+    device = deviceInput.value;
+    channel = channelInput.value;
+    if (!device) {
+      fetchAllData(channel)
+    } else {
+    fetch(`/data_point/${device}/${channel}`)
+      .then(data => data.json())
+      .then(data => dataPoint.innerHTML = data)
+      .catch(err => dataPoint.innerHTML = "Error")
+    }
+  }
+  function fetchAllData(channel) {
+    let componentList = [];
+    dataPoint.innerHTML = "All Results:"
+    fetch('/component_list')
+      .then(data => data.json())
+      .then(data => data.forEach(component => {
+        fetch(`/data_point/${component.name}/${channel}`)
+        .then(data => data.json())
+        .then(data => {
+          if (data.length < 30) {
+            let row = document.createElement('li');
+            row.innerHTML = `Device ${component.name}: ${data}`;
+            row.onclick = ()=> {
+              deviceInput.value = component.name;
+              fetchChannelList(component.name);
+            }
+            dataPoint.appendChild(row);
+          }
+        })
+        .catch(err => dataPoint.innerHTML = "Error")
+      }))
+  }
+</script>
+<style>
+li{
+  cursor: pointer;
+  padding: 5px;
+}
+.content{
+  display: flex;
+}
+.components{
+  padding-right: 30px;
+}
+
+</style>
+  </body>
+</html>
