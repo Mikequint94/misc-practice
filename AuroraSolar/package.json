@@ -7,10 +7,8 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "axios": "^0.17.1",
     "ejs": "^2.5.7",
     "express": "^4.13.3",
-    "jade": "^1.11.0",
     "request": "^2.83.0"
   },
   "engines": {
