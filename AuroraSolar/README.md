@@ -1,6 +1,11 @@
 # Solar Installation Application
 
-A basic application to fetch data from Aurora Solar databases about a specific solar plant.
+##### A basic application to fetch data from Aurora Solar databases.
+
+To setup, simply run
+  `npm install` followed by 
+  `npm start`
+and then navigate to  localhost:5000.
 
 ## Features and Instructions
 
