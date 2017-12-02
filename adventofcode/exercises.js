@@ -24,3 +24,13 @@ function captchaAround(num) {
     }
     return result;
 }
+function checkSum(spreadsheet) {
+  let rows = spreadsheet.split("x");
+  let result = 0;
+  rows.forEach(row => { 
+	let diff = Math.max(...row.split(/\s+/)) - Math.min(...row.split(/\s+/));
+  // console.log(diff);
+	result = result + diff;
+  });
+  return result;
+}
