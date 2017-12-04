@@ -34,25 +34,13 @@ function checkSum(spreadsheet) {
   });
   return result;
 }
-function checkSumDivide(spreadsheet) {
-  let rows = spreadsheet.split("x");
-  let result = 0;
-  rows.forEach(row => { 
-     let sum;
-	   let nums = row.split(/\s+/);
-     for (let i=0; i < nums.length - 1; i++) {
-       for (let j = i + 1; j < nums.length; j++) {
-         if (nums[i] % nums[j] === 0) {
-           sum = nums[i] / nums[j];
-         } else {
-           if (nums[j] % nums[i] === 0) {
-             sum = nums[j] / nums[i];
-           }
-         }
-       }
-     }
-     // console.log(result);
-	result = result + sum;
-  });
-  return result;
+function spiralMemory(number) {
+  let total = 1;
+  let i = 0;
+  while (total < number) {
+    total = total + 1 + 8*i;
+    i++;
+  }
+  return [i, total];
 }
+//got number of spirals out from center, then worked way around.
