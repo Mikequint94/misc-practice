@@ -1,6 +1,6 @@
 // add to total if number is next to same number in long string
 function captcha(num) {
-    let result = 0; 
+    let result = 0;
 	num = num.split("");
 	console.log(num);
   let i;
@@ -13,7 +13,7 @@ function captcha(num) {
 }
 // add to total if number half way around string is same
 function captchaAround(num) {
-  let result = 0; 
+  let result = 0;
 	num = num.split("");
 	console.log(num);
   let i;
@@ -27,7 +27,7 @@ function captchaAround(num) {
 function checkSum(spreadsheet) {
   let rows = spreadsheet.split("x");
   let result = 0;
-  rows.forEach(row => { 
+  rows.forEach(row => {
 	let diff = Math.max(...row.split(/\s+/)) - Math.min(...row.split(/\s+/));
   // console.log(diff);
 	result = result + diff;
@@ -44,3 +44,6 @@ function spiralMemory(number) {
   return [i, total];
 }
 //got number of spirals out from center, then worked way around.
+function spiralMemoryBorder(number) {
+  
+}
