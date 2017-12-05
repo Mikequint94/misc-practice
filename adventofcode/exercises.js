@@ -51,7 +51,6 @@ function spiralMemoryBorder(number) {
   matrix[x + "," + y] = 1;
   let value = 1;
   while(value <= number) {
-    // console.log(x, y);
     if ((x!==y || x >= 0) && Math.abs(x) <= Math.abs(y)) {
       x += y >= 0 ? 1: -1;
     } else {
@@ -73,8 +72,7 @@ function getValue(matrix, x, y) {
   }
   return sum;
 }
-// spiralMemoryBorder(747);
-spiralMemoryBorder(368078);
+// spiralMemoryBorder(368078);
 
 function validPassphrase(file) {
   let fs = require("fs");
@@ -118,8 +116,6 @@ function jumpAround(file) {
   let pointer = 0;
   let steps = 0;
   while (pointer >= 0 && pointer < jumps.length) {
-    // console.log(pointer);
-    // console.log(jumps);
     steps++;
     let oldpointer = pointer;
     pointer += jumps[pointer];
