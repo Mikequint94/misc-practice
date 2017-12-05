@@ -63,5 +63,22 @@ function validPassphrase(file) {
   });
   console.log(count);
 }
+function validPassphraseAnagram(file) {
+  let fs = require("fs");
+  const text = fs.readFileSync(file, "utf-8");
+  let lines = text.split("\n");
+  let count = 0;
+  lines.forEach((line) => {
+    let words = line.split(" ");
+    words = words.map(word => word.split("").sort().join(""));
+    // console.log(words);
+    let set = new Set(words);
+    // console.log(set.size, words.length);
+    if (set.size === words.length) {
+      count++;
+    }
+  });
+  console.log(count);
+}
 
-validPassphrase('./day4.txt');
+validPassphraseAnagram('./day4.txt');
