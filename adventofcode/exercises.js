@@ -90,13 +90,17 @@ function jumpAround(file) {
   let pointer = 0;
   let steps = 0;
   while (pointer >= 0 && pointer < jumps.length) {
-    console.log(pointer);
-    console.log(jumps);
+    // console.log(pointer);
+    // console.log(jumps);
     steps++;
-    // let oldpointer = pointer;
-    pointer += jumps[pointer]++;
-    // jumps[oldpointer]++;
+    let oldpointer = pointer;
+    pointer += jumps[pointer];
+    if (jumps[oldpointer] >= 3) {
+      jumps[oldpointer] -= 1;
+    } else {
+      jumps[oldpointer]++;
+    }
   }
   console.log(steps);
 }
-jumpAround('./day5-test.txt');
+jumpAround('./day5.txt');
