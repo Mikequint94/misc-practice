@@ -45,8 +45,36 @@ function spiralMemory(number) {
 }
 //got number of spirals out from center, then worked way around.
 function spiralMemoryBorder(number) {
-
+  let x = 0;
+  let y = 0;
+  let matrix = {};
+  matrix[x + "," + y] = 1;
+  let value = 1;
+  while(value <= number) {
+    // console.log(x, y);
+    if ((x!==y || x >= 0) && Math.abs(x) <= Math.abs(y)) {
+      x += y >= 0 ? 1: -1;
+    } else {
+      y += x >= 0 ? -1: 1;
+    }
+    value = getValue(matrix, x, y);
+    matrix[x + "," + y] = value;
+  }
+  console.log(value);
 }
+function getValue(matrix, x, y) {
+  let sum = 0;
+  for (let i = x-1; i<= x+1; i++) {
+    for (let j = y-1; j<= y+1; j++) {
+      if (matrix[i + "," + j]) {
+        sum += matrix[i + "," + j];
+      }
+    }
+  }
+  return sum;
+}
+// spiralMemoryBorder(747);
+spiralMemoryBorder(368078);
 
 function validPassphrase(file) {
   let fs = require("fs");
@@ -103,4 +131,4 @@ function jumpAround(file) {
   }
   console.log(steps);
 }
-jumpAround('./day5.txt');
+// jumpAround('./day5.txt');
