@@ -128,3 +128,27 @@ function jumpAround(file) {
   console.log(steps);
 }
 // jumpAround('./day5.txt');
+
+function memoryReallocation(file){
+  let fs = require('fs');
+  let banks = fs.readFileSync(file, "utf-8").trim().split("\t").map(el => parseInt(el));
+  const history = new Set([banks]);
+  let rounds = 1;
+  console.log(history);
+  while (!history.has(banks) || rounds === 1) {
+    rounds++;
+    let currentMax = (Math.max(...banks));
+    let currentIndex = banks.indexOf(currentMax);
+    banks[currentIndex] = 0;
+    console.log(history);
+    for (let i=1; i <= currentMax; i++) {
+      banks[(currentIndex + i) % 4]++;
+    }
+    history.add(banks);
+    console.log(history);
+    // console.log(history.has(banks));
+  }
+  console.log( rounds);
+}
+
+memoryReallocation('day6-test.txt');
