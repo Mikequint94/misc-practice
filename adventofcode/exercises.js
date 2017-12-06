@@ -129,26 +129,42 @@ function jumpAround(file) {
 }
 // jumpAround('./day5.txt');
 
+Array.prototype.hashCode = function() {
+    let hash = 0;
+    if (this.length === 0) {
+        return hash;
+    }
+    for (let i = 0; i < this.length; i++) {
+
+        hash += 3+ (this[i]*2.2 - 31) * ((i+13)/4 + 423432)/11 - ((i-11)/2.3);
+    }
+    return hash;
+};
+
+// console.log([1,2,3].hashCode());
 function memoryReallocation(file){
   let fs = require('fs');
   let banks = fs.readFileSync(file, "utf-8").trim().split("\t").map(el => parseInt(el));
-  const history = new Set([banks]);
+  // let banks2 = banks.slice(0);
+  const history = new Set();
+  // history.add(banks.hashCode())
   let rounds = 1;
-  console.log(history);
-  while (!history.has(banks) || rounds === 1) {
+  // console.log(history);
+  while (!history.has(banks.hashCode()) || rounds === 1) {
     rounds++;
+    history.add(banks.hashCode());
     let currentMax = (Math.max(...banks));
     let currentIndex = banks.indexOf(currentMax);
     banks[currentIndex] = 0;
-    console.log(history);
+    // console.log(history);
     for (let i=1; i <= currentMax; i++) {
-      banks[(currentIndex + i) % 4]++;
+      banks[(currentIndex + i) % 16]++;
     }
-    history.add(banks);
     console.log(history);
+    // banks = banks.slice(0);
     // console.log(history.has(banks));
   }
   console.log( rounds);
 }
 
-memoryReallocation('day6-test.txt');
+memoryReallocation('day6.txt');
