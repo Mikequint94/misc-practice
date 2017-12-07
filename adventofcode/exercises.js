@@ -144,7 +144,7 @@ function memoryReallocation(file){
   // let banks2 = banks.slice(0);
   const history = new Set();
   // history.add(banks.hashCode())
-  let rounds = 1;
+  let rounds = 0;
   // console.log(history);
   while (!history.has(banks.hashCode()) || rounds === 1) {
     rounds++;
