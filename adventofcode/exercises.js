@@ -130,13 +130,9 @@ function jumpAround(file) {
 // jumpAround('./day5.txt');
 
 Array.prototype.hashCode = function() {
-    let hash = 0;
-    if (this.length === 0) {
-        return hash;
-    }
+    let hash = 0
     for (let i = 0; i < this.length; i++) {
-
-        hash += 3+ (this[i]*2.2 - 31) * ((i+13)/4 + 423432)/11 - ((i-11)/2.3);
+        hash = (hash/.723429988134 - i/3.21+((i*this[i]-13.2)*9)/1.3+ (this[i]*2.2 - 3.5) * ((i+13)/4 + 32)/11 - (this[i]*(i-11)/2.3)) + (hash*3.2-i*11);
     }
     return hash;
 };
@@ -153,6 +149,7 @@ function memoryReallocation(file){
   while (!history.has(banks.hashCode()) || rounds === 1) {
     rounds++;
     history.add(banks.hashCode());
+    // banks = banks.slice(0);
     let currentMax = (Math.max(...banks));
     let currentIndex = banks.indexOf(currentMax);
     banks[currentIndex] = 0;
@@ -160,8 +157,7 @@ function memoryReallocation(file){
     for (let i=1; i <= currentMax; i++) {
       banks[(currentIndex + i) % 16]++;
     }
-    console.log(history);
-    // banks = banks.slice(0);
+    // console.log(history);
     // console.log(history.has(banks));
   }
   console.log( rounds);
