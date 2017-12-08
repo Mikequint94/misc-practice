@@ -157,6 +157,9 @@ function memoryReallocation(file){
     for (let i=1; i <= currentMax; i++) {
       banks[(currentIndex + i) % 16]++;
     }
+    if (banks.hashCode() === -533439218908.9933) {
+      console.log(rounds);
+    }
     // console.log(history);
     // console.log(history.has(banks));
   }
