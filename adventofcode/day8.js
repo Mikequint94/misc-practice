@@ -5,6 +5,8 @@ function registerInstructions(file) {
   lines.splice(-1,1);
   let dictionary = new Map;
 
+  let max;
+  let newval;
   lines.forEach(line => {
     line = line.split(" if ");
     let statement = line[1].split(" ");
@@ -17,18 +19,17 @@ function registerInstructions(file) {
     }
     let ifStatement = eval(`if ( ${dictionary.get(statement[0])} ${statement[1]} ${statement[2]}) {
       if ("inc" == "${command[1]}") {
-        dictionary.set(command[0], parseInt(dictionary.get(command[0])) + parseInt(command[2]))
+        newval = parseInt(dictionary.get(command[0])) + parseInt(command[2]);
+        dictionary.set(command[0], newval);
       } else {
-        dictionary.set(command[0], parseInt(dictionary.get(command[0])) - parseInt(command[2]))
+        newval = parseInt(dictionary.get(command[0])) - parseInt(command[2]);
+        dictionary.set(command[0], newval);
+      }
+      if (!max || max < newval) {
+        max = newval;
       }
     }`);
     // console.log(statement);
-  });
-  let max;
-  dictionary.forEach(entry => {
-    if (!max || max < entry) {
-      max = entry;
-    }
   });
   console.log(max);
 }
