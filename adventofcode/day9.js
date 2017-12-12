@@ -4,4 +4,5 @@ function streamProcessing(file) {
   let splitText = text.split("!"); // but wouldnt work for double !!
   console.log(splitText);
 }
+
 streamProcessing('./day9.txt');
