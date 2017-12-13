@@ -8,8 +8,8 @@ function streamProcessing(file) {
   splitText = splitText.join("");
 
   var brackets = new RegExp('<\.+>');
-  splitText = splitText.split(brackets); //remove garbafe
-  splitText = splitText.join(""); //remove garbafe
+  splitText = splitText.split(brackets); //remove garbage
+  splitText = splitText.join(""); //remove garbage
   console.log(splitText);
 }
 
