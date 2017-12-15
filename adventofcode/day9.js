@@ -32,4 +32,26 @@ function streamProcessing(file) {
 }
 
 // streamProcessing('./day9.txt');
-streamProcessing('./day9.txt');
+// streamProcessing('./day9.txt');
+
+function streamProcessing2(file) { //count garbage
+  let fs = require("fs");
+  const text = fs.readFileSync(file, "utf-8");
+  let regex = new RegExp('!\.');
+  let splitText = text.split(regex); //remove canceled characters
+
+  splitText = splitText.filter(n => n);
+  splitText = splitText.join("");
+
+  let brackets = new RegExp('<(.*?)>');
+  splitText = splitText.split(brackets); //filter out garbage
+  let justGarbage = ""; // join only non-garbage back in
+  for (let i = 1; i <= splitText.length; i++) {
+    if (i%2 === 1 && i<splitText.length) {
+      justGarbage += splitText[i];
+    }
+  }
+  console.log(justGarbage.length);
+
+}
+streamProcessing2('./day9.txt');
