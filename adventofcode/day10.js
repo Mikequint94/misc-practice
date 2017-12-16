@@ -8,7 +8,10 @@ let currentPosition = 0;
 let skipSize = 0;
 
 input.forEach(length => {
-  
+  let reversable = list.splice(currentPosition,length);
+  // reversable = reverse(reversable);
+  // list = [list.slice(0, currentPosition), reversable, list.slice(currentPosition)].join();
+  // console.log(list);
 });
 // console.log(list);
 
@@ -22,5 +25,7 @@ function reverse(segment) {
   }
   return segment;
 }
-let segment = test.splice(2,2);
-console.log(reverse(segment));
+let segment = test.splice(1,3);
+let reversed = reverse(segment);
+console.log([test.slice(0,1),reversed,test.slice(1)].join());
+console.log(test);
