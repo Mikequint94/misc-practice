@@ -4,7 +4,9 @@ function hexEd(file) {
   let directions = text.split(",");
   console.log(directions);
   let up = 0;
+  let upmax = 0;
   let right = 0;
+  let rightmax = 0;
   directions.forEach(direction => {
     if (direction.includes('n')) {
       up +=1;
@@ -18,8 +20,15 @@ function hexEd(file) {
     if (direction.includes('w')) {
       right -=1;
     }
+    if (Math.abs(up) > Math.abs(upmax)) {
+      upmax = up;
+    }
+    if (Math.abs(right) > Math.abs(rightmax)) {
+      rightmax = right;
+    }
   });
   console.log(up, right);
+  console.log(upmax, rightmax);
 }
 
 hexEd('./day11.txt');
