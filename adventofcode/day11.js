@@ -23,7 +23,7 @@ function hexEd(file) {
     if (Math.abs(up) > Math.abs(upmax)) {
       upmax = up;
     }
-    if (Math.abs(right) > Math.abs(rightmax)) {
+    if (Math.abs(right) > Math.abs(rightmax)ad) {
       rightmax = right;
     }
   });
