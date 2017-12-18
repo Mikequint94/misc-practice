@@ -9,27 +9,20 @@ function digPlumb(file) {
     let splitLine = line.split(" <-> ");
     let program = splitLine[0];
     let groups = splitLine[1];
-    // console.log(program, groups);
-    // groups.split(", ").forEach(group => {
       dictionary.set(program, groups.split(", "));
-    // });
   });
-  // let i = 0;
-  // while (i < 5) {
-    // let lastEl = allGroups[allGroups.length - 1];
     let newAdds = dictionary.get('0');
     newAdds.forEach(child => {
       addChildren(child);
     });
-    console.log(allGroups.size);
-  //   i++;
-  // }
+    console.log(allGroups);
+    console.log(dictionary);
 }
 function addChildren(child) {
     allGroups.add(child);
     // console.log(allGroups);
     let newAdds = dictionary.get(child);
-    // console.log(newAdds);
+    dictionary.delete(child);
     if (newAdds) {
     newAdds.forEach(group => {
       if (!allGroups.has(group)) {
@@ -38,4 +31,4 @@ function addChildren(child) {
     });
   }
 }
-digPlumb('./day12.txt');
+digPlumb('./day12-test.txt');
