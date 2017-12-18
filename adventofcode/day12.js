@@ -3,7 +3,8 @@ function digPlumb(file) {
   const text = fs.readFileSync(file, "utf-8");
   let lines = text.split("\n");
   lines.splice(lines.length-1, 1);
-  allGroups = new Set('0');
+  let numGroups = 0;
+  allGroups = new Set();
   dictionary = new Map;
   lines.forEach(line => {
     let splitLine = line.split(" <-> ");
@@ -11,13 +12,16 @@ function digPlumb(file) {
     let groups = splitLine[1];
       dictionary.set(program, groups.split(", "));
   });
-    let newAdds = dictionary.get('0');
-    newAdds.forEach(child => {
-      addChildren(child);
-    });
-    console.log(allGroups);
-    console.log(dictionary);
+  while (dictionary.size > 0) {
+    numGroups++;
+    let firstKey = Array.from(dictionary.keys())[0];
+    addChildren(firstKey);
+    // console.log(allGroups);
+    // console.log(dictionary);
+  }
+  console.log(numGroups);
 }
+
 function addChildren(child) {
     allGroups.add(child);
     // console.log(allGroups);
@@ -31,4 +35,4 @@ function addChildren(child) {
     });
   }
 }
-digPlumb('./day12-test.txt');
+digPlumb('./day12.txt');
