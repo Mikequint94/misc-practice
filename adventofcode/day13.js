@@ -6,12 +6,18 @@ function fireWall(file) {
   let wall = new Map();
   lines.forEach(line => {
     line = line.split(": ");
-    wall.set(line[0],line[1]);
+    wall.set(line[0], parseInt(line[1]));
   });
+  let severity = 0;
 
 Array.from(wall.keys()).forEach(key => {
-  console.log(key);
+  let scanner = key % ((wall.get(key) - 1) * 2);
+  console.log(scanner, wall.get(key));
+  if (scanner === 0) {
+    severity += key * wall.get(key);
+  }
 });
+console.log(severity);
 
 }
 
