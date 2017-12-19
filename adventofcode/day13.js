@@ -6,18 +6,26 @@ function fireWall(file) {
   let wall = new Map();
   lines.forEach(line => {
     line = line.split(": ");
-    wall.set(line[0], parseInt(line[1]));
+    wall.set(parseInt(line[0]), parseInt(line[1]));
   });
-  let severity = 0;
-
-Array.from(wall.keys()).forEach(key => {
-  let scanner = key % ((wall.get(key) - 1) * 2);
-  console.log(scanner, wall.get(key));
-  if (scanner === 0) {
-    severity += key * wall.get(key);
+  let allKeys = Array.from(wall.keys());
+  let delay = 0;
+  let finished = false;
+  while (!finished) {
+    let hit = 0;
+    allKeys.forEach(key => {
+      let scanner = (key+delay) % ((wall.get(key) - 1) * 2);
+      if (scanner === 0) {
+        hit += 1;
+      }
+    });
+    // console.log(severity);
+    if (hit === 0) {
+      finished = true;
+    }
+    delay++;
   }
-});
-console.log(severity);
+  console.log(delay-1);
 
 }
 
