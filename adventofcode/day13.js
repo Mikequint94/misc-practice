@@ -21,4 +21,4 @@ console.log(severity);
 
 }
 
-fireWall('./day13-test.txt');
+fireWall('./day13.txt');
