@@ -99,8 +99,6 @@ Algorithms.isPalindrome = function (string) {
     j -= 1;
   }
   return true;
-
-
 };
 
 // Implement the Folding Cipher.
@@ -163,7 +161,6 @@ Algorithms.sillyYears = function (number) {
     year += 1;
   }
   return result;
-
 };
 
 // Given an array of integers, return all pairs that sum up to a specified value k.
