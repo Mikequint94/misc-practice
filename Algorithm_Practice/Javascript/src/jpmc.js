@@ -16,18 +16,39 @@ function maxRangeSum(input) {
   console.log(maxGain);
 }
 
-// maxRangeSum("10 7 -3 -10 4 2 8 -2 4 -5 -6");
+// Text Dollar Problem - function can be called directly or through standard input
 
+// Stdin processing
+let encoding = 'utf-8';
+let data = "";
+if (process.stdin.isTTY) {
+   data = process.argv[2] || '';
+  process.stdout.write(textDollar(data));
+} else {
+  process.stdin.setEncoding(encoding);
+  process.stdin.on('readable', function() {
+    var chunk;
+    while (chunk = process.stdin.read()) {
+      data += chunk;
+    }
+  });
+  process.stdin.on('end', function () {
+    data = data.replace(/\n$/, '');
+    data.split("\n").forEach(number => {
+      process.stdout.write(textDollar(number));
+    });
+  });
+}
 
 function textDollar(number) {
+  number = parseInt(number); //make sure input is a number
   let englishNumber = "";
   let firstNineteen = "One Two Three Four Five Six Seven Eight Nine Ten Eleven Twelve Thirteen Fourteen Fifteen Sixteen Seventeen Eighteen Nineteen".split(" ");
   let tensPlace  = "Twenty Thirty Forty Fifty Sixty Seventy Eighty Ninety".split(" ");
   let chunks = number.toLocaleString().split(",");
-  let endings = ["Dollars", "Thousand", "Million"].slice(0,chunks.length);
+  let endings = ["Dollars", "Thousand", "Million", "Billion", "Trillion"].slice(0,chunks.length);
   let chunk = parseInt(chunks.shift());
   while (endings.length > 0) {
-    console.log(endings);
     if (chunk < 20) {
       englishNumber += firstNineteen[chunk - 1] || "";
       englishNumber += endings.pop();
@@ -40,7 +61,5 @@ function textDollar(number) {
       chunk = chunk % 100;
     }
   }
-  console.log(englishNumber);
+  return englishNumber + "\n";
 }
-
-textDollar(1111321);
