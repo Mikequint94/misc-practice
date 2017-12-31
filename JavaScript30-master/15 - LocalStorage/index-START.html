@@ -37,7 +37,12 @@
       text,
       done: false
     }
-    console.log(item);
+    items.push(item);
+    this.reset();
+  }
+  
+  function populateList() {
+    
   }
   
   addItems.addEventListener('submit', addItem);
