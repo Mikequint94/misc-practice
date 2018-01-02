@@ -23,7 +23,7 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
-    <button onclick="checkAll()">Check All</button>
+    <button onclick="toggleAll()">Check/Uncheck All</button>
   </div>
 
 <script>
@@ -31,8 +31,12 @@
   const itemsList = document.querySelector('.plates');
   const items = JSON.parse(localStorage.getItem('items')) || [];
   
-  function checkAll() {
-    items.forEach(item => item.done = true);
+  function toggleAll() {
+    if (items.every(item => item.done === true)) {
+      items.forEach(item => item.done = false);
+    } else {
+      items.forEach(item => item.done = true);
+    }
     localStorage.setItem('items', JSON.stringify(items));
     populateList(items, itemsList)
   }
