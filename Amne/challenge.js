@@ -5,7 +5,7 @@ function windowPatterns(file) {
   let numDays = parseInt(lines[0].split(" ")[0]);
   let windowSize = parseInt(lines[0].split(" ")[1]);
   let prices = lines[1].split(" ").map(Number);
-  
+
   for (let i = 0; i < numDays - windowSize + 1; i++) {
     let pattern = 0;
     let comboUp = 0;
@@ -23,7 +23,7 @@ function windowPatterns(file) {
     }
     console.log(pattern);
   }
-  
+
 }
 
-windowPatterns("./test.txt")
+windowPatterns("./test.txt");
