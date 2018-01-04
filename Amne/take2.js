@@ -1,53 +1,51 @@
-string = '18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15 15 15 12 13 15 18 19 20 15'
-k = 26;
+function windowPatterns(file) {
+  console.time("test1");
+  let fs = require("fs");
+  const text = fs.readFileSync(file, "utf-8");
+  let lines = text.split("\n");
+  let numDays = parseInt(lines[0].split(" ")[0]);
+  let windowSize = parseInt(lines[0].split(" ")[1]);
+  let prices = lines[1].split(" ").map(Number);
 
-
-function increasingSubsequence(houseValues, k){
-  houseValues = houseValues.split(' ');
-  var diffArray = houseValues.map((elem, idx, arr)=>{
-    if(arr[idx - 1] === undefined){
+  let simpleArray = prices.map((price, idx, arr)=>{
+    if(!arr[idx - 1]){
       return 0;
-    } else if(elem > arr[idx - 1]){
+    } else if(price > arr[idx - 1]){
       return 1;
-    } else if(elem < arr[idx - 1]){
+    } else if(price < arr[idx - 1]){
       return -1;
-    } else if(elem === arr[idx - 1]){
+    } else if(price === arr[idx - 1]){
       return 0;
     }
   });
-
-  for(var i = 1; i <= houseValues.length - k + 1; i++){
-    countIncreasing(diffArray.slice(i, i + k - 1))
+  for (let i = 0; i < numDays - windowSize + 1; i++) {
+    let pattern = 0;
+    let condensed = condenseArray(simpleArray.slice(i+1, i+windowSize));
+    condensed.forEach(el => {
+      if (el > 0) {
+        pattern += ((el + 1) * (el/2));
+      } else if (el < 0) {
+        pattern += ((el - 1) * (el/-2));
+      }
+    });
+    console.log(pattern);
   }
+  console.timeEnd("test1");
 }
-
-function countIncreasing(arr){
-  var posCounter = 0;
-  var negCounter = 0;
-  for(var i = 1; i < arr.length; i++){
-    if(arr[i-1] > 0 && arr[i] > 0){
-      arr[i-1]++;
-      arr.splice(i, 1);
-    }
-    if(arr[i - 1] < 0 && arr[i] < 0){
-      arr[i-1]--;
-      arr.splice(i, 1);
+function condenseArray(array) {
+  let i = 1;
+  while (i < array.length) {
+    if (array[i-1] >= 0 &&  array[i] >= 0) {
+      array[i] += array[i-1];
+      array.splice(i-1,1);
+    } else if (array[i-1] <= 0 &&  array[i] <= 0) {
+      array[i] += array[i-1];
+      array.splice(i-1,1);
+    } else {
+      i++;
     }
   }
-  arr.forEach(elem => {
-    if(elem > 0){
-      posCounter+= euler(elem);
-    } else if(elem < 0){
-      negCounter+= euler(Math.abs(elem));
-    }
-  });
-  console.log(posCounter - negCounter);
-  console.log(arr);
-
+  return array;
 }
 
-function euler(num){
-  return (1 + num) * num / 2
-}
-
-increasingSubsequence(string, k)
+windowPatterns('./test-big.txt');

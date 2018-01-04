@@ -1,4 +1,5 @@
 function windowPatterns(file) {
+  console.time("test1");
   let fs = require("fs");
   const text = fs.readFileSync(file, "utf-8");
   let lines = text.split("\n");
@@ -23,7 +24,7 @@ function windowPatterns(file) {
     }
     console.log(pattern);
   }
-
+console.timeEnd("test1");
 }
 
-windowPatterns("./test.txt");
+windowPatterns("./test-big.txt");
