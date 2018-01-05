@@ -23,13 +23,12 @@ io.on('connection', function(socket){
     io.emit('chat message', user + " has joined the chat!");
   });
   
-  socket.on('typing', function(user){
-    // console.log("USER", user);
-    io.emit('typing', user + " is typing");
+  socket.on('typing', function(typer){
+    io.emit('typing', typer + " is typing");
   });
   
-  socket.on('stoptyping', function(user){
-    io.emit('stoptyping', user);
+  socket.on('stoptyping', function(typer){
+    io.emit('stoptyping', typer);
   });
   
   socket.on('disconnect', function(){

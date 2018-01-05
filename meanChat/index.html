@@ -23,7 +23,7 @@
   let msgBox = document.getElementById('messages');
   let input = document.getElementById('m');
   let user = null;
-  let typing = false;
+  let typing = new Set();
   
   function isTyping() {
     if (input.value.length > 0 && user) {
@@ -56,14 +56,14 @@
       let txt = document.createTextNode(msg);
       newMsg.appendChild(txt)
       msgBox.append(newMsg);
+      window.scrollTo(0, msgBox.scrollHeight);
     });
     socket.on('typing', function(msg){
-      // console.log(msg);
-      if (!typing) {
-        typing = true;
+      let sliced = msg.slice(0,-10);
+      console.log(sliced, user);
+      if (!typing.has(sliced) && user !== sliced) {
+        typing.add(sliced);
         let newMsg = document.createElement("li");
-        let sliced = msg.slice(0,-10);
-        // console.log(sliced);
         newMsg.id = sliced;
         let txt = document.createTextNode(msg);
         newMsg.appendChild(txt)
@@ -71,8 +71,8 @@
       }
     });
     socket.on('stoptyping', function(msg){
-      if (typing) {
-        typing = false;
+      if (typing.has(msg)) {
+        typing.delete(msg);
         let els = document.querySelectorAll(`#${msg}`);
         els.forEach(el => msgBox.removeChild(el));
       }
