@@ -11,23 +11,23 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
   let user = null;
   socket.on('chat message', function(msg){
-    console.log('message: ' + msg);
+    // console.log('message: ' + msg);
     io.emit('chat message', user + " : " + msg);
   });
   
   socket.on('set user', function(msg){
-    console.log('user: ' + msg);
+    // console.log('user: ' + msg);
     user = msg;
     io.emit('chat message', user + " has joined the chat!");
   });
   
   socket.on('typing', function(user){
-    console.log("USER", user);
+    // console.log("USER", user);
     io.emit('typing', user + " is typing");
   });
   
   socket.on('stoptyping', function(user){
-    io.emit('stoptyping', user + " is typing");
+    io.emit('stoptyping', user);
   });
   
   socket.on('disconnect', function(){
@@ -38,5 +38,5 @@ io.on('connection', function(socket){
 });
 
 http.listen(port, function(){
-  console.log(`listening on ${port}`);
+  // console.log(`listening on ${port}`);
 });
