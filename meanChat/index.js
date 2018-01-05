@@ -6,15 +6,31 @@ app.get('/', function(req, res){
 });
 
 io.on('connection', function(socket){
-  console.log('a user connected');
-  
+  let user = null;
   socket.on('chat message', function(msg){
     console.log('message: ' + msg);
-    io.emit('chat message', msg);
+    io.emit('chat message', user + " : " + msg);
+  });
+  
+  socket.on('set user', function(msg){
+    console.log('user: ' + msg);
+    user = msg;
+    io.emit('chat message', user + " has joined the chat!");
+  });
+  
+  socket.on('typing', function(user){
+    console.log("USER", user);
+    io.emit('typing', user + " is typing");
+  });
+  
+  socket.on('stoptyping', function(user){
+    io.emit('stoptyping', user + " is typing");
   });
   
   socket.on('disconnect', function(){
-    console.log('user disconnected');
+    if (user) {
+      io.emit('chat message', user + " has left the chat!");
+    }
   });
 });
 

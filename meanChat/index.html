@@ -22,23 +22,36 @@
     <h2 id="title">Set Username Below and Click Send</h2>
     <ul id="messages"></ul>
     <form action="">
-      <input id="m" autocomplete="off" /><button>Send</button>
+      <input id="m" autocomplete="off" onkeyup="isTyping()"/><button id="button">Set Username</button>
     </form>
   </body>
   <script>
   let msgBox = document.getElementById('messages');
   let input = document.getElementById('m');
   let user = null;
+  let typing = false;
+  
+  function isTyping() {
+    if (input.value.length > 0 && user) {
+      socket.emit('typing', user)      
+    } else {
+      socket.emit('stoptyping', user);
+    }
+  };
+  
   $(function () {
     var socket = io();
     $('form').submit(function(){
       if (user) {
       socket.emit('chat message', input.value);
+      socket.emit('stoptyping', user);
       input.value = '';
       return false;
     } else {
+      socket.emit('set user', input.value);
+      document.getElementById('title').innerHTML = "";
+      document.getElementById('button').innerHTML = "Send";
       user = input.value;
-      console.log(user);
       input.value = '';
       return false;
     }
@@ -46,9 +59,26 @@
     socket.on('chat message', function(msg){
       console.log(msg);
       let newMsg = document.createElement("li");
-      let txt = document.createTextNode(user + ":" + msg);
+      let txt = document.createTextNode(msg);
       newMsg.appendChild(txt)
       msgBox.append(newMsg);
+    });
+    socket.on('typing', function(msg){
+      console.log(msg);
+      if (!typing) {
+        typing = true;
+        let newMsg = document.createElement("li");
+        newMsg.id = msg;
+        let txt = document.createTextNode(msg);
+        newMsg.appendChild(txt)
+        msgBox.append(newMsg);
+      }
+    });
+    socket.on('stoptyping', function(msg){
+      if (typing) {
+        typing = false;
+        msgBox.removeChild(document.getElementById(msg));
+      }
     });
   });
   </script>
