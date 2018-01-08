@@ -13,12 +13,10 @@ app.get('/', function(req, res){
 io.on('connection', function(socket){
   let user = null;
   socket.on('chat message', function(msg){
-    // console.log('message: ' + msg);
     io.emit('chat message', user + " : " + msg);
   });
   
   socket.on('set user', function(msg){
-    // console.log('user: ' + msg);
     user = msg;
     io.emit('chat message', user + " has joined the chat!");
   });
@@ -39,5 +37,4 @@ io.on('connection', function(socket){
 });
 
 http.listen(port, function(){
-  // console.log(`listening on ${port}`);
 });

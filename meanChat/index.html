@@ -51,7 +51,6 @@
     }
     });
     socket.on('chat message', function(msg){
-      // console.log(msg);
       let newMsg = document.createElement("li");
       let txt = document.createTextNode(msg);
       newMsg.appendChild(txt)
@@ -60,7 +59,6 @@
     });
     socket.on('typing', function(msg){
       let sliced = msg.slice(0,-10);
-      console.log(sliced, user);
       if (!typing.has(sliced) && user !== sliced) {
         typing.add(sliced);
         let newMsg = document.createElement("li");
