@@ -14,17 +14,16 @@ function fibonacci(n) {
 // fibonacci(20)
 
 function MergeMeetings(meetings) {
-  // meetings = meetings.sort()
-  let SortedMeetings = meetings.sort((a,b) => {return a[0] - b[0];});
+  let sortedMeetings = meetings.sort((a,b) => {return a[0] - b[0];});
 
   for (let i = 0; i < (meetings.length - 1); i++){
-    if (SortedMeetings[i+1][0] <= SortedMeetings[i][1]){
-      SortedMeetings[i+1][0] = Math.min(SortedMeetings[i+1][0], SortedMeetings[i][0]);
-      SortedMeetings[i+1][1] = Math.max(SortedMeetings[i+1][1], SortedMeetings[i][1]);
-      SortedMeetings[i] = null;
+    if (sortedMeetings[i+1][0] <= sortedMeetings[i][1]){
+      sortedMeetings[i+1][0] = Math.min(sortedMeetings[i+1][0], sortedMeetings[i][0]);
+      sortedMeetings[i+1][1] = Math.max(sortedMeetings[i+1][1], sortedMeetings[i][1]);
+      sortedMeetings[i] = null;
     }
   }
-  console.log(SortedMeetings.filter(el => el !== null));
+  console.log(sortedMeetings.filter(el => el !== null));
 }
 
 
