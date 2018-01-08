@@ -33,10 +33,10 @@ function MergeMeetings(meetings) {
 
 // gonna want the top 3 positives and top 2 negs.  if top 2 negs product is greater than lower 2 positives, use them.
 
-function Product3Ints(array) {
+function product3Ints(array) {
   let positives = [];
   let negatives = [];
-  array.forEach(function(el){
+  array.forEach((el) => {
     if (el > 0) {
       if (positives.length < 3) {
         positives.push(el);
@@ -63,7 +63,7 @@ function Product3Ints(array) {
   }
 }
 
-// product_3_ints([3,5,2,6,-5,-7,-4,5])
+product3Ints([3,5,2,6,-5,-7,-4,5]);
 
 // You have a list of integers, and for each index you want to find the product of every integer except the integer at that index.
 
@@ -85,7 +85,7 @@ function productsExceptMe(array){
   console.log(results);
 }
 
-productsExceptMe([3,1,2,1,-3,-5]);
+// productsExceptMe([3,1,2,1,-3,-5]);
 
 function uniqueEntries(array) {
   let entries = new Set();
