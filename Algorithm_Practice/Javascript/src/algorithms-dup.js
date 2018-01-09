@@ -100,3 +100,64 @@ function uniqueSubs(string) {
   return results;
 }
 // console.log(uniqueSubs("hello"));
+function lcs(array) {
+  let largestSum = 0;
+  let currentSum = 0;
+  array.forEach(el => {
+    currentSum+= el;
+    if (currentSum > largestSum) {
+        largestSum = currentSum;
+    }
+    if (currentSum < 0) {
+      currentSum = 0;
+    }
+  });
+  return largestSum;
+}
+// console.log(lcs([1,2,3,4,-5,4,5,-10,2,3,4]));
+
+function sillyYears(year) {
+  let results = [];
+  while (results.length < 10) {
+    year++;
+    let firstTwo = Math.floor(year/100);
+    let lastTwo = year % 100;
+    let middleTwo = Math.floor(year/10) % 100;
+    if (firstTwo + lastTwo === middleTwo) {
+      results.push(year);
+    }
+  }
+  return results;
+}
+
+// console.log(sillyYears(2018));
+
+function pairSum(array, k) {
+  let map = new Map();
+  let pairs = [];
+  array.forEach(el => map.set(el, map.get(el) + 1 || 1));
+  array.forEach(el => {
+    if (map.get(k - el)) {
+      if (k - el === el && map.get(k-el) > 1) {
+        pairs.push([Math.min(el, k-el), Math.max(el, k-el)]);
+      } else if (k - el !== el){
+        pairs.push([Math.min(el, k-el), Math.max(el, k-el)]);
+      }
+      map.delete(el);
+    }
+  });
+  return pairs;
+}
+// console.log(pairSum([1,3,32,3,4,5], 6));
+
+function matrixRegionSum(matrix, topLeftCoords, bottomRightCoords) {
+  let sum = 0;
+  for (let x = topLeftCoords[0]; x <= bottomRightCoords[0]; x++) {
+    for (let y = topLeftCoords[1]; y <= bottomRightCoords[1]; y++) {
+      sum += matrix[x][y];
+    }
+  }
+  return sum;
+}
+
+// console.log(matrixRegionSum([[2,3,4,5],[4,3,2,1],[3,3,3,3],[1,1,1,3]], [0,2],[2,2]));

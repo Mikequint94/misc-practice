@@ -349,6 +349,7 @@ end
 # Hint: Do not compare any two strings.
 # All strings contain only lowercase letters without whitespace or punctuation.
 def sort3(array, length)
+  print array
   (length-1).downto(0) do |idx|
     buckets = Array.new(26) {[]}
     array.each do |string|
@@ -362,8 +363,9 @@ def sort3(array, length)
         array << string
       end
     end
+    print buckets
+    print array
   end
-  array
 end
 
 # Given an array, write a function that will return a random index of the array.
