@@ -63,7 +63,7 @@ function product3Ints(array) {
   }
 }
 
-product3Ints([3,5,2,6,-5,-7,-4,5]);
+// product3Ints([3,5,2,6,-5,-7,-4,5]);
 
 // You have a list of integers, and for each index you want to find the product of every integer except the integer at that index.
 
