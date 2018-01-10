@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Entelo Chat</title>
+  </head>
+  <body>
+    <div>
+      <ul id="messages">
+      </ul>
+    </div>
+    
+    <form accept-charset="UTF-8" action="/messages" method="post">
+      Username<input id="user" name="message[user]" value="" />
+      Body<input id="body" name="message[body]" value="" />
+      <button id="submit" name="submit">Submit</button>
+    </form>
+  </body>
+  <script>
+  function fetchMessages() {
+    fetch("/messages")
+    .then(function(info) {
+      info.json().then(data => console.log(data))
+    })
+  }
+  let messageBox = document.getElementById('messages');
+  
+  setInterval(() => {
+    fetchMessages()
+  },2000);
+  
+  let userInput = document.getElementById('user');
+  let bodyInput = document.getElementById('body');
+  let submit = document.getElementById('submit');
+  submit.addEventListener('click', postData);
+  
+  function postData() {
+    fetch("/messages", {
+      method: "post",
+      body: JSON.stringify({
+        user: userInput.value,
+        body: bodyInput.value
+      })
+    })
+    // .then(function(info) {
+    // info.json().then(data => console.log(data))
+    // })
+  }
+</script>
+</html>

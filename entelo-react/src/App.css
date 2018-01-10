@@ -1,0 +1,9 @@
+.App {
+  text-align: left;
+  padding: 40px 80px;
+}
+
+.App-searchBar {
+  width: 500px;
+  font-size: 1.17em;
+}

@@ -1,0 +1,26 @@
+.ProfileCard {
+  border: 1px solid #DDD;
+  padding: 15px;
+  max-width: 500px;
+  position: relative;
+}
+
+.ProfileCard-name {
+  padding-left: 90px;
+  margin: 0 0 5px;
+}
+
+.ProfileCard-location, .ProfileCard-position {
+  padding-left: 90px;
+  margin: 0;
+  text-size: 10px;
+}
+
+.ProfileCard-image {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 75px;
+  height: 75px;
+  border-radius: 50%;
+}
