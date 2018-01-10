@@ -12,7 +12,7 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
     if @message.save
       @messages = Message.all
-      render :index
+      render json: @messages
     else
       render @message.errors.full_messages
     end
