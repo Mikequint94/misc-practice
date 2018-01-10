@@ -14,25 +14,30 @@
       <button id="submit" name="submit">Submit</button>
   </body>
   <script>
+  let displayed = new Set();
   function fetchMessages() {
-    let messages = [];
-    messageBox.innerHTML = "";
+    // messageBox.innerHTML = "";
     fetch("/messages")
     .then((info) => {
       info.json().then(data => data.forEach((message) => {
-        let node = document.createElement("P")
-        let bold = document.createElement("B");
-        let t1 = document.createTextNode(message.user +" : ");
-        let t2 = document.createTextNode(message.body);
-        bold.appendChild(t1);
-        node.appendChild(bold);
-        node.appendChild(t2);
-        messageBox.appendChild(node);
+        if (!displayed.has(message.id)) {
+          displayed.add(message.id);
+          console.log(displayed);
+          let node = document.createElement("P")
+          let bold = document.createElement("B");
+          let t1 = document.createTextNode(message.user +" : ");
+          let t2 = document.createTextNode(message.body);
+          bold.appendChild(t1);
+          node.appendChild(bold);
+          node.appendChild(t2);
+          messageBox.appendChild(node);
+        }
       }
       ));
     })
   }
   let messageBox = document.getElementById('messages');
+  fetchMessages()
   
   setInterval(() => {
     fetchMessages()
@@ -58,6 +63,7 @@
     }).then(() => {
         bodyInput.value = "";
         userInput.value = "";
+        fetchMessages();
     });
   }
 </script>
