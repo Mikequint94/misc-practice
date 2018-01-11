@@ -40,7 +40,11 @@
   let walk = 100;
   
   function shadow(e) {
-    walk = walk + 5;
+    if (walk < 500) {
+      walk = walk + 5;
+    } else {
+      walk = walk - 500;
+    }
     const width = hero.offsetWidth;
     const height = hero.offsetHeight;
     
