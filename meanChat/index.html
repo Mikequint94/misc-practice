@@ -17,7 +17,7 @@
       </form>
     </div>
     <div id="online">
-      <h3>Current Users Online: </h3>
+      <h3 id="numUsers">Current Users Online: </h3>
       <ul id="users"></ul>
     </div>
   </body>
@@ -25,6 +25,7 @@
   <script>
   let msgBox = document.getElementById('messages');
   let onlineUsers = document.getElementById('users');
+  let numUsers = document.getElementById('numUsers');
   let input = document.getElementById('m');
   let user = null;
   let typing = new Set();
@@ -61,12 +62,17 @@
       msgBox.append(newMsg);
       window.scrollTo(0, msgBox.scrollHeight);
     });
-    socket.on('new user', function(msg){
-      console.log(msg);
-      let newUser = document.createElement("li");
-      let user = document.createTextNode(msg);
-      newUser.appendChild(user)
-      onlineUsers.append(newUser);
+    socket.on('all users', function(usernames){
+      console.log(usernames);
+      // usernames.forEach(username) => {
+      //   let newUser = document.createElement("li");
+      //   let user = document.createTextNode(username);
+      //   newUser.appendChild(user)
+      //   onlineUsers.append(newUser);
+      // }
+    });
+    socket.on('num users', function(num){
+      numUsers.innerHTML = `Current Users Online: ${num}`;
     });
     socket.on('typing', function(msg){
       let sliced = msg.slice(0,-10);

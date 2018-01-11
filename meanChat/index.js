@@ -9,9 +9,12 @@ var port = process.env.PORT || 3000;
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
+let people = {};
 
 io.on('connection', function(socket){
-  console.log(io.engine.clientsCount/2);
+  io.emit('num users', io.engine.clientsCount/2);
+  // console.log(Object.values(people));
+  io.emit('all users', Object.values(people));
   let user = null;
   socket.on('chat message', function(msg){
     io.emit('chat message', user + " : " + msg);
@@ -19,8 +22,9 @@ io.on('connection', function(socket){
 
   socket.on('set user', function(msg){
     user = msg;
+    people[socket.id] = user;
+    io.emit('all users', Object.values(people));
     io.emit('chat message', user + " has joined the chat!");
-    io.emit('new user', user);
   });
 
   socket.on('typing', function(typer){
@@ -32,6 +36,7 @@ io.on('connection', function(socket){
   });
 
   socket.on('disconnect', function(){
+    delete people[socket.id];
     if (user) {
       io.emit('chat message', user + " has left the chat!");
     }
