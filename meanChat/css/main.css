@@ -11,9 +11,12 @@ body {
 #messages li:nth-child(odd) { background: #d4ffa1; }
 #users li { list-style: none; margin: 5px 10px; background: #94d3ff; padding: 5px 10px; }
 #users li:nth-child(odd) { background: #a1c3ff; }
-#wrapper {overflow: auto; margin-bottom: 50px; display: flex; flex-direction: column-reverse;}
-#chat {float: left; width: 70%}
+#wrapper {margin-bottom: 50px; display: flex; flex-direction: column-reverse;}
+#left {float: left; width: 70%; height: 100vh;}
+#chat.no-vid {height: 100vh; overflow-y: scroll;}
+#chat.vid {height: 33vh; overflow-y: scroll;}
 #online {background: #b0f5f5; float: left; width: 30%; height: 100vh}
+#left #vid-box video {width: -webkit-fill-available; height: 66vh;}
 @media screen and (max-width: 480px) {
   body {
     font: 28px Helvetica, Arial;

@@ -7,25 +7,19 @@
   </head>
 
   <body>
-    <div id="chat">
-      <h2 id="title">Set Username Below to Start</h2>
-      <div id="wrapper">
-        <ul id="messages"></ul>
-      </div>
-
+    <div id="left">
       <div id="vid-box"></div>
-      <!-- <form name="loginForm" id="login" action="#" onsubmit="return login(this);">
-        <input type="text" name="username" id="username" placeholder="Pick a username!" />
-        <input type="submit" name="login_submit" value="Log In">
-      </form>
-      <form name="callForm" id="call" action="#" onsubmit="return makeCall(this);">
-    	<input type="text" name="number" placeholder="Enter user to dial!" />
-    	<input type="submit" value="Call"/>
-      </form> -->
+      <div class="no-vid" id="chat">
+        <h2 id="title">Set Username Below to Start</h2>
+        <div id="wrapper">
+          <ul id="messages"></ul>
+        </div>
 
-      <form id = "form" action="">
-        <input id="m" autocomplete="off" onkeyup="isTyping()"/><button id="button">Set Username</button>
-      </form>
+
+        <form id = "form" action="">
+          <input id="m" autocomplete="off" onkeyup="isTyping()"/><button id="button">Set Username</button>
+        </form>
+      </div>
     </div>
     <div id="online">
       <h3 id="numUsers">Current Users: </h3>
@@ -42,11 +36,18 @@
   	    number        : username || "Anonymous", // listen on username line else Anonymous
   	    publish_key   : 'pub-c-b2400040-4d8f-489f-8732-10e7d84881ce',
   	    subscribe_key : 'sub-c-315c4f36-f6a8-11e7-acf8-26f7716e5467',
+        ssl : (('https:' == document.location.protocol) ? true : false)
   	});
   	phone.ready(function(){ console.log("logged in", username); });
   	phone.receive(function(session){
-  	    session.connected(function(session) { video_out.appendChild(session.video); });
-  	    session.ended(function(session) { video_out.innerHTML=''; });
+  	    session.connected(function(session) {
+          chatBox.className="vid";
+          video_out.appendChild(session.video);
+        });
+  	    session.ended(function(session) {
+          video_out.innerHTML='';
+          chatBox.className="no-vid";
+        });
   	});
   	return false; 	// So the form does not submit.
   }
@@ -56,6 +57,7 @@
   	return false;
   }
 
+  let chatBox = document.getElementById('chat');
   let msgBox = document.getElementById('messages');
   let onlineUsers = document.getElementById('users');
   let numUsers = document.getElementById('numUsers');
@@ -74,27 +76,26 @@
   $(function () {
     var socket = io();
     $('form').submit(function(){
-      if (user) {
+      if (user && input.value.length > 0) {
       socket.emit('chat message', input.value);
       socket.emit('stoptyping', user);
       input.value = '';
-      return false;
-    } else {
+    } else if (input.value.length > 0){
       login(input.value);
       socket.emit('set user', input.value);
       document.getElementById('title').innerHTML = "";
       document.getElementById('button').innerHTML = "Send";
       user = input.value;
       input.value = '';
-      return false;
     }
+    return false;
     });
     socket.on('chat message', function(msg){
       let newMsg = document.createElement("li");
       let txt = document.createTextNode(msg);
       newMsg.appendChild(txt)
       msgBox.append(newMsg);
-      window.scrollTo(0, msgBox.scrollHeight);
+      chatBox.scrollTo(0, msgBox.scrollHeight);
     });
     socket.on('all users', function(usernames){
       numUsers.innerHTML = `Current Users: ${usernames.length}`;
