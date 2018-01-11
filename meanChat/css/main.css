@@ -17,6 +17,7 @@ body {
 #chat.vid {height: 33vh; overflow-y: scroll;}
 #online {background: #b0f5f5; float: left; width: 30%; height: 100vh}
 #left #vid-box video {width: -webkit-fill-available; height: 66vh;}
+
 @media screen and (max-width: 480px) {
   body {
     font: 28px Helvetica, Arial;
