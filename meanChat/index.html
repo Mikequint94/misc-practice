@@ -5,34 +5,38 @@
     <link rel="stylesheet" href="/css/main.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
-  <script src="/socket.io/socket.io.js"></script>
-  <script>
-    var socket = io();
-  </script>
-  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+
   <body>
-    <h2 id="title">Set Username Below to Start</h2>
-    <div id="wrapper">
-    <ul id="messages"></ul>
+    <div id="chat">
+      <h2 id="title">Set Username Below to Start</h2>
+      <div id="wrapper">
+        <ul id="messages"></ul>
+      </div>
+      <form id = "form" action="">
+        <input id="m" autocomplete="off" onkeyup="isTyping()"/><button id="button">Set Username</button>
+      </form>
     </div>
-    <form id = "form" action="">
-      <input id="m" autocomplete="off" onkeyup="isTyping()"/><button id="button">Set Username</button>
-    </form>
+    <div id="online">
+      <h3>Current Users Online: </h3>
+      <ul id="users"></ul>
+    </div>
   </body>
+  <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script>
   let msgBox = document.getElementById('messages');
+  let onlineUsers = document.getElementById('users');
   let input = document.getElementById('m');
   let user = null;
   let typing = new Set();
-  
+
   function isTyping() {
     if (input.value.length > 0 && user) {
-      socket.emit('typing', user)      
+      socket.emit('typing', user)
     } else {
       socket.emit('stoptyping', user);
     }
   };
-  
+
   $(function () {
     var socket = io();
     $('form').submit(function(){
@@ -57,6 +61,13 @@
       msgBox.append(newMsg);
       window.scrollTo(0, msgBox.scrollHeight);
     });
+    socket.on('new user', function(msg){
+      console.log(msg);
+      let newUser = document.createElement("li");
+      let user = document.createTextNode(msg);
+      newUser.appendChild(user)
+      onlineUsers.append(newUser);
+    });
     socket.on('typing', function(msg){
       let sliced = msg.slice(0,-10);
       if (!typing.has(sliced) && user !== sliced) {
@@ -76,5 +87,9 @@
       }
     });
   });
+  </script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    var socket = io();
   </script>
 </html>
