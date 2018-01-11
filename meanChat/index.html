@@ -12,6 +12,17 @@
       <div id="wrapper">
         <ul id="messages"></ul>
       </div>
+
+      <div id="vid-box"></div>
+      <!-- <form name="loginForm" id="login" action="#" onsubmit="return login(this);">
+        <input type="text" name="username" id="username" placeholder="Pick a username!" />
+        <input type="submit" name="login_submit" value="Log In">
+      </form>
+      <form name="callForm" id="call" action="#" onsubmit="return makeCall(this);">
+    	<input type="text" name="number" placeholder="Enter user to dial!" />
+    	<input type="submit" value="Call"/>
+      </form> -->
+
       <form id = "form" action="">
         <input id="m" autocomplete="off" onkeyup="isTyping()"/><button id="button">Set Username</button>
       </form>
@@ -22,7 +33,29 @@
     </div>
   </body>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
+  <script src="https://cdn.pubnub.com/pubnub-3.7.14.min.js"></script>
+  <script src="https://cdn.pubnub.com/webrtc/webrtc.js"></script>
   <script>
+  let video_out = document.getElementById("vid-box");
+  function login(username) {
+  	let phone = window.phone = PHONE({
+  	    number        : username || "Anonymous", // listen on username line else Anonymous
+  	    publish_key   : 'pub-c-b2400040-4d8f-489f-8732-10e7d84881ce',
+  	    subscribe_key : 'sub-c-315c4f36-f6a8-11e7-acf8-26f7716e5467',
+  	});
+  	phone.ready(function(){ console.log("logged in", username); });
+  	phone.receive(function(session){
+  	    session.connected(function(session) { video_out.appendChild(session.video); });
+  	    session.ended(function(session) { video_out.innerHTML=''; });
+  	});
+  	return false; 	// So the form does not submit.
+  }
+  function makeCall(username){
+  	if (!window.phone) alert("You must login first!");
+  	else phone.dial(username);
+  	return false;
+  }
+
   let msgBox = document.getElementById('messages');
   let onlineUsers = document.getElementById('users');
   let numUsers = document.getElementById('numUsers');
@@ -47,6 +80,7 @@
       input.value = '';
       return false;
     } else {
+      login(input.value);
       socket.emit('set user', input.value);
       document.getElementById('title').innerHTML = "";
       document.getElementById('button').innerHTML = "Send";
@@ -67,7 +101,10 @@
       onlineUsers.innerHTML = "";
       usernames.map((username)=> {
           let newUser = document.createElement("li");
-          let user = document.createTextNode(username);
+          newUser.onclick = () => {
+            makeCall(username);
+          };
+          let user = document.createTextNode(username + "  🎥");
           newUser.appendChild(user)
           onlineUsers.append(newUser);
       })
