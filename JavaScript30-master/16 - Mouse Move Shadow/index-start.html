@@ -38,12 +38,17 @@
   const hero = document.querySelector('.hero');
   const txt = hero.querySelector('h1');
   let walk = 100;
+  let increasing = true;
   
   function shadow(e) {
-    if (walk < 500) {
+    
+    if (increasing) {
       walk = walk + 5;
     } else {
-      walk = walk - 500;
+      walk = walk - 5;
+    }
+    if (walk > 500 || walk < -500) {
+      increasing = !increasing;
     }
     const width = hero.offsetWidth;
     const height = hero.offsetHeight;
