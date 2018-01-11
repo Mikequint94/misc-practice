@@ -1,17 +1,19 @@
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
   font: 13px Helvetica, Arial;
-  background-color: lightblue;
+  background-color: #5febef;
 }
 form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
 form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+form button { width: 9%; background: #5febef; border: none; padding: 10px; }
 #messages { list-style-type: none; margin: 0; padding: 0; }
-#messages li { padding: 5px 10px; }
-#messages li:nth-child(odd) { background: #eee; }
+#messages li { background: springgreen; padding: 5px 10px; }
+#messages li:nth-child(odd) { background: #d4ffa1; }
+#users li { list-style: none; margin: 5px 10px; background: #94d3ff; padding: 5px 10px; }
+#users li:nth-child(odd) { background: #a1c3ff; }
 #wrapper {overflow: auto; margin-bottom: 50px; display: flex; flex-direction: column-reverse;}
 #chat {float: left; width: 70%}
-#online {background: lime; float: left; width: 30%; height: 100vh}
+#online {background: #b0f5f5; float: left; width: 30%; height: 100vh}
 @media screen and (max-width: 480px) {
   body {
     font: 28px Helvetica, Arial;

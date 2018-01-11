@@ -17,7 +17,7 @@
       </form>
     </div>
     <div id="online">
-      <h3 id="numUsers">Current Users Online: </h3>
+      <h3 id="numUsers">Current Users: </h3>
       <ul id="users"></ul>
     </div>
   </body>
@@ -63,16 +63,14 @@
       window.scrollTo(0, msgBox.scrollHeight);
     });
     socket.on('all users', function(usernames){
-      console.log(usernames);
-      // usernames.forEach(username) => {
-      //   let newUser = document.createElement("li");
-      //   let user = document.createTextNode(username);
-      //   newUser.appendChild(user)
-      //   onlineUsers.append(newUser);
-      // }
-    });
-    socket.on('num users', function(num){
-      numUsers.innerHTML = `Current Users Online: ${num}`;
+      numUsers.innerHTML = `Current Users: ${usernames.length}`;
+      onlineUsers.innerHTML = "";
+      usernames.map((username)=> {
+          let newUser = document.createElement("li");
+          let user = document.createTextNode(username);
+          newUser.appendChild(user)
+          onlineUsers.append(newUser);
+      })
     });
     socket.on('typing', function(msg){
       let sliced = msg.slice(0,-10);

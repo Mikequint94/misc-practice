@@ -12,8 +12,6 @@ app.get('/', function(req, res){
 let people = {};
 
 io.on('connection', function(socket){
-  io.emit('num users', io.engine.clientsCount/2);
-  // console.log(Object.values(people));
   io.emit('all users', Object.values(people));
   let user = null;
   socket.on('chat message', function(msg){
@@ -37,6 +35,7 @@ io.on('connection', function(socket){
 
   socket.on('disconnect', function(){
     delete people[socket.id];
+    io.emit('all users', Object.values(people));
     if (user) {
       io.emit('chat message', user + " has left the chat!");
     }
