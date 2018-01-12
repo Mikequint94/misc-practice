@@ -8,7 +8,9 @@
 
   <body>
     <div id="left">
-      <div id="vid-box"></div>
+      <div id="vid-box">
+        <button id="hangup" class="hidden" onclick="end()">Hang up</button>
+      </div>
       <div id="vid-thumb"></div>
       <div class="no-vid" id="chat">
         <h2 id="title">Set Username Below to Start</h2>
@@ -34,6 +36,7 @@
   <script>
   let video_out = document.getElementById("vid-box");
   let vid_thumb = document.getElementById("vid-thumb");
+  let hangup_button = document.getElementById("hangup");
   function login(username) {
   	let phone = window.phone = PHONE({
   	    number        : username || "Anonymous", // listen on username line else Anonymous
@@ -50,10 +53,12 @@
   	    session.connected(function(session) {
           chatBox.className="vid";
           video_out.appendChild(session.video);
+          hangup_button.className="show";
         });
   	    session.ended(function(session) {
           video_out.innerHTML='';
           vid_thumb.innerHTML='';
+          hangup_button.className="hidden";
           chatBox.className="no-vid";
         });
   	});
@@ -63,6 +68,10 @@
   	if (!window.phone) alert("You must login first!");
   	else phone.dial(username);
   	return false;
+  }
+  function end(){
+    console.log("hanging up");
+  	ctrl.hangup();
   }
 
   let chatBox = document.getElementById('chat');

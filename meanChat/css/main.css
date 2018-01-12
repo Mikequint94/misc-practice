@@ -19,6 +19,11 @@ body {
 #left #vid-box video {width: -webkit-fill-available; height: 66vh;}
 #left #vid-thumb {position: absolute; top: 10px; left: 10px;}
 #left #vid-thumb video {width: 20vw; height: 20vh;}
+button.show {
+  width: 50px; color: black; background: #b0f5f5;
+  position: relative; top: 66vh; left: calc(100% - 100px);
+  z-index: 1;}
+button.hidden{display: none;}
 
 @media screen and (max-width: 480px) {
   body {
