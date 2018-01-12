@@ -43,3 +43,93 @@ How was your transition from Hack Reactor to JPMC?
 Is there mentoring available?
 What kind of projects can I expect to work on?
 Insight on contract position and how it differs or can lead to full time?
+
+// interview
+
+var siteData = {
+    users: [
+        {
+            id: 68237946,
+            birthMonth: 5,
+            vip: "true"
+        },
+        {
+            id: 23949894,
+            birthMonth: 2,
+            vip: "false"
+        },
+        {
+            id: 65524624,
+            birthMonth: 11,
+            vip: "false"
+        },
+        {
+            id: 16728547,
+            birthMonth: 9,
+            vip: "true"
+        },
+        ...
+    ]
+}
+
+//Returns an array of all eligible user ids
+//Eligibility rules:
+// 1) User was born in the current month
+// 2) User has vip account status
+function findEligibleUsers(data, currentMonth) {
+
+    let filteredUsers = Object.values(data).filter((user) => (
+        user.birthMonth === currentMonth && user.vip === "true"
+    ))
+    return filteredUsers;
+}
+
+findEligibleUsers(siteData, 11)
+
+
+
+
+
+
+
+
+
+
+//HTML
+
+<body>
+    ...
+    <div class="button important" id="activateButton"> Activate your account </div>
+</body>
+
+//CSS
+
+div .button {
+    font-size: 9px;
+    padding: 5px;
+    color: #0b97c4;
+}
+
+//JS
+
+let activateButton = document.getElementById('activateButton');
+activateButton.addEventListener('click', submitActivation);'
+
+
+
+
+
+function getVIPsFromServer() { /* Asynchronous method which retrieves list of VIPs. Do not implement this method */ }
+
+function isUserVIP(userId) {
+    getVIPFromServer()
+        .then(array => array.indexOf(userID) !== -1)
+}
+
+
+...
+var userId = "55555555"
+
+if(isUserVIP(userId)) {
+    $('.userBadge').addClass('vip');
+}
