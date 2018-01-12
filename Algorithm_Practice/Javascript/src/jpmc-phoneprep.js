@@ -10,12 +10,13 @@ const customers = [
 
 function filterCustomers() {
   let filtered = customers.filter((customer) => (
-    customer.month === "september"// && customer.last_purchase > new Date(2017,3,3)
+    customer.month === "september" && customer.last_purchase > new Date(2017,3,3)
   ));
   console.log(filtered.map((el) => el.id));
 }
 filterCustomers();
-
+//to get todays date, today = new Date().  One year ago = today.setFullYear(today.getFullYear() - 1)
+// maybe JSON.parse() to get into JS object or array
 // Given the HTML and CSS add an event to the div using JS – a quick event
 
 function modifyText() {
@@ -23,7 +24,7 @@ function modifyText() {
     t2.firstChild.nodeValue = "three";
 }
 
-let el = document.getElementById("outside");
+let el = document.getElementById("outside"); // or querySelector(".class")
 el.addEventListener("click", modifyText);
 //also keydown, mouseover, etc.
 
@@ -35,3 +36,10 @@ fetch("/messages")
     .then(function(info) {
       info.json().then(data => console.log(data));
     });
+
+Why is JPMC hiring?  What problems are they currently facing?
+What do you like about working there?
+How was your transition from Hack Reactor to JPMC?
+Is there mentoring available?
+What kind of projects can I expect to work on?
+Insight on contract position and how it differs or can lead to full time?
