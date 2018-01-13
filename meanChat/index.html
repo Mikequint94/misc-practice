@@ -6,10 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   </head>
 
-  <body>
+  <body OnLoad="document.form.m.focus();">
     <div id="left">
       <div id="vid-box">
-        <button id="hangup" class="hidden" onclick="end()">Hang up</button>
+        <!-- <button id="hangup" class="hidden" onclick="end()">Hang up</button> -->
       </div>
       <div id="vid-thumb"></div>
       <div class="no-vid" id="chat">
@@ -19,8 +19,8 @@
         </div>
 
 
-        <form id = "form" action="">
-          <input id="m" autocomplete="off" onkeyup="isTyping()"/><button id="button">Set Username</button>
+        <form id = "form" name="form" action="">
+          <input id="m" name="m" autocomplete="off" onkeyup="isTyping()"/><button id="button">Set Username</button>
         </form>
       </div>
     </div>
@@ -56,14 +56,19 @@
         }
           session.connected(function(session) {
             chatBox.className="vid";
+            let hangupButton = document.createElement('button');
+            hangupButton.innerHTML = 'Hang Up';
+            hangupButton.onclick = end;
+            hangupButton.id = "show";
+            // session.video.appendChild(hangupButton);
 
             video_out.appendChild(session.video);
-            hangup_button.className="show";
+            // hangup_button.className="show";
           });
           session.ended(function(session) {
             ctrl.getVideoElement(session.number).remove();
             vid_thumb.innerHTML='';
-            hangup_button.className="hidden";
+            // hangup_button.className="hidden";
             chatBox.className="no-vid";
             selfVisible = false;
           });
