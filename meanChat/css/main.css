@@ -12,10 +12,11 @@ body {
 #users li { list-style: none; margin: 5px 10px; background: #94d3ff; padding: 5px 10px; }
 #users li:nth-child(odd) { background: #a1c3ff; }
 #wrapper {margin-bottom: 50px; display: flex; flex-direction: column-reverse;}
-#left {float: left; width: 70%; height: 100vh;}
+#left {float: left; width: 85%; height: 100vh;}
 #chat.no-vid {height: 100vh; overflow-y: scroll;}
 #chat.vid {height: 33vh; overflow-y: scroll;}
-#online {background: #b0f5f5; float: left; width: 30%; height: 100vh}
+#online {background: #b0f5f5; float: left; width: 15%; height: 100vh}
+#vid-box {display: flex;}
 #left #vid-box video {width: -webkit-fill-available; height: 66vh;}
 #left #vid-thumb {position: absolute; top: 10px; left: 10px;}
 #left #vid-thumb video {width: 20vw; height: 20vh;}
@@ -23,7 +24,20 @@ button.show {
   width: 50px; color: black; background: #b0f5f5;
   position: relative; top: 66vh; left: calc(100% - 100px);
   z-index: 1;}
-button.hidden{display: none;}
+button.hidden{visibility: hidden;}
+
+@media screen and (max-width: 1150px) {
+  #left {width: 80%}
+  #online {width: 20%}
+}
+@media screen and (max-width: 800px) {
+  #left {width: 75%}
+  #online {width: 25%}
+}
+@media screen and (max-width: 600px) {
+  #left {width: 70%}
+  #online {width: 30%}
+}
 
 @media screen and (max-width: 480px) {
   body {
