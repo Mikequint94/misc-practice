@@ -11,6 +11,7 @@ body {
 #messages li:nth-child(odd) { background: #d4ffa1; }
 #users li { list-style: none; margin: 5px 10px; background: #94d3ff; padding: 5px 10px; }
 #users li:nth-child(odd) { background: #a1c3ff; }
+#users li:hover { cursor: pointer;}
 #wrapper {margin-bottom: 50px; display: flex; flex-direction: column-reverse;}
 #left {float: left; width: 85%; height: 100vh;}
 #chat.no-vid {height: 100vh; overflow-y: scroll;}
@@ -21,8 +22,8 @@ body {
 #left #vid-thumb {position: absolute; top: 10px; left: 10px;}
 #left #vid-thumb video {width: 20vw; height: 20vh;}
 button.show {
-  width: 50px; color: black; background: #b0f5f5;
-  position: relative; top: 66vh; left: calc(100% - 100px);
+  width: 40px; height: 40px; color: black; background: #b0f5f5;
+  position: relative; top: 55vh; left: 50pxs;
   z-index: 1;}
 button.hidden{visibility: hidden;}
 
