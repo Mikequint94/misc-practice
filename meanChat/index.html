@@ -63,12 +63,11 @@
             video_out.append(hangupButton);
 
             video_out.appendChild(session.video);
-            // hangup_button.className="show";
           });
           session.ended(function(session) {
             ctrl.getVideoElement(session.number).remove();
+            console.log(session);
             vid_thumb.innerHTML='';
-            // hangup_button.className="hidden";
             chatBox.className="no-vid";
             selfVisible = false;
           });
@@ -165,6 +164,6 @@
   </script>
   <script src="/socket.io/socket.io.js"></script>
   <script>
-    var socket = io();
+    let socket = io();
   </script>
 </html>
