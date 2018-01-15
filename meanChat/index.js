@@ -1,6 +1,7 @@
 let app = require('express')();
 let express = require("express");
 app.use("/css",express.static(__dirname + "/css"));
+app.use("/assets",express.static(__dirname + "/assets"));
 let http = require('http').Server(app);
 let io = require('socket.io')(http);
 

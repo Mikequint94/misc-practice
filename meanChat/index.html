@@ -29,6 +29,10 @@
       <ul id="users"></ul>
     </div>
   </body>
+  <audio data-key="chat" src="assets/pling.mp3"></audio>
+  <audio data-key="join" src="assets/newuser.mp3"></audio>
+  <audio data-key="leave" src="assets/userleave.mp3"></audio>
+  <audio data-key="typing" src="assets/istyping.mp3"></audio>
   <script src="https://code.jquery.com/jquery-1.11.1.js"></script>
   <script src="https://cdn.pubnub.com/pubnub-3.7.14.min.js"></script>
   <script src="https://cdn.pubnub.com/webrtc/webrtc.js"></script>
@@ -129,6 +133,20 @@
         newMsg.appendChild(txt)
         msgBox.append(newMsg);
         chatBox.scrollTo(0, msgBox.scrollHeight);
+        let sliced = msg.slice(msg.length-16, msg.length);
+        console.log(sliced);
+        let audio;
+        if (sliced === "joined the chat!") {
+          audio = document.querySelector(`audio[data-key="join"]`);
+        } else if (sliced == "s left the chat!") {
+          audio = document.querySelector(`audio[data-key="leave"]`);
+        } else {
+          audio = document.querySelector(`audio[data-key="chat"]`);
+        }
+        if(!audio) return;
+        // console.log(audio);
+        audio.currentTime = 0;
+        audio.play();
       });
       socket.on('all users', function(usernames){
         numUsers.innerHTML = `Current Users: ${usernames.length}`;
@@ -148,16 +166,20 @@
         if (!typing.has(sliced) && user !== sliced) {
           typing.add(sliced);
           let newMsg = document.createElement("li");
-          newMsg.id = sliced;
+          newMsg.id = `user-${sliced}`;
           let txt = document.createTextNode(msg);
           newMsg.appendChild(txt)
           msgBox.append(newMsg);
+          const audio = document.querySelector(`audio[data-key="typing"]`);
+          if(!audio) return;
+          audio.currentTime = 0;
+          audio.play();
         }
       });
       socket.on('stoptyping', function(msg){
         if (typing.has(msg)) {
           typing.delete(msg);
-          let els = document.querySelectorAll(`#${msg}`);
+          let els = document.querySelectorAll(`#user-${msg}`);
           els.forEach(el => msgBox.removeChild(el));
         }
       });
