@@ -60,6 +60,7 @@
             hangupButton.innerHTML = 'Hang Up';
             hangupButton.onclick = () => end.apply(hangupButton);
             hangupButton.className = "show";
+            hangupButton.id = session.number;
             video_out.append(hangupButton);
 
             video_out.appendChild(session.video);
@@ -68,6 +69,7 @@
             ctrl.getVideoElement(session.number).remove();
             console.log(session);
             vid_thumb.innerHTML='';
+            document.getElementById(`${session.number}`).remove();
             chatBox.className="no-vid";
             selfVisible = false;
           });
@@ -84,7 +86,7 @@
       }
     }
     function end(){
-      this.remove();
+      // this.remove();
       console.log("hanging up");
       ctrl.hangup();
     }

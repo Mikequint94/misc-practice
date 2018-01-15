@@ -1,10 +1,10 @@
-var app = require('express')();
-var express = require("express");
+let app = require('express')();
+let express = require("express");
 app.use("/css",express.static(__dirname + "/css"));
-var http = require('http').Server(app);
-var io = require('socket.io')(http);
+let http = require('http').Server(app);
+let io = require('socket.io')(http);
 
-var port = process.env.PORT || 3000;
+let port = process.env.PORT || 3000;
 
 app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
