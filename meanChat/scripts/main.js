@@ -4,10 +4,10 @@
   // if dot in name, fix
   // emoji keyboard
     let socket = io();
-    let video_out = document.getElementById("vid-box");
-    let vid_thumb = document.getElementById("vid-thumb");
+    let videoOut = document.getElementById("vid-box");
+    let vidThumb = document.getElementById("vid-thumb");
     let selfVisible = false;
-    // let hangup_button = document.getElementById("hangup");
+
     function login(username) {
       let phone = window.phone = PHONE({
           number        : username || "Anonymous", // listen on username line else Anonymous
@@ -22,24 +22,24 @@
       ctrl.receive(function(session){
         if (!selfVisible) {
           selfVisible = true;
-          ctrl.addLocalStream(vid_thumb);
+          ctrl.addLocalStream(vidThumb);
         }
-          session.connected(function(session) {
+          session.connected(function(sesh) {
             chatBox.className="vid";
             let hangupButton = document.createElement('button');
             hangupButton.innerHTML = 'Hang Up';
             hangupButton.onclick = () => end.apply(hangupButton);
             hangupButton.className = "show";
-            hangupButton.id = session.number;
-            video_out.append(hangupButton);
+            hangupButton.id = sesh.number;
+            videoOut.append(hangupButton);
 
-            video_out.appendChild(session.video);
+            videoOut.appendChild(sesh.video);
           });
-          session.ended(function(session) {
-            ctrl.getVideoElement(session.number).remove();
-            console.log(session);
-            vid_thumb.innerHTML='';
-            document.getElementById(`${session.number}`).remove();
+          session.ended(function(sesh) {
+            ctrl.getVideoElement(sesh.number).remove();
+            console.log(sesh);
+            vidThumb.innerHTML='';
+            document.getElementById(`${sesh.number}`).remove();
             chatBox.className="no-vid";
             selfVisible = false;
           });
@@ -52,7 +52,7 @@
         else phone.dial(username);
         return false;
       } else {
-        alert("You can't call yourself lol")
+        alert("You can't call yourself lol");
       }
     }
     function end(){
@@ -70,14 +70,13 @@
 
     function isTyping() {
       if (input.value.length > 0 && user) {
-        socket.emit('typing', user)
+        socket.emit('typing', user);
       } else {
         socket.emit('stoptyping', user);
       }
-    };
+    }
 
     $(function () {
-      var socket = io();
       $('form').submit(function(){
         if (user && input.value.length > 0) {
         socket.emit('chat message', input.value);
@@ -96,21 +95,19 @@
       socket.on('chat message', function(msg){
         let newMsg = document.createElement("li");
         let txt = document.createTextNode(msg);
-        newMsg.appendChild(txt)
+        newMsg.appendChild(txt);
         msgBox.append(newMsg);
         chatBox.scrollTo(0, msgBox.scrollHeight);
         let sliced = msg.slice(msg.length-16, msg.length);
-        // console.log(sliced);
         let audio;
         if (sliced === "joined the chat!") {
           audio = document.querySelector(`audio[data-key="join"]`);
-        } else if (sliced == "s left the chat!") {
+        } else if (sliced === "s left the chat!") {
           audio = document.querySelector(`audio[data-key="leave"]`);
         } else {
           audio = document.querySelector(`audio[data-key="chat"]`);
         }
         if(!audio) return;
-        // console.log(audio);
         audio.currentTime = 0;
         audio.play();
       });
@@ -122,10 +119,10 @@
             newUser.onclick = () => {
               makeCall(username);
             };
-            let user = document.createTextNode(username + "  🎥");
-            newUser.appendChild(user)
+            let userNode = document.createTextNode(username + "  🎥");
+            newUser.appendChild(userNode);
             onlineUsers.append(newUser);
-        })
+        });
       });
       socket.on('typing', function(msg){
         let sliced = msg.slice(0,-10);
@@ -134,7 +131,7 @@
           let newMsg = document.createElement("li");
           newMsg.id = `user-${sliced}`;
           let txt = document.createTextNode(msg);
-          newMsg.appendChild(txt)
+          newMsg.appendChild(txt);
           msgBox.append(newMsg);
           const audio = document.querySelector(`audio[data-key="typing"]`);
           if(!audio) return;
