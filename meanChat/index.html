@@ -8,9 +8,7 @@
 
   <body OnLoad="document.form.m.focus();">
     <div id="left">
-      <div id="vid-box">
-        <!-- <button id="hangup" class="hidden" onclick="end()">Hang up</button> -->
-      </div>
+      <div id="vid-box"></div>
       <div id="vid-thumb"></div>
       <div class="no-vid" id="chat">
         <h2 id="title">Set Username Below to Start</h2>
@@ -38,6 +36,14 @@
   <script src="https://cdn.pubnub.com/webrtc/webrtc.js"></script>
   <script src="https://cdn.pubnub.com/webrtc/rtc-controller.js"></script>
   <script>
+
+  // break out script to new file
+  // add assets to main thing
+  // change colors of chat background
+  // dont kill thmb video if multiple people
+  // group chat adds to everyone
+  // if dot in name, fix
+  // emoji keyboard
     let video_out = document.getElementById("vid-box");
     let vid_thumb = document.getElementById("vid-thumb");
     let selfVisible = false;
@@ -134,7 +140,7 @@
         msgBox.append(newMsg);
         chatBox.scrollTo(0, msgBox.scrollHeight);
         let sliced = msg.slice(msg.length-16, msg.length);
-        console.log(sliced);
+        // console.log(sliced);
         let audio;
         if (sliced === "joined the chat!") {
           audio = document.querySelector(`audio[data-key="join"]`);
