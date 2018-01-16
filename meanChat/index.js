@@ -12,34 +12,51 @@ app.get('/', function(req, res){
     res.sendFile(__dirname + '/index.html');
 });
 let people = {};
+let colors = {};
+
+function getRandomColor() {
+  let letters = '0123456789ABCDEF';
+  let color = '#';
+  for (let i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
 
 io.on('connection', function(socket){
-  io.emit('all users', Object.values(people));
+  io.emit('all users', {users: Object.values(people), color: colors});
   let user = null;
-  socket.on('chat message', function(msg){
-    io.emit('chat message', user + " : " + msg);
+
+  socket.on('chat message', function(chatMsg){
+    io.emit('chat message', {msg: user + " : " + chatMsg, color: colors[user]});
   });
 
   socket.on('set user', function(msg){
     user = msg;
     people[socket.id] = user;
-    io.emit('all users', Object.values(people));
-    io.emit('chat message', user + " has joined the chat!");
+    colors[user] = getRandomColor();
+    io.emit('all users', {users: Object.values(people), color: colors});
+    io.emit('chat message', {msg: user + " has joined the chat!", color: colors[user] });
   });
 
   socket.on('typing', function(typer){
-    io.emit('typing', typer + " is typing");
+    io.emit('typing', {msg: typer + " is typing", color: colors[typer]});
   });
 
   socket.on('stoptyping', function(typer){
     io.emit('stoptyping', typer);
   });
 
+  socket.on('colorChange', function(userColor){
+    colors[userColor.user] = userColor.color;
+    io.emit('all users', {users: Object.values(people), color: colors});
+  });
+
   socket.on('disconnect', function(){
     delete people[socket.id];
-    io.emit('all users', Object.values(people));
+    io.emit('all users', {users: Object.values(people), color: colors});
     if (user) {
-      io.emit('chat message', user + " has left the chat!");
+      io.emit('chat message', {msg: user + " has left the chat.", color: colors[user] });
     }
   });
 });

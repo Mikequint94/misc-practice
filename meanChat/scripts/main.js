@@ -1,8 +1,7 @@
   // change colors of chat background
-  // dont kill thmb video if multiple people
-  // group chat adds to everyone
-  // if dot in name, fix
-  // emoji keyboard
+  // dont kill thmb video if multiple people - cant replicate problem in local
+  // group chat adds to everyone - hard
+  // emoji keyboard - hard
     let socket = io();
     let videoOut = document.getElementById("vid-box");
     let vidThumb = document.getElementById("vid-thumb");
@@ -69,6 +68,15 @@
     let user = null;
     let typing = new Set();
 
+    const colorInput = document.getElementById('colorPick');
+    colorInput.addEventListener('change', updateColor);
+
+
+    function updateColor() {
+      socket.emit('colorChange', {user, color: this.value});
+      console.log(this.value);
+    }
+
     function isTyping() {
       if (input.value.length > 0 && user) {
         socket.emit('typing', user);
@@ -93,10 +101,13 @@
       return false;
     }
 
-    socket.on('chat message', function(msg){
+    socket.on('chat message', function(msgObj){
+      console.log(msgObj);
+      let msg = msgObj.msg;
       let newMsg = document.createElement("li");
       let txt = document.createTextNode(msg);
       newMsg.appendChild(txt);
+      newMsg.style=`background: ${msgObj.color}`;
       msgBox.append(newMsg);
       chatBox.scrollTo(0, msgBox.scrollHeight);
       let sliced = msg.slice(msg.length-16, msg.length);
@@ -113,28 +124,35 @@
       audio.play();
     });
     socket.on('all users', function(usernames){
-      numUsers.innerHTML = `Current Users: ${usernames.length}`;
+      // console.log(usernames);
+      if (user) {
+        document.getElementById('colorDiv').className="";
+        colorInput.value = usernames.color[user];
+      }
+      numUsers.innerHTML = `Current Users: ${usernames.users.length}`;
       onlineUsers.innerHTML = "";
-      usernames.map((username)=> {
+      usernames.users.map((username)=> {
           let newUser = document.createElement("li");
           newUser.onclick = () => {
             makeCall(username);
           };
           let userNode = document.createTextNode(username + "  🎥");
           newUser.appendChild(userNode);
+          newUser.style=`background: ${usernames.color[username]}`;
           onlineUsers.append(newUser);
       });
     });
-    socket.on('typing', function(msg){
+    socket.on('typing', function(msgObj){
+      let msg = msgObj.msg;
       let sliced = msg.slice(0,-10);
       sliced = sliced.replace(/[_#.-\s]/g,'0');
-      console.log(sliced);
       if (!typing.has(sliced) && user && user.replace(/[_#.-\s]/g,'0') !== sliced) {
         typing.add(sliced);
         let newMsg = document.createElement("li");
         newMsg.id = `user${sliced}`;
         let txt = document.createTextNode(msg);
         newMsg.appendChild(txt);
+        newMsg.style=`background: ${msgObj.color}`;
         msgBox.append(newMsg);
         const audio = document.querySelector(`audio[data-key="typing"]`);
         if(!audio) return;
