@@ -24,9 +24,9 @@ h2#title.hidden2{display: none;}
 #left #vid-thumb {position: absolute; top: 10px; left: 10px;}
 #left #vid-thumb video {width: 20vw; height: 20vh;}
 button.show {
-  width: 40px; height: 40px; color: black; background: #b0f5f5;
+  width: 100px; height: 35px; color: black; background: #ade1fc;
   position: relative; top: 55vh; left: 50px;
-  z-index: 1;}
+  border-radius: 18px; border: 1px solid #5bc5c7; z-index: 1;}
 button.hidden{visibility: hidden;}
 .hidden{visibility: hidden;}
 @media screen and (max-width: 1150px) {
