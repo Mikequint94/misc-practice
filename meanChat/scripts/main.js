@@ -72,7 +72,7 @@
     function isTyping() {
       if (input.value.length > 0 && user) {
         socket.emit('typing', user);
-      } else {
+      } else if (user){
         socket.emit('stoptyping', user);
       }
     }
@@ -93,74 +93,60 @@
       return false;
     }
 
-    $(function () {
-      // $('form').submit(function(){
-      //   if (user && input.value.length > 0) {
-      //   socket.emit('chat message', input.value);
-      //   socket.emit('stoptyping', user);
-      //   input.value = '';
-      // } else if (input.value.length > 0){
-      //   login(input.value);
-      //   socket.emit('set user', input.value);
-      //   document.getElementById('title').innerHTML = "";
-      //   document.getElementById('button').innerHTML = "Send";
-      //   user = input.value;
-      //   input.value = '';
-      // }
-      // return false;
-      // });
-      socket.on('chat message', function(msg){
+    socket.on('chat message', function(msg){
+      let newMsg = document.createElement("li");
+      let txt = document.createTextNode(msg);
+      newMsg.appendChild(txt);
+      msgBox.append(newMsg);
+      chatBox.scrollTo(0, msgBox.scrollHeight);
+      let sliced = msg.slice(msg.length-16, msg.length);
+      let audio;
+      if (sliced === "joined the chat!") {
+        audio = document.querySelector(`audio[data-key="join"]`);
+      } else if (sliced === "s left the chat!") {
+        audio = document.querySelector(`audio[data-key="leave"]`);
+      } else {
+        audio = document.querySelector(`audio[data-key="chat"]`);
+      }
+      if(!audio) return;
+      audio.currentTime = 0;
+      audio.play();
+    });
+    socket.on('all users', function(usernames){
+      numUsers.innerHTML = `Current Users: ${usernames.length}`;
+      onlineUsers.innerHTML = "";
+      usernames.map((username)=> {
+          let newUser = document.createElement("li");
+          newUser.onclick = () => {
+            makeCall(username);
+          };
+          let userNode = document.createTextNode(username + "  🎥");
+          newUser.appendChild(userNode);
+          onlineUsers.append(newUser);
+      });
+    });
+    socket.on('typing', function(msg){
+      let sliced = msg.slice(0,-10);
+      sliced = sliced.replace(/[_#.-\s]/g,'0');
+      console.log(sliced);
+      if (!typing.has(sliced) && user && user.replace(/[_#.-\s]/g,'0') !== sliced) {
+        typing.add(sliced);
         let newMsg = document.createElement("li");
+        newMsg.id = `user${sliced}`;
         let txt = document.createTextNode(msg);
         newMsg.appendChild(txt);
         msgBox.append(newMsg);
-        chatBox.scrollTo(0, msgBox.scrollHeight);
-        let sliced = msg.slice(msg.length-16, msg.length);
-        let audio;
-        if (sliced === "joined the chat!") {
-          audio = document.querySelector(`audio[data-key="join"]`);
-        } else if (sliced === "s left the chat!") {
-          audio = document.querySelector(`audio[data-key="leave"]`);
-        } else {
-          audio = document.querySelector(`audio[data-key="chat"]`);
-        }
+        const audio = document.querySelector(`audio[data-key="typing"]`);
         if(!audio) return;
         audio.currentTime = 0;
         audio.play();
-      });
-      socket.on('all users', function(usernames){
-        numUsers.innerHTML = `Current Users: ${usernames.length}`;
-        onlineUsers.innerHTML = "";
-        usernames.map((username)=> {
-            let newUser = document.createElement("li");
-            newUser.onclick = () => {
-              makeCall(username);
-            };
-            let userNode = document.createTextNode(username + "  🎥");
-            newUser.appendChild(userNode);
-            onlineUsers.append(newUser);
-        });
-      });
-      socket.on('typing', function(msg){
-        let sliced = msg.slice(0,-10);
-        if (!typing.has(sliced) && user !== sliced) {
-          typing.add(sliced);
-          let newMsg = document.createElement("li");
-          newMsg.id = `user-${sliced}`;
-          let txt = document.createTextNode(msg);
-          newMsg.appendChild(txt);
-          msgBox.append(newMsg);
-          const audio = document.querySelector(`audio[data-key="typing"]`);
-          if(!audio) return;
-          audio.currentTime = 0;
-          audio.play();
-        }
-      });
-      socket.on('stoptyping', function(msg){
-        if (typing.has(msg)) {
-          typing.delete(msg);
-          let els = document.querySelectorAll(`#user-${msg}`);
-          els.forEach(el => msgBox.removeChild(el));
-        }
-      });
+      }
+    });
+    socket.on('stoptyping', function(msg){
+      msg = msg.replace(/[_#.-\s]/g,'0');
+      if (typing.has(msg)) {
+        typing.delete(msg);
+        let els = document.querySelectorAll(`#user${msg}`);
+        els.forEach(el => msgBox.removeChild(el));
+      }
     });
