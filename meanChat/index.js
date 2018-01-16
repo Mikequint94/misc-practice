@@ -9,8 +9,13 @@ let io = require('socket.io')(http);
 let port = process.env.PORT || 3000;
 
 app.get('/', function(req, res){
+  if (req.headers['x-forwarded-proto'] != 'https' && process.env.NODE_ENV === 'production') {
+    res.redirect('https://'+req.hostname+req.url);
+  } else {
     res.sendFile(__dirname + '/index.html');
+  }
 });
+
 let people = {};
 let colors = {};
 const allColors = ['#6EEB83', '#911CFF', '#E4FF1A', '#E8AA14', '#FF5714', '#EA6ED7', '#99FF14' ];
