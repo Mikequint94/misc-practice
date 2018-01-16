@@ -16,8 +16,9 @@
           <ul id="messages"></ul>
         </div>
 
-        <form id = "form" name="form" action="">
-          <input id="m" name="m" autocomplete="off" onkeyup="isTyping()"/><button id="button">Set Username</button>
+        <form id = "form" name="form" onsubmit="return sendMessage();">
+          <input id="m" name="m" autocomplete="off" onkeyup="isTyping()"/>
+          <button id="button">Set Username</button>
         </form>
       </div>
     </div>

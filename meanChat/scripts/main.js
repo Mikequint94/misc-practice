@@ -20,6 +20,7 @@
         console.log("logged in", username);
       });
       ctrl.receive(function(session){
+        console.log(session);
         if (!selfVisible) {
           selfVisible = true;
           ctrl.addLocalStream(vidThumb);
@@ -76,12 +77,11 @@
       }
     }
 
-    $(function () {
-      $('form').submit(function(){
-        if (user && input.value.length > 0) {
-        socket.emit('chat message', input.value);
-        socket.emit('stoptyping', user);
-        input.value = '';
+    function sendMessage() {
+      if (user && input.value.length > 0) {
+      socket.emit('chat message', input.value);
+      socket.emit('stoptyping', user);
+      input.value = '';
       } else if (input.value.length > 0){
         login(input.value);
         socket.emit('set user', input.value);
@@ -91,7 +91,24 @@
         input.value = '';
       }
       return false;
-      });
+    }
+
+    $(function () {
+      // $('form').submit(function(){
+      //   if (user && input.value.length > 0) {
+      //   socket.emit('chat message', input.value);
+      //   socket.emit('stoptyping', user);
+      //   input.value = '';
+      // } else if (input.value.length > 0){
+      //   login(input.value);
+      //   socket.emit('set user', input.value);
+      //   document.getElementById('title').innerHTML = "";
+      //   document.getElementById('button').innerHTML = "Send";
+      //   user = input.value;
+      //   input.value = '';
+      // }
+      // return false;
+      // });
       socket.on('chat message', function(msg){
         let newMsg = document.createElement("li");
         let txt = document.createTextNode(msg);
