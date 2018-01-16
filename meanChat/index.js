@@ -18,11 +18,12 @@ app.get('/', function(req, res){
 
 let people = {};
 let colors = {};
-const allColors = ['#6EEB83', '#911CFF', '#E4FF1A', '#E8AA14', '#FF5714', '#EA6ED7', '#99FF14' ];
+let allColors = ['#6EEB83', '#911CFF', '#E4FF1A', '#E8AA14', '#FF5714', '#EA6ED7', '#99FF14' ];
 function getRandomColor() {
   if (allColors.length > 0) {
     return allColors.splice(Math.floor(Math.random()*allColors.length), 1);
   } else {
+    allColors = ['#6EEB83', '#911CFF', '#E4FF1A', '#E8AA14', '#FF5714', '#EA6ED7', '#99FF14' ];
     return ['#6EEA8D'];
   }
 }
