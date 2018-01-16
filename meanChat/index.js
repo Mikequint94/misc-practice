@@ -13,14 +13,13 @@ app.get('/', function(req, res){
 });
 let people = {};
 let colors = {};
-
+const allColors = ['#6EEB83', '#911CFF', '#E4FF1A', '#E8AA14', '#FF5714', '#EA6ED7', '#99FF14' ];
 function getRandomColor() {
-  let letters = '0123456789ABCDEF';
-  let color = '#';
-  for (let i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
+  if (allColors.length > 0) {
+    return allColors.splice(Math.floor(Math.random()*allColors.length), 1);
+  } else {
+    return ['#6EEA8D'];
   }
-  return color;
 }
 
 io.on('connection', function(socket){

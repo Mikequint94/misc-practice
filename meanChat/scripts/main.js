@@ -1,4 +1,4 @@
-  // change colors of chat background
+  // style hangup button
   // dont kill thmb video if multiple people - cant replicate problem in local
   // group chat adds to everyone - hard
   // emoji keyboard - hard
