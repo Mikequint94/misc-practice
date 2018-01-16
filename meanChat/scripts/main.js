@@ -93,7 +93,7 @@
       } else if (input.value.length > 0){
         login(input.value);
         socket.emit('set user', input.value);
-        document.getElementById('title').innerHTML = "";
+        document.getElementById('title').className = "hidden2";
         document.getElementById('button').innerHTML = "Send";
         user = input.value;
         input.value = '';

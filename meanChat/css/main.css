@@ -3,9 +3,11 @@ body {
   font: 13px Helvetica, Arial;
   background-color: #5febef;
 }
+h2#title.hidden2{display: none;}
+#title { display: flex; height: 42%; justify-content: center; align-items: center; font-size: 2em;}
 #form { background: #000; padding: 3px; position: fixed; bottom: 0; width: 100%; }
-#form input { border: 0; padding: 10px; width: 90%; margin-right: .5%; }
-#form button { width: 9%; background: #5febef; border: none; padding: 10px; }
+#form input { height: 40px; width: 88%; margin-right: 1%; }
+#form button { width: 10%; background: #5febef; height: 40px; }
 #messages { list-style-type: none; margin: 0; padding: 0; }
 #messages li { background: springgreen; padding: 5px 10px; }
 #messages li:nth-child(odd) { background: #d4ffa1; }
@@ -23,7 +25,7 @@ body {
 #left #vid-thumb video {width: 20vw; height: 20vh;}
 button.show {
   width: 40px; height: 40px; color: black; background: #b0f5f5;
-  position: relative; top: 55vh; left: 50pxs;
+  position: relative; top: 55vh; left: 50px;
   z-index: 1;}
 button.hidden{visibility: hidden;}
 .hidden{visibility: hidden;}
@@ -44,17 +46,14 @@ button.hidden{visibility: hidden;}
   body {
     font: 28px Helvetica, Arial;
   }
-  form input {
+  #form input {
     font: 28px Helvetica, Arial;
-    width: 73%;
+    width: 82%;
   }
-  form button {
-    width: 25%;
+  #form button {
+    width: 14%;
     padding: 0px;
-    /* padding-top: 6px;
-    padding-bottom: 2px; */
     font-size: 18px;
-    /* height: auto; */
   }
   #wrapper{
     margin-bottom: 70px;
