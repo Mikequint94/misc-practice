@@ -14,7 +14,7 @@ function filterCustomers() {
   ));
   console.log(filtered.map((el) => el.id));
 }
-filterCustomers();
+// filterCustomers();
 //to get todays date, today = new Date().  One year ago = today.setFullYear(today.getFullYear() - 1)
 // maybe JSON.parse() to get into JS object or array
 // Given the HTML and CSS add an event to the div using JS – a quick event
@@ -24,25 +24,25 @@ function modifyText() {
     t2.firstChild.nodeValue = "three";
 }
 
-let el = document.getElementById("outside"); // or querySelector(".class")
-el.addEventListener("click", modifyText);
+// let el = document.getElementById("outside"); // or querySelector(".class")
+// el.addEventListener("click", modifyText);
 //also keydown, mouseover, etc.
 
 // If provided a set of functions why would this code break or why it didn’t work?
 // It was centered around asynchronous code and he would call a certain variable
 // If this was returned in a promise, how would you do it?
 
-fetch("/messages")
-    .then(function(info) {
-      info.json().then(data => console.log(data));
-    });
-
-Why is JPMC hiring?  What problems are they currently facing?
-What do you like about working there?
-How was your transition from Hack Reactor to JPMC?
-Is there mentoring available?
-What kind of projects can I expect to work on?
-Insight on contract position and how it differs or can lead to full time?
+// fetch("/messages")
+//     .then(function(info) {
+//       info.json().then(data => console.log(data));
+//     });
+//
+// Why is JPMC hiring?  What problems are they currently facing?
+// What do you like about working there?
+// How was your transition from Hack Reactor to JPMC?
+// Is there mentoring available?
+// What kind of projects can I expect to work on?
+// Insight on contract position and how it differs or can lead to full time?
 
 // interview
 
@@ -68,68 +68,60 @@ var siteData = {
             birthMonth: 9,
             vip: "true"
         },
-        ...
     ]
-}
-
+};
 //Returns an array of all eligible user ids
 //Eligibility rules:
 // 1) User was born in the current month
 // 2) User has vip account status
 function findEligibleUsers(data, currentMonth) {
 
-    let filteredUsers = Object.values(data).filter((user) => (
+    let filteredUsers = data.users.filter((user) => (
         user.birthMonth === currentMonth && user.vip === "true"
-    ))
-    return filteredUsers;
+    ));
+    console.log(filteredUsers);
 }
 
-findEligibleUsers(siteData, 11)
-
-
-
-
-
-
-
-
-
+// findEligibleUsers(siteData, 9);
 
 //HTML
 
-<body>
-    ...
-    <div class="button important" id="activateButton"> Activate your account </div>
-</body>
+// <body>
+//     ...
+//     <div class="button important" id="activateButton"> Activate your account </div>
+// </body>
 
 //CSS
 
-div .button {
-    font-size: 9px;
-    padding: 5px;
-    color: #0b97c4;
-}
+// div .button {
+//     font-size: 9px;
+//     padding: 5px;
+//     color: #0b97c4;
+// }
 
 //JS
 
-let activateButton = document.getElementById('activateButton');
-activateButton.addEventListener('click', submitActivation);'
+// let activateButton = document.getElementById('activateButton');
+// activateButton.addEventListener('click', submitActivation);'
 
 
 
 
 
-function getVIPsFromServer() { /* Asynchronous method which retrieves list of VIPs. Do not implement this method */ }
+// function getVIPsFromServer() {
+//  fetch("https://email-web-api.herokuapp.com/api/emails");
+// }
 
 function isUserVIP(userId) {
-    getVIPFromServer()
-        .then(array => array.indexOf(userID) !== -1)
+    fetch("https://email-web-api.herokuapp.com/api/emails")
+        .then(data => data.json())
+        .then(data => {
+          Object.values(data).forEach(user => {
+            if (user.to === userId) {
+              console.log(user);
+            }
+          });
+        });
 }
-
-
-...
-var userId = "55555555"
-
-if(isUserVIP(userId)) {
-    $('.userBadge').addClass('vip');
-}
+var userID = "mjq8@cornell.edu";
+isUserVIP(userID);
