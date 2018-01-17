@@ -107,7 +107,11 @@
       let newMsg = document.createElement("li");
       let txt = document.createTextNode(msg);
       newMsg.appendChild(txt);
-      newMsg.style=`background: ${msgObj.color}`;
+      if (msgObj.color === "#000000") {
+        newMsg.style=`background: ${msgObj.color}; color: white`;
+      } else {
+        newMsg.style=`background: ${msgObj.color}`;
+      }
       msgBox.append(newMsg);
       chatBox.scrollTo(0, msgBox.scrollHeight);
       let sliced = msg.slice(msg.length-16, msg.length);
@@ -138,7 +142,11 @@
           };
           let userNode = document.createTextNode(username + "  🎥");
           newUser.appendChild(userNode);
-          newUser.style=`background: ${usernames.color[username]}`;
+          if (usernames.color[username] === "#000000") {
+            newUser.style=`background: ${usernames.color[username]}; color: white`;
+          } else {
+            newUser.style=`background: ${usernames.color[username]}`;
+          }
           onlineUsers.append(newUser);
       });
     });
@@ -152,7 +160,11 @@
         newMsg.id = `user${sliced}`;
         let txt = document.createTextNode(msg);
         newMsg.appendChild(txt);
-        newMsg.style=`background: ${msgObj.color}`;
+        if (msgObj.color === "#000000") {
+          newMsg.style=`background: ${msgObj.color}; color: white`;
+        } else {
+          newMsg.style=`background: ${msgObj.color}`;
+        }
         msgBox.append(newMsg);
         const audio = document.querySelector(`audio[data-key="typing"]`);
         if(!audio) return;
