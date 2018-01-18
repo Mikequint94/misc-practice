@@ -27,7 +27,7 @@ def schedule_meeting(schedules)
     end
   end
 
-  all_meetings.compact!
+  all_meetings.compact! # gets rid of nils
   available_times << [0, all_meetings[0][0]]
   (0...(all_meetings.length - 1)).each do |idx|
     available_times << [all_meetings[idx][1], all_meetings[idx + 1][0]]
