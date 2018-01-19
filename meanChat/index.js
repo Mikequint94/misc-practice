@@ -1,5 +1,5 @@
-let app = require('express')();
 let express = require("express");
+let app = express();
 app.use("/css",express.static(__dirname + "/css"));
 app.use("/assets",express.static(__dirname + "/assets"));
 app.use("/scripts",express.static(__dirname + "/scripts"));

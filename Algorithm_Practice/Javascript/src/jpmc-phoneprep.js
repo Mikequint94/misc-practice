@@ -113,7 +113,7 @@ function findEligibleUsers(data, currentMonth) {
 // }
 
 function isUserVIP(userId) {
-    fetch("https://email-web-api.herokuapp.com/api/emails")
+    fetch("http://email-web-api.herokuapp.com/api/emails")
         .then(data => data.json())
         .then(data => {
           Object.values(data).forEach(user => {
@@ -125,3 +125,22 @@ function isUserVIP(userId) {
 }
 var userID = "mjq8@cornell.edu";
 isUserVIP(userID);
+
+
+// function getVIPsFromServer() { /* Asynchronous method which retrieves list of VIPs. Do not implement this method */ }
+//
+//  function isUserVIP(userId) {
+//      getVIPsFromServer()
+//          .then((vipList) => {
+//            if (vipList.indexOf(userId) !== -1) {
+//              return true;
+//            }
+//            return false;
+//          })//INSERTCODEHERE
+//  }
+//
+//  var userId = "55555555"
+//
+//  if(isUserVIP(userId)) {
+//      $('.userBadge').addClass('vip');
+//  }
