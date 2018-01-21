@@ -6,6 +6,10 @@
 *CSS Dynamics into window size (media query, responsiveness, etc)*
 *CSS Hierarchy*
 *inline styling*
+<h1 style="color:blue;">This is a Blue Heading</h1>
+element.style.color = "blue"; To change one property
+element.style = "color: blue;" //overwrites other props
+
 *Event triggering, delegation, bubbling, event into store function, associate event with specific event*
 
 `let button = document.querySelector("button");
