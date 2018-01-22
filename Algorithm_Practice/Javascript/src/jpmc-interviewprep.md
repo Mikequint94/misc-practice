@@ -1,6 +1,22 @@
 *Bubble Sort - maybe quick sort too?*
 *create a node/JS Module*
 *All about Sets and Maps*
+  `let animals = new Set();`
+  `animals.add('pig');` can add things but will only hold unique values
+  `animals.size` is like length
+  `animals.delete('pig');`
+  `animals.has('elephant')` true or false
+  `animals.forEach(animal => console.log(animal))`
+  `animals.clear()` clears all
+  You can initialize a set with an array, and it will deconstruct into elements
+
+  `let things = new Map();` can also initialize with array of 2 element arrays
+  `things.set(key, value);`
+  `things.size`
+  `things.has(key)` true or false
+  `things.get(key)` returns value
+  `things.delete(key)`
+  `things.forEach((value, key) => console.log(key, value))`
 *Array sorting*
 array.sort() converts everything to string and sorts, also mutates array
 array.sort((a, b) => a-b) is better for number sort.
