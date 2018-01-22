@@ -4,6 +4,9 @@
 *Array sorting*
 array.sort() converts everything to string and sorts, also mutates array
 array.sort((a, b) => a-b) is better for number sort.
+`band.sort((a, b) => {
+  return a.genre > b.genre
+  })` will sort band genre's alphabetically
 
 *CSS Dynamics into window size (media query, responsiveness, etc)*
 `document.getElementById('square').className += " red"` to add a class.
