@@ -92,6 +92,7 @@ array.sort((a, b) => a-b) is better for number sort.
 Never use absolute pixel widths or positioning.  Everything relative to screen size.
 Always do Mobile First design.
 can do width: 100% to fit your spot. or 80vw to be a percentage of the total viewport width.
+`window.innerWidth` or `window.innerHeight` get window dimensions.
 
 *CSS Hierarchy*
 Most specific or last declared will win if all is equal.
