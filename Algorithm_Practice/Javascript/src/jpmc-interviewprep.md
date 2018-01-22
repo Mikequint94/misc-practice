@@ -1,4 +1,41 @@
-*Bubble Sort - maybe quick sort too?*
+*Bubble Sort - maybe quick sort too? merge sort?*
+  __Bubble Sort__ steps through list, swaps adjacent elements if needed, keeps iterating through list
+  until no more swaps are needed, then its done. O(n^2)
+  `function bubbleSort(array) {
+    let swapped = true;
+    while (swapped) {
+      swapped = false;
+      for (let i = 0; i < array.length - 1; i++) {
+        if (array[i] > array[i+1]) {
+          let temp = array[i];
+          array[i] = array[i+1];
+          array[i+1] = temp;
+          swapped = true;
+        }
+      }
+    }
+    return array;
+  }`
+  __Quick Sort__ divides array into two with smaller and larger elements, then
+  recursively sorts O(n*log(n)) avg.  worst O(n^2)
+  `function quickSort(array) {
+    if (array.length < 2) {
+      return array;
+    }
+    let lesser = [];
+    let greater = [];
+    let first = array.shift();
+    for (let i = 0; i < array.length; i++) {
+      if (array[i] < first) {
+        lesser.push(array[i]);
+      } else {
+        greater.push(array[i]);
+      }
+    }
+    return quickSort(lesser).concat(first).concat(quickSort(greater));
+  }`
+  __Merge Sort__ divides array into single element and merges together in sorted way.
+  O(n*log(n)) worst case.
 
 *create a node/JS Module*
   make new folder.  do an npm init.  then in index.js file include

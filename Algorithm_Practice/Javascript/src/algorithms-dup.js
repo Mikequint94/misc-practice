@@ -161,3 +161,39 @@ function matrixRegionSum(matrix, topLeftCoords, bottomRightCoords) {
 }
 
 // console.log(matrixRegionSum([[2,3,4,5],[4,3,2,1],[3,3,3,3],[1,1,1,3]], [0,2],[2,2]));
+
+function bubbleSort(array) {
+  let swapped = true;
+  while (swapped) {
+    swapped = false;
+    for (let i = 0; i < array.length - 1; i++) {
+      if (array[i] > array[i+1]) {
+        let temp = array[i];
+        array[i] = array[i+1];
+        array[i+1] = temp;
+        swapped = true;
+      }
+    }
+  }
+  return array;
+}
+
+// console.log(bubbleSort([0,2,4,1,5,7,3,5,8,3,4]));
+
+function quickSort(array) {
+  if (array.length < 2) {
+    return array;
+  }
+  let lesser = [];
+  let greater = [];
+  let first = array.shift();
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] < first) {
+      lesser.push(array[i]);
+    } else {
+      greater.push(array[i]);
+    }
+  }
+  return quickSort(lesser).concat(first).concat(quickSort(greater));
+}
+console.log(quickSort([0,2,4,1,5,7,3,5,8,3,4]));
