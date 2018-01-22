@@ -14,7 +14,7 @@ function fibonacci(n) {
 // fibonacci(20)
 
 function MergeMeetings(meetings) {
-  let sortedMeetings = meetings.sort((a,b) => {return a[0] - b[0];});
+  let sortedMeetings = meetings.sort((a,b) => a[0] - b[0]);
 
   for (let i = 0; i < (meetings.length - 1); i++){
     if (sortedMeetings[i+1][0] <= sortedMeetings[i][1]){
@@ -27,7 +27,7 @@ function MergeMeetings(meetings) {
 }
 
 
-// MergeMeetings([[0,2],[1,5],[10,11],[12,13],[5,6]])
+MergeMeetings([[0,2],[1,5],[10,11],[12,13],[5,6]]);
 
 // Given a list of integers, find the highest product you can get from three of the integers.
 

@@ -19,7 +19,7 @@ def schedule_meeting(schedules)
 
   all_meetings.sort!
 
-  (0...(all_meetings.length -  1)).each do |idx|
+  (0...(all_meetings.length - 1)).each do |idx|
     if all_meetings[idx+1][0] <= all_meetings[idx][1]
       all_meetings[idx+1][0] = [all_meetings[idx][0], all_meetings[idx+1][0]].min
       all_meetings[idx+1][1] = [all_meetings[idx][1], all_meetings[idx+1][1]].max
