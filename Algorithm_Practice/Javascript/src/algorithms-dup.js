@@ -216,4 +216,4 @@ function merge(left, right) {
   }
   return sorted.concat(left, right);
 }
-console.log(mergeSort([0,2,4,1,5,7,3,5,8,3,4]));
+// console.log(mergeSort([0,2,4,1,5,7,3,5,8,3,4]));

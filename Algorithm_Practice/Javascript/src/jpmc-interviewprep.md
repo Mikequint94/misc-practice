@@ -114,7 +114,12 @@ element.style = "color: blue;" //overwrites other props
  }
 button.addEventListener("click", once);` will happen once then remove cause same fn name
 to get more info about event, do `function(event) {console.log(event)}` as fn.
+can also do button.onclick = () => {whatever} // onmousedown, onmouseenter, onmousemove
 parent nodes will get triggered when children nodes are, but most specific trigger happens first,
 can do `event.stopPropagation()` inside fn to stop bubbling up
 can put one listener on a parent and use event.target.whatever to get into specifics of which was clicked
 `event.preventDefault();` prevents default action browser would take
+this (=event.currentTarget) is the <form> element, because the handler runs on it.
+event.target is the concrete element inside the form that actually was clicked.
+
+can trigger another click by selecting element and doing `el.click();`
