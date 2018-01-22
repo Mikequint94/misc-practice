@@ -36,6 +36,24 @@
   }`
   __Merge Sort__ divides array into single element and merges together in sorted way.
   O(n*log(n)) worst case.
+  `function mergeSort(array) {
+    if (array.length < 2) {return array; }
+    let leftSorted = mergeSort(array.slice(0, Math.floor(array.length / 2)));
+    let rightSorted = mergeSort(array.slice(Math.floor(array.length / 2)));
+    return merge(leftSorted, rightSorted);
+  }
+
+  function merge(left, right) {
+    let sorted = [];
+    while (left.length > 0 && right.length > 0) {
+      if (left[0] < right[0]) {
+        sorted.push(left.shift());
+      } else {
+        sorted.push(right.shift());
+      }
+    }
+    return sorted.concat(left, right);
+  }`
 
 *create a node/JS Module*
   make new folder.  do an npm init.  then in index.js file include
