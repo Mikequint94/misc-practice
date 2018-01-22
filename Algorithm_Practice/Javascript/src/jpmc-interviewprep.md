@@ -57,7 +57,7 @@
 
 *create a node/JS Module*
   make new folder.  do an npm init.  then in index.js file include
-  `exports.printMsg = function() {
+  `exports.printMsg = () => {
   console.log("This is a message from the demo package");
   }`
 *All about Sets and Maps*
@@ -82,7 +82,7 @@ array.sort() converts everything to string and sorts, also mutates array
 array.sort((a, b) => a-b) is better for number sort.
 `band.sort((a, b) => {
   return a.genre > b.genre
-  })` will sort band genre's alphabetically
+  })` will sort band genre's alphabetically (use > for strings)
 
 *CSS Dynamics into window size (media query, responsiveness, etc)*
 `document.getElementById('square').className += " red"` to add a class.
