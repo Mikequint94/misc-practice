@@ -1,5 +1,10 @@
 *Bubble Sort - maybe quick sort too?*
+
 *create a node/JS Module*
+  make new folder.  do an npm init.  then in index.js file include
+  `exports.printMsg = function() {
+  console.log("This is a message from the demo package");
+  }`
 *All about Sets and Maps*
   `let animals = new Set();`
   `animals.add('pig');` can add things but will only hold unique values
