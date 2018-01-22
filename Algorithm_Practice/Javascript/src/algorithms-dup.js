@@ -217,3 +217,64 @@ function merge(left, right) {
   return sorted.concat(left, right);
 }
 // console.log(mergeSort([0,2,4,1,5,7,3,5,8,3,4]));
+
+function bubbleSort2(array) {
+  let swapped = true;
+  while (swapped) {
+    swapped = false;
+    for (let i = 0; i < array.length - 1; i++) {
+      if (array[i] > array[i+1]) {
+        let temp = array[i];
+        array[i] = array[i+1];
+        array[i+1] = temp;
+        swapped = true;
+      }
+    }
+  }
+  return array;
+}
+
+// console.log(bubbleSort2([5,2,5,7,3,1,3,4,6,8,4,3,7,3,2,1,8,3,7,3]));
+
+function quickSort2(array) {
+  if (array.length < 2) {
+    return array;
+  }
+  let first = array.shift();
+  let lesser = [];
+  let greater = [];
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] < first) {
+      lesser.push(array[i]);
+    } else {
+      greater.push(array[i]);
+    }
+  }
+  return quickSort2(lesser).concat(first, quickSort2(greater));
+}
+// console.log(quickSort2([5,2,5,7,3,1,3,4,6,8,4,3,7,3,2,1,8,3,7,3]));
+
+function mergeSort2(array) {
+  if (array.length < 2) {
+    return array;
+  }
+
+  let leftSorted = mergeSort2(array.slice(0, Math.floor(array.length / 2)));
+  let rightSorted = mergeSort2(array.slice(Math.floor(array.length / 2)));
+
+  return merge2(leftSorted, rightSorted);
+}
+
+function merge2(left, right) {
+  let sorted = [];
+  while (left.length > 0 && right.length > 0) {
+    if (left[0] < right[0]) {
+      sorted.push(left.shift());
+    } else {
+      sorted.push(right.shift());
+    }
+  }
+  return sorted.concat(left, right);
+}
+
+// console.log(mergeSort2([5,2,5,7,3,1,3,4,6,8,4,3,7,3,2,1,8,3,7,3]));
