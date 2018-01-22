@@ -1,9 +1,19 @@
-*Bubble Sort*
+*Bubble Sort - maybe quick sort too?*
 *create a node/JS Module*
-*basic CSS Syntax*
 *All about Sets and Maps*
 *Array sorting*
+array.sort() converts everything to string and sorts, also mutates array
+array.sort((a, b) => a-b) is better for number sort.
+
 *CSS Dynamics into window size (media query, responsiveness, etc)*
+`document.getElementById('square').className += " red"` to add a class.
+`@media screen and (max-width: 1140px) {
+  font-size: 10px;
+}`
+Never use absolute pixel widths or positioning.  Everything relative to screen size.
+Always do Mobile First design.
+can do width: 100% to fit your spot. or 80vw to be a percentage of the total viewport width.
+
 *CSS Hierarchy*
 Most specific or last declared will win if all is equal.
 1. !important (`!important`) next to a property. - don't use!
