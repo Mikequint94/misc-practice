@@ -105,5 +105,5 @@ uniqueEntries([2,3,52,234,23,23,3,"3","df"]);
 function uniqueEntries2(array) {
   let entries = new Set(array);
   console.log([...entries]);
-}
+} // you can spread a set into an array.
 uniqueEntries2([2,3,52,234,23,23,3,"3","df"]);
