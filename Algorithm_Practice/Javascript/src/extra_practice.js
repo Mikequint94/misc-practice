@@ -63,7 +63,7 @@ function product3Ints(array) {
   }
 }
 
-product3Ints([3,11,5,2,6,-50,-7,-14,5,10]);
+// product3Ints([3,11,5,2,6,-50,-7,-14,5,10]);
 
 // You have a list of integers, and for each index you want to find the product of every integer except the integer at that index.
 
@@ -82,7 +82,7 @@ function productsExceptMe(array){
   }
 
 
-  console.log(results);
+  // console.log(results);
 }
 
 // productsExceptMe([3,1,2,1,-3,-5]);
@@ -97,7 +97,13 @@ function uniqueEntries(array) {
       entries.add(el);
     }
   });
-  return results;
+  console.log(results);
 }
 
 uniqueEntries([2,3,52,234,23,23,3,"3","df"]);
+
+function uniqueEntries2(array) {
+  let entries = new Set(array);
+  console.log([...entries]);
+}
+uniqueEntries2([2,3,52,234,23,23,3,"3","df"]);
