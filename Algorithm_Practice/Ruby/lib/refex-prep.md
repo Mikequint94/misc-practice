@@ -15,9 +15,20 @@ end
 
 print_once { puts "Block is being run" }`
 # Procs and Lambdas
-A lambda is a type of proc.
+A lambda is a type of proc.  Use = -> {to define}.  then need to call later.
+`say_something = -> { puts "This is a lambda" }
+say_something.call `# or .(), or .[]
+Can also take an arg like `say_something = -> (a) {puts a}
+say_something.call(a)`
+It will raise exception if you pass the wrong number of args.
+
+Procs don't care.  Make with `t = Proc.new {|args| stuff}. t.call`
+
+Also lambdas return normally like a method.  Procs return from current context.
+SO. can't have procs in outer scope or else will make error cause can only return inside something.
 
 # Closures
+Procs capture current scope (local variables, methods) when you make them from the context they are made in.  Lock that in with them wherever they go.
 
 # Ways to call a method
 Normal way:  `jack.say`
