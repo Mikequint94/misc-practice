@@ -14,7 +14,7 @@ class DogsController < ApplicationController
       @dogs = Dog.all
       render :index
     else
-      render @dog.errors.full_messages
+      render json: @dog.errors.full_messages
     end
   end
   
