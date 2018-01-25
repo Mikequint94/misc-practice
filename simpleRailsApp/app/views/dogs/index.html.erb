@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Dogs!</title>
+  </head>
+  <body>
+    <% @dogs.each do |dog| %>
+      Dog number <%= dog.id %>
+      <%= dog.name %>
+      <%= dog.age %>
+      <br>
+    <% end %>
+  </body>
+
+  <form action="/dogs" method= 'post'>
+   <label for='name'> Name </label>
+   <input id='name' type='text' name = 'dog[name]' value="">
+   <br>
+   <label for='age'> Age </label>
+   <input id='birth_date' type='number' name = 'dog[age]'
+    value="">
+   <br>
+   <input type='submit' value ="register dog">
+</form>
+
+</html>

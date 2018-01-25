@@ -1,4 +1,8 @@
 # Review Rails!
+start: rails new my_project_name --database=postgresql
+routes:  resources :cats
+rails g model User
+rails g controller User
 
 # Ruby Blocks
 anonymous functions passed into methods.  anything with a do/end statement or between {|arg| brackets + arg}
@@ -29,6 +33,9 @@ SO. can't have procs in outer scope or else will make error cause can only retur
 
 # Closures
 Procs capture current scope (local variables, methods) when you make them from the context they are made in.  Lock that in with them wherever they go.
+
+In summation, Procs are blocks of code that are bound to local variables
+Lambdas are like anonymous functions
 
 # Ways to call a method
 Normal way:  `jack.say`
