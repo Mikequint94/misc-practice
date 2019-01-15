@@ -34,4 +34,4 @@ function hello () {
 hello();
 
 // console.log(a);  a will be undefined.
-// console.log(b);  b will be for because it is set on global scope.
+// console.log(b);  b will be 4 because it is set on global scope.
