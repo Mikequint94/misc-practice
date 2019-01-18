@@ -30,40 +30,16 @@ function MergeMeetings(meetings) {
 // MergeMeetings([[0,2],[1,5],[10,11],[12,13],[5,6]]);
 
 // Given a list of integers, find the highest product you can get from three of the integers.
-
 // gonna want the top 3 positives and top 2 negs.  if top 2 negs product is greater than lower 2 positives, use them.
-
-function product3Ints(array) {
-  let positives = [];
-  let negatives = [];
-  array.forEach((el) => {
-    if (el > 0) {
-      if (positives.length < 3) {
-        positives.push(el);
-      } else {
-        positives.sort((a,b) => a-b);
-        let lowest = positives.shift();
-        positives.push(Math.max(lowest, el));
-      }
-    } else {
-      if (negatives.length < 2) {
-        negatives.push(el);
-      } else {
-        negatives.sort((a,b) => b - a);
-        let highest = negatives.shift();
-        negatives.push(Math.min(highest, el));
-      }
-    }
-  });
-  positives = positives.sort();
-  if (negatives[0]*negatives[1] > positives[0]*positives[1]) {
-    console.log(negatives[0]*negatives[1]*positives[2]);
-  } else {
-    console.log(positives.reduce((a,b) => a*b));
-  }
+function productThreeInts(array) {
+  array = array.sort((a,b) => {return a - b;});
+  let n = array.length;
+  let highestPos = array[n-1]*array[n-2]*array[n-3];
+  let highestusingNegs = array[0]*array[1]*array[n-1];
+  console.log(Math.max(highestPos, highestusingNegs));
 }
 
-// product3Ints([3,11,5,2,6,-50,-7,-14,5,10]);
+productThreeInts([3,11,5,2,6,-50,-7,-14,5,10]);
 
 // You have a list of integers, and for each index you want to find the product of every integer except the integer at that index.
 
@@ -100,10 +76,10 @@ function uniqueEntries(array) {
   console.log(results);
 }
 
-uniqueEntries([2,3,52,234,23,23,3,"3","df"]);
+// uniqueEntries([2,3,52,234,23,23,3,"3","df"]);
 
 function uniqueEntries2(array) {
   let entries = new Set(array);
   console.log([...entries]);
 } // you can spread a set into an array.
-uniqueEntries2([2,3,52,234,23,23,3,"3","df"]);
+// uniqueEntries2([2,3,52,234,23,23,3,"3","df"]);
