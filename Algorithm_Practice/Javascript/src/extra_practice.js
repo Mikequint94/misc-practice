@@ -39,7 +39,7 @@ function productThreeInts(array) {
   console.log(Math.max(highestPos, highestusingNegs));
 }
 
-productThreeInts([3,11,5,2,6,-50,-7,-14,5,10]);
+// productThreeInts([3,11,5,2,6,-50,-7,-14,5,10]);
 
 // You have a list of integers, and for each index you want to find the product of every integer except the integer at that index.
 
@@ -56,12 +56,20 @@ function productsExceptMe(array){
     results[i] *= productsAfter;
     productsAfter *= el;
   }
-
-
-  // console.log(results);
+  console.log(results);
+  // SECOND WAY TO DO IT. which is better?
+  let results2 = [];
+  let sum = 1;
+  array.map(el => {
+    sum *= el;
+  });
+  for (let i = 0; i<array.length; i++) {
+    results2.push(sum/array[i]);
+  }
+  console.log(results2);
 }
 
-// productsExceptMe([3,1,2,1,-3,-5]);
+productsExceptMe([3,1,2,1,-3,-5]);
 
 function uniqueEntries(array) {
   let entries = new Set();
