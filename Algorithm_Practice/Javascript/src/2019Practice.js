@@ -20,7 +20,7 @@ function canEscape(array) {
   return pathFinder([0,0]);
 }
 
-console.log(canEscape(escapeMap));
+// console.log(canEscape(escapeMap));
 
 //Make it harder:  How many paths are there?
 function howManyPathsToEscape(array) {
@@ -47,7 +47,27 @@ function howManyPathsToEscape(array) {
 // console.log(howManyPathsToEscape(escapeMap));
 
 function islandCounter(array) {
-
+  let count = 0;
+  for (let i = 0; i< array[0].length; i++) {
+    for (let j=0; j< array.length; j++) {
+      if (array[j][i] === 1) {
+        count++;
+        explore(i, j);
+      }
+    }
+  }
+  function explore(row, column) {
+    if (row < 0 || column < 0 || row >= array[0].length || column >= array.length || array[column][row] === 0) {
+      return;
+    } else {
+      array[column][row] = 0;
+      explore(row+1, column);
+      explore(row-1, column);
+      explore(row, column+1);
+      explore(row, column-1);
+    }
+  }
+  return count;
 }
 
-// console.log(islandCounter(escapeMap));
+console.log(islandCounter(escapeMap));
