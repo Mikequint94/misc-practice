@@ -185,7 +185,7 @@ function matrixRegionSum(matrix, topLeftCoords, bottomRightCoords) {
   return sum;
 }
 
-// console.log(matrixRegionSum([[2,3,4,5],[4,3,2,1],[3,3,3,3],[1,1,1,3]], [0,2],[2,2]));
+console.log(matrixRegionSum([[2,3,4,5],[4,3,2,1],[3,3,3,3],[1,1,1,3]], [0,2],[2,2]));
 
 function bubbleSort(array) {
   let swapped = true;
