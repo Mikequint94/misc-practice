@@ -97,11 +97,11 @@ function uniqueSubs(string) {
       results.add(string.slice(i,j));
     }
   }
-  return results;
+  return [...results];
 }
 // console.log(uniqueSubs("hello"));
 function lcs(array) {
-  let largestSum = 0;
+  let largestSum = array[0];
   let currentSum = 0;
   array.forEach(el => {
     currentSum+= el;
@@ -115,6 +115,7 @@ function lcs(array) {
   return largestSum;
 }
 // console.log(lcs([1,2,3,4,-5,4,5,-10,2,3,4]));
+// console.log(lcs([-1,-2,-3,-4,-5]));
 
 function sillyYears(year) {
   let results = [];
@@ -132,6 +133,7 @@ function sillyYears(year) {
 
 // console.log(sillyYears(2018));
 
+//return all pairs that sum up to target
 function pairSum(array, k) {
   let map = new Map();
   let pairs = [];
@@ -149,6 +151,29 @@ function pairSum(array, k) {
   return pairs;
 }
 // console.log(pairSum([1,3,32,3,4,5], 6));
+
+//return indices of all pairs that sum up to target
+function twoSum(array, target) {
+  let numMap = {};
+  let results = [];
+  array.forEach( (num, idx) => {
+    numMap[num] ? numMap[num].push(idx) : numMap[num] = [idx];
+  })
+  array.forEach( (num) => {
+    if (numMap[target-num] && numMap[target-num].length) {
+      if (target-num === num && numMap[num].length > 1) {
+        results.push([numMap[num][0], numMap[num][1]]);
+        numMap[num] = numMap[num].slice(2);
+      } else if (target - num !== num){
+        results.push([numMap[num][0], numMap[target-num][0]]);
+        numMap[num] = numMap[num].slice(1);
+        numMap[target-num] = numMap[target-num].slice(1);
+      }
+    }
+  })
+  return results;
+}
+// console.log(twoSum([2,3,4,5,6,5,8,9],10));
 
 function matrixRegionSum(matrix, topLeftCoords, bottomRightCoords) {
   let sum = 0;
