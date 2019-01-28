@@ -137,4 +137,32 @@ function maxDepthBST(root) {
   let right = maxDepthBST(root.right);
   return 1 + Math.max(left,right);
 }
-console.log(maxDepthBST(sampleRoot));
+// console.log(maxDepthBST(sampleRoot));
+let list = [];
+function treeInOrder(root) {
+  if (root === null) return;
+  treeInOrder(root.left);
+  list.push(root.data);
+  treeInOrder(root.right);
+  return list;
+}
+// console.log(treeInOrder(sampleRoot));
+function breadthFirstSearch(root) {
+  let queue = [root];
+  while (queue.length) {
+    let first = queue.shift();
+    list.push(first.data);
+    if (first.left) queue.push(first.left);
+    if (first.right) queue.push(first.right);
+    }
+  return list;
+}
+// console.log(breadthFirstSearch(sampleRoot));
+function maxPathSum(root) {
+  if (root === null) return 0;
+  let left = maxPathSum(root.left);
+  let right = maxPathSum(root.right);
+  
+  return root.data + Math.max(left, right);
+}
+console.log(maxPathSum(sampleRoot));
