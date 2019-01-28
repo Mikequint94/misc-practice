@@ -91,7 +91,8 @@ function reverseLinkedList(head) {
   }
   return currentNode;
 }
-let listHead = new Node(4, new Node(6, new Node(1, new Node(14, new Node(-6)))));
+let listHead = new Node(4, new Node(6, new Node(1, new Node(2, new Node(6)))));
+let listHead2 = new Node(1, new Node(9, new Node(9)));
 // console.log(reverseLinkedList(listHead));
 
 function findMiddleNode(head) {
@@ -103,4 +104,20 @@ function findMiddleNode(head) {
   }
   return slowPointer;
 }
-console.log(findMiddleNode(listHead));
+// console.log(findMiddleNode(listHead)); 
+function addTwoLists(h1, h2) {
+  let sentinel = new Node(-1);
+  let current = sentinel;
+  let nextCarryOver = 0;
+  while (h1 || h2 || nextCarryOver) {
+    let newVal = (h1.data || 0) + (h2.data || 0) + nextCarryOver;
+    nextCarryOver = Math.floor(newVal / 10);
+    newVal = newVal % 10;
+    current.next = new Node(newVal);
+    current = current.next;
+    h1 = h1.next || 0;
+    h2 = h2.next || 0;
+  }
+  return sentinel.next;
+}
+console.log(addTwoLists(listHead, listHead2));
