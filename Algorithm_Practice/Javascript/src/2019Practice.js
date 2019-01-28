@@ -1,3 +1,5 @@
+const BSTNode = require('./practiceHelper');
+
 //Given a 2D map, can the robber make an escape path from top left corner to bottom right?
 const escapeMap = [[0,0,0,1,0],
                    [1,1,0,0,0],
@@ -120,4 +122,19 @@ function addTwoLists(h1, h2) {
   }
   return sentinel.next;
 }
-console.log(addTwoLists(listHead, listHead2));
+// console.log(addTwoLists(listHead, listHead2));
+let sampleRoot = new BSTNode(3);
+sampleRoot.insert(11);
+sampleRoot.insert(5);
+sampleRoot.insert(2);
+sampleRoot.insert(1);
+sampleRoot.insert(31);
+sampleRoot.insert(21);
+
+function maxDepthBST(root) {
+  if (root === null) return 0;
+  let left = maxDepthBST(root.left);
+  let right = maxDepthBST(root.right);
+  return 1 + Math.max(left,right);
+}
+console.log(maxDepthBST(sampleRoot));
