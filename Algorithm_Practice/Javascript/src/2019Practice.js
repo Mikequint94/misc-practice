@@ -42,7 +42,7 @@ function howManyPathsToEscape(array) {
   }
   pathFinder(array, [0,0]);
   return count;
-} // HELPS
+} // HELPS - but maybe too hard?
 
 // console.log(howManyPathsToEscape(escapeMap));
 
@@ -70,4 +70,26 @@ function islandCounter(array) {
   return count;
 }
 
-console.log(islandCounter(escapeMap));
+// console.log(islandCounter(escapeMap));
+class Node {
+  constructor(data, next = null) {
+    this.data = data;
+    this.next = next;
+  }
+}
+
+function reverseLinkedList(head) {
+  let prevNode = null;
+  let currentNode = head;
+  let nextNode = head.next;
+  currentNode.next = null;
+  while (nextNode) {
+    prevNode = currentNode;
+    currentNode = nextNode;
+    nextNode = nextNode.next;
+    currentNode.next = prevNode;
+  }
+  return currentNode;
+}
+let listHead = new Node(4, new Node(6, new Node(1)));
+console.log(reverseLinkedList(listHead));
