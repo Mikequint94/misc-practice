@@ -91,5 +91,16 @@ function reverseLinkedList(head) {
   }
   return currentNode;
 }
-let listHead = new Node(4, new Node(6, new Node(1)));
-console.log(reverseLinkedList(listHead));
+let listHead = new Node(4, new Node(6, new Node(1, new Node(14, new Node(-6)))));
+// console.log(reverseLinkedList(listHead));
+
+function findMiddleNode(head) {
+  let slowPointer = head;
+  let fastPointer = head;
+  while (fastPointer.next && fastPointer.next.next) {
+    slowPointer = slowPointer.next;
+    fastPointer = fastPointer.next.next;
+  }
+  return slowPointer;
+}
+console.log(findMiddleNode(listHead));
