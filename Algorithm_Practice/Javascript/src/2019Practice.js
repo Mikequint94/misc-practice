@@ -198,16 +198,16 @@ function permutations(arr, perm, freq) {
     }
   }
 }
-permutations([1,2,3,4], [], [1,1,1,1]);
+// permutations([1,2,3,4], [], [1,1,1,1]);
 
-//Do telephone numbers Problem later
 let permsList = [];
+//all the permutations of a string where letters can be capital or lowercase
 function stringPerms(string, perm, i) {
   if (perm.length === string.length) {
     permsList.push(perm);
     return;
   }
-  if (!parseInt(string[i])) {
+  if (!parseInt(string[i])) { // if its a letter.  Could also say if > 'A' && < 'z'
     stringPerms(string, perm + string[i].toUpperCase(), i+1);
     stringPerms(string, perm + string[i].toLowerCase(), i+1);
   } else {
@@ -216,3 +216,48 @@ function stringPerms(string, perm, i) {
   return permsList;
 }
 // console.log(stringPerms('a1b2', '', 0));
+
+//sum up all of the nodes in each level of a tree
+//DFS
+let levelOrderSumDFSList = [];
+function levelOrderSumDFS(root, level) {
+  if (root === null) return;
+  levelOrderSumDFS(root.left, level + 1);
+  levelOrderSumDFS(root.right, level + 1);
+  if (levelOrderSumDFSList[level]) {
+    levelOrderSumDFSList[level] += root.data;
+  } else {
+    levelOrderSumDFSList[level] = root.data;
+  }
+  return levelOrderSumDFSList;
+}
+// console.log(levelOrderSumDFS(sampleRoot, 0));
+//sum up all of the nodes in each level of a tree
+//BFS
+let levelOrderSumBFSList = [];
+function levelOrderSumBFS(queue) {
+    if (!queue.length) return;
+    let childQueue = [];
+    let count = 0;
+    while (queue.length) {
+      let first = queue.shift();
+      count += first.data;
+      if (first.left) childQueue.push(first.left);
+      if (first.right) childQueue.push(first.right);
+    }
+    levelOrderSumBFSList.push(count);
+    queue = childQueue;
+  levelOrderSumBFS(queue);
+  return levelOrderSumBFSList;
+}
+console.log(levelOrderSumBFS([sampleRoot]));
+
+//Do telephone numbers Problem later
+//https://leetcode.com/problems/letter-combinations-of-a-phone-number/
+function telephoneNumbers() {
+  
+}
+
+
+
+
