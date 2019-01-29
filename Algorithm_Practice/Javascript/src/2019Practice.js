@@ -165,4 +165,49 @@ function maxPathSum(root) {
   
   return root.data + Math.max(left, right);
 }
-console.log(maxPathSum(sampleRoot));
+// console.log(maxPathSum(sampleRoot));
+
+function combination(arr, combo, idx) {
+  if (!arr[idx]) {
+    return;
+  }
+  
+  for (let i = idx; i < arr.length; i++) {
+    let next = combo.concat(arr[i]);
+    console.log(next);
+    combination(arr, next, i + 1);
+  }
+}
+
+// combination([1,2,3,4], [], 0);
+function permutations(arr, perm, freq) {
+  if (perm.length === arr.length) {
+    console.log(perm);
+    return;
+  }
+  for (let i = 0; i < arr.length; i++) {
+    if (freq[i]) {
+      freq[i] -= 1;
+      permutations(arr, perm.concat(arr[i]), freq);
+      freq[i] += 1; // backtracking: set state, try it out, then set it back.
+    }
+  }
+}
+// permutations([1,2,3], [], [1,1,1]);
+
+//Do telephone numbers Problem later
+let permsList = [];
+function stringPerms(string, perm, i) {
+  if (perm.length === string.length) {
+    permsList.push(perm);
+    return;
+  }
+  if (!parseInt(string[i])) {
+    stringPerms(string, perm + string[i].toUpperCase(), i+1);
+    stringPerms(string, perm + string[i].toLowerCase(), i+1);
+  } else {
+    stringPerms(string, perm + string[i], i+1);
+  }
+  return permsList;
+}
+console.log(stringPerms('a1b2', '', 0));
