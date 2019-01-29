@@ -167,6 +167,9 @@ function maxPathSum(root) {
 }
 // console.log(maxPathSum(sampleRoot));
 
+// find All the combinations of an array of elements. 1, 12, 123, 13, 2, 3, 23.
+// loop with recursion starts at idz + 1
+//O(n!) time complexity
 function combination(arr, combo, idx) {
   if (!arr[idx]) {
     return;
@@ -178,8 +181,10 @@ function combination(arr, combo, idx) {
     combination(arr, next, i + 1);
   }
 }
-
 // combination([1,2,3,4], [], 0);
+
+//loop with recursion always starts at 0
+//O(n!) time complexity
 function permutations(arr, perm, freq) {
   if (perm.length === arr.length) {
     console.log(perm);
@@ -193,7 +198,7 @@ function permutations(arr, perm, freq) {
     }
   }
 }
-// permutations([1,2,3], [], [1,1,1]);
+permutations([1,2,3,4], [], [1,1,1,1]);
 
 //Do telephone numbers Problem later
 let permsList = [];
@@ -210,4 +215,4 @@ function stringPerms(string, perm, i) {
   }
   return permsList;
 }
-console.log(stringPerms('a1b2', '', 0));
+// console.log(stringPerms('a1b2', '', 0));
