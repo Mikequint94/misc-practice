@@ -250,13 +250,37 @@ function levelOrderSumBFS(queue) {
   levelOrderSumBFS(queue);
   return levelOrderSumBFSList;
 }
-console.log(levelOrderSumBFS([sampleRoot]));
+// console.log(levelOrderSumBFS([sampleRoot]));
 
 //Do telephone numbers Problem later
 //https://leetcode.com/problems/letter-combinations-of-a-phone-number/
-function telephoneNumbers() {
-  
+function telephoneNumbers(digits) {
+  const digitMapper = {
+        '2': ['a','b','c'],
+        '3': ['d','e','f'],
+        '4': ['g','h','i'],
+        '5': ['j','k','l'],
+        '6': ['m','n','o'],
+        '7': ['p','q','r','s'],
+        '8': ['t','u','v'],
+        '9': ['w','x','y','z']
+    }
+    const results = [];
+    if (!digits) {return results;}
+    var recurseCombo = function(remainingDigits, combo) {
+        if (combo.length === digits.length) {
+            results.push(combo);
+            return;
+        }
+        let first = remainingDigits[0];
+        digitMapper[first].forEach(letter => {
+            recurseCombo(remainingDigits.slice(1), combo + letter);
+        })
+    }
+    recurseCombo(digits, '');
+    return results;
 }
+// console.log(telephoneNumbers("6543"));
 
 
 
