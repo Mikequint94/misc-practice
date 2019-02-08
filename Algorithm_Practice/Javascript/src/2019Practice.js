@@ -124,12 +124,12 @@ function addTwoLists(h1, h2) {
 }
 // console.log(addTwoLists(listHead, listHead2));
 let sampleRoot = new BSTNode(3);
-sampleRoot.insert(11);
-sampleRoot.insert(5);
 sampleRoot.insert(2);
+sampleRoot.insert(4);
+sampleRoot.insert(5);
 sampleRoot.insert(1);
-sampleRoot.insert(31);
-sampleRoot.insert(21);
+// sampleRoot.insert(31);
+// sampleRoot.insert(21);
 
 function maxDepthBST(root) {
   if (root === null) return 0;
@@ -281,7 +281,16 @@ function telephoneNumbers(digits) {
     return results;
 }
 // console.log(telephoneNumbers("6543"));
-
+let result = [];
+function rootToLeafsPathSum(root) {
+  if (root === null) {
+    return;
+  }
+  rootToLeafsPathSum(root.left);
+  rootToLeafsPathSum(root.right);
+  return root.data;
+}
+console.log(rootToLeafsPathSum(sampleRoot));
 
 
 
