@@ -123,13 +123,6 @@ function addTwoLists(h1, h2) {
   return sentinel.next;
 }
 // console.log(addTwoLists(listHead, listHead2));
-let sampleRoot = new BSTNode(3);
-sampleRoot.insert(2);
-sampleRoot.insert(4);
-sampleRoot.insert(5);
-sampleRoot.insert(1);
-// sampleRoot.insert(31);
-// sampleRoot.insert(21);
 
 function maxDepthBST(root) {
   if (root === null) return 0;
@@ -282,15 +275,30 @@ function telephoneNumbers(digits) {
 }
 // console.log(telephoneNumbers("6543"));
 let result = [];
-function rootToLeafsPathSum(root) {
+let sampleRoot = new BSTNode(4);
+sampleRoot.insert(2);
+sampleRoot.insert(3);
+sampleRoot.insert(1);
+sampleRoot.insert(6);
+sampleRoot.insert(5);
+sampleRoot.insert(7);
+// sampleRoot.insert(21);
+function rootToLeafsPathSum(root, currentSum) {
   if (root === null) {
     return;
   }
-  rootToLeafsPathSum(root.left);
-  rootToLeafsPathSum(root.right);
-  return root.data;
+  currentSum += root.data;
+  currentSum *= 10;
+  
+  rootToLeafsPathSum(root.left, currentSum);
+  rootToLeafsPathSum(root.right, currentSum);
+  if (!root.right && !root.left) {
+    result.push(currentSum/10);
+  }
+  return result.reduce((acc, el) => acc + el);
 }
-console.log(rootToLeafsPathSum(sampleRoot));
+console.log(rootToLeafsPathSum(sampleRoot, 0));
+console.log(421+423+465+467);
 
 
 
