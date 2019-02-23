@@ -281,5 +281,30 @@ function rootToLeafsPathSum(root, currentSum) {
 
 //TODO
 //find Nth prime most efficiently
+function findNthPrime(n) {
+  let bigN = n * 50;
+  let primes = Array(bigN).fill(true);
+  for (let j = 2; j < bigN; j+= 2) {
+    primes[j] = false;
+  }
+  for (let i = 2; i < Math.sqrt(bigN); i++) {
+    if (primes[i]) {
+      for (let j = Math.pow(i,2); j < bigN; j+= 2*i) {
+        primes[j] = false;
+      }
+    }
+  }
+  let count = 1;
+  for (let i = 2; i < bigN; i++) {
+    if (primes[i]) {
+      primes[i] = count++;
+    }
+  }
+  console.log(primes.indexOf(n));
+}
+
+findNthPrime(10001);
+
+//2 3 5 7 11 13 17
 //card underline question
 // Write an interpreter to evaluate strings of nonsense math notation, respecting order of operations indicated by (possibly nested) parentheses.
