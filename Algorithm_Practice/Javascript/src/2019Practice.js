@@ -300,11 +300,43 @@ function findNthPrime(n) {
       primes[i] = count++;
     }
   }
-  console.log(primes.indexOf(n));
+  return primes.indexOf(n);
+}
+// console.log(findNthPrime(10001));
+
+//card underline question
+function cardsToUnderline(maxNum) {
+  let results = [];
+  let nonFlippable = ['3','4','7'];
+  if (maxNum > 5) results.push('6');
+  if (maxNum > 8) results.push('9');
+  for (let i = 10; i <= maxNum; i++) {
+    let numStr = i.toString();
+    let shouldPush = true;
+      for (let j = 0; j < numStr.length; j++) {
+        if (nonFlippable.includes(numStr[j])) {
+          shouldPush = false;
+        }
+      }
+    if (shouldPush && numStr[numStr.length - 1] !== '0' && !isNon69Palindrome(numStr)) results.push(numStr);
+  }
+  return results;
 }
 
-findNthPrime(10001);
-
-//2 3 5 7 11 13 17
-//card underline question
+function isNon69Palindrome(numStr) {
+  let pointerOne = 0;
+  let pointerTwo = numStr.length - 1;
+  let palindrome = false;
+  if (numStr.includes('6') || numStr.includes('9')) return false;
+  while (pointerOne < pointerTwo) {
+    if (numStr[pointerOne] === numStr[pointerTwo]) {
+      palindrome = true;
+      break;
+    }
+    pointerOne++;
+    pointerTwo--;
+  }
+  return palindrome;
+}
+console.log(cardsToUnderline(70));
 // Write an interpreter to evaluate strings of nonsense math notation, respecting order of operations indicated by (possibly nested) parentheses.
