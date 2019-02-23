@@ -21,32 +21,8 @@ function canEscape(array) {
   }
   return pathFinder([0,0]);
 }
-
 // console.log(canEscape(escapeMap));
 
-//Make it harder:  How many paths are there?
-function howManyPathsToEscape(array) {
-  console.log(array);
-  let endPos = [array[0].length - 1, array.length - 1];
-  let count = 0;
-  function pathFinder(map, currentPos) {
-    if (currentPos[0] === endPos[0] && currentPos[1] === endPos[1]) {
-      count++;
-      console.log(count);
-      return true;
-    }
-    if (currentPos[0] >= 0 && currentPos[0] < map[0].length && currentPos[1] >= 0 && currentPos[1] < map.length && map[currentPos[0]][currentPos[1]] === 0) {
-      map[currentPos[0]][currentPos[1]] += 1;
-      // console.log(map);
-      return pathFinder(map, [currentPos[0] -1, currentPos[1]]) + pathFinder(map, [currentPos[0] + 1, currentPos[1]]) + pathFinder(map, [currentPos[0], currentPos[1] - 1]) + pathFinder(map, [currentPos[0], currentPos[1] + 1]);
-    }
-    return 0;
-  }
-  pathFinder(array, [0,0]);
-  return count;
-} // HELPS - but maybe too hard?
-
-// console.log(howManyPathsToEscape(escapeMap));
 
 function islandCounter(array) {
   let count = 0;
@@ -106,7 +82,7 @@ function findMiddleNode(head) {
   }
   return slowPointer;
 }
-// console.log(findMiddleNode(listHead)); 
+// console.log(findMiddleNode(listHead));
 function addTwoLists(h1, h2) {
   let sentinel = new Node(-1);
   let current = sentinel;
@@ -155,7 +131,7 @@ function maxPathSum(root) {
   if (root === null) return 0;
   let left = maxPathSum(root.left);
   let right = maxPathSum(root.right);
-  
+
   return root.data + Math.max(left, right);
 }
 // console.log(maxPathSum(sampleRoot));
@@ -167,7 +143,7 @@ function combination(arr, combo, idx) {
   if (!arr[idx]) {
     return;
   }
-  
+
   for (let i = idx; i < arr.length; i++) {
     let next = combo.concat(arr[i]);
     console.log(next);
@@ -289,7 +265,7 @@ function rootToLeafsPathSum(root, currentSum) {
   }
   currentSum += root.data;
   currentSum *= 10;
-  
+
   rootToLeafsPathSum(root.left, currentSum);
   rootToLeafsPathSum(root.right, currentSum);
   if (!root.right && !root.left) {
@@ -297,8 +273,13 @@ function rootToLeafsPathSum(root, currentSum) {
   }
   return result.reduce((acc, el) => acc + el);
 }
-console.log(rootToLeafsPathSum(sampleRoot, 0));
-console.log(421+423+465+467);
+// console.log(rootToLeafsPathSum(sampleRoot, 0));
+// console.log(421+423+465+467);
 
+//amazon testID 23280666301694
+//consider edge cases and think about time complexity
 
-
+//TODO
+//find Nth prime most efficiently
+//card underline question
+// Write an interpreter to evaluate strings of nonsense math notation, respecting order of operations indicated by (possibly nested) parentheses.
