@@ -12,9 +12,9 @@ function caesarCipher (string, shift) {
   string.split("").map((ch, idx) => {
     result.push(alphabet[(alphabet.indexOf(ch)+shift)%26]);
   });
-  console.log(result.join(''));
+  return result.join('');
 }
-// caesarCipher("helloworld", 34);
+console.log(caesarCipher("helloworld", 34));
 function commonSubstrings(str1, str2) {
   let cache = new Array(str1.length);
     for (let i =0; i <str1.length; i++) {
