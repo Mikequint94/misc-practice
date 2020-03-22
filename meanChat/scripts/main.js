@@ -9,8 +9,8 @@
     function login(username) {
       let phone = window.phone = PHONE({
           number        : username || "Anonymous", // listen on username line else Anonymous
-          publish_key   : 'pub-c-b2400040-4d8f-489f-8732-10e7d84881ce',
-          subscribe_key : 'sub-c-315c4f36-f6a8-11e7-acf8-26f7716e5467',
+          publish_key   : 'pub-c-76391d4d-2a6b-439e-af52-759abb173a04',
+          subscribe_key : 'sub-c-e64c6e00-6bd4-11ea-a7c4-5e95b827fd71',
           ssl : (('https:' == document.location.protocol) ? true : false)
       });
       let ctrl = window.ctrl = CONTROLLER(phone);
