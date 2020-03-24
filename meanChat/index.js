@@ -17,7 +17,10 @@ app.get('/', function(req, res){
 });
 
 let people = {};
+let playerCards = {}; // ex. {'mike': 13, 'chy': 12}
 let colors = {};
+let currentPlayer = '';
+let currentPlayerIdx = -1;
 let allColors = ['#6EEB83', '#911CFF', '#E4FF1A', '#E8AA14', '#FF5714', '#EA6ED7', '#99FF14' ];
 function getRandomColor() {
   if (allColors.length > 0) {
@@ -27,6 +30,25 @@ function getRandomColor() {
     return ['#6EEA8D'];
   }
 }
+
+let deck = [];
+const createDeck = () => {
+  const suits = ['♥', '♠', '♣', '♦'];
+  const values = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
+
+  for (let suit in suits) {
+    for (let value in values) {
+      deck.push(`${values[value]} ${suits[suit]}`);
+    }
+  }
+};
+const stackShuffle = () => {
+  let count = deck.length;
+  while(count) {
+      deck.push(deck.splice(Math.floor(Math.random() * count), 1)[0]);
+      count -= 1;
+  }
+};
 
 io.on('connection', function(socket){
   io.emit('all users', {users: Object.values(people), color: colors});
@@ -52,9 +74,57 @@ io.on('connection', function(socket){
     io.emit('stoptyping', typer);
   });
 
+  socket.on('start new game', function(){
+    createDeck();
+    stackShuffle();
+    Object.keys(colors).forEach((user) => {
+      playerCards[user] = 13;
+    })
+    io.emit('start new round', deck, colors, playerCards);
+    io.emit('chat message', {msg: '~~~ ' + user + " has started a new game! ~~~", color: 'white' });
+  });
+  socket.on('pick from deck', function(){
+    io.emit('pick from deck');
+  });
+  socket.on('flip card', function(targetId, selection){
+    io.emit('flip card', targetId, selection);
+  });
+  socket.on('discard card', function(){
+    io.emit('discard card');
+  });
+  socket.on('start new round', function(){
+    deck = [];
+    createDeck();
+    stackShuffle();
+    currentPlayer = '';
+    currentPlayerIdx = 0;
+    io.emit('start new round', deck, colors, playerCards);
+  });
+  socket.on('win round', function(user){
+    playerCards[user] -= 1;
+    if (playerCards[user] === 0) {
+      io.emit('win game', user);
+    } else {
+      io.emit('win round', user);
+    }
+  });
+  socket.on('pick from discard', function(){
+    io.emit('pick from discard');
+  });
+  socket.on('next turn', function(startingUser){
+    const players = Object.keys(colors);
+    currentPlayerIdx = (currentPlayerIdx + 1) % players.length;
+    if (startingUser) {
+      currentPlayerIdx = players.indexOf(startingUser);
+    }
+    currentPlayer = players[currentPlayerIdx];
+    io.emit('next turn', currentPlayer);
+  });
+
   socket.on('colorChange', function(userColor){
     colors[userColor.user] = userColor.color;
     io.emit('all users', {users: Object.values(people), color: colors});
+    io.emit('change board color', colors);
   });
 
   socket.on('disconnect', function(){

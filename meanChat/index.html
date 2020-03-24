@@ -16,6 +16,24 @@
   </head>
 
   <body OnLoad="document.form.m.focus();">
+    <div id="game" class="show">
+      <button onclick="startGame();" id="start-game">Start game with current players</button>
+      <div id="deckSection" class="hide">
+        <div id="numDeckCards">52</div>
+        <div id="deckOfCards" onclick="pickFromDeck();" class='hidden'></div>
+        <div id="selectedCard" class='hidden'></div>
+        <div id="discardPile" onclick="discardCard();"class='hidden'></div>
+        <div id="turnDisplay">Player 1's turn</div>
+      </div>
+      <div id="player1" class="playerArea hide">
+        <p id="player1name"></p>
+        <div id="player1cards" class="cards"></div>
+      </div>
+      <div id="player2" class="playerArea hide">
+        <p id="player2name"></p>
+        <div id="player2cards" class="cards"></div>
+      </div>
+    </div>
     <div id="left">
       <div id="vid-box"></div>
       <div id="vid-thumb"></div>
@@ -50,4 +68,5 @@
   <script src="https://cdn.pubnub.com/webrtc/rtc-controller.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="scripts/main.js"></script>
+  <script src="scripts/stairs.js"></script>
 </html>

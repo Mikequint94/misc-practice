@@ -1,3 +1,4 @@
+  
   // dont kill thmb video if multiple people - cant replicate problem in local
   // group chat adds to everyone - hard
   // emoji keyboard - hard
@@ -45,15 +46,15 @@
       });
       return false; 	// So the form does not submit.
     }
-    function makeCall(username){
-      if (username !== user) {
-        if (!window.phone) alert("You must login first!");
-        else phone.dial(username);
-        return false;
-      } else {
-        alert("You can't call yourself lol");
-      }
-    }
+    // function makeCall(username){
+    //   if (username !== user) {
+    //     if (!window.phone) alert("You must login first!");
+    //     else phone.dial(username);
+    //     return false;
+    //   } else {
+    //     alert("You can't call yourself lol");
+    //   }
+    // }
     function end(){
       console.log("hanging up");
       ctrl.hangup();
@@ -63,17 +64,26 @@
     let msgBox = document.getElementById('messages');
     let onlineUsers = document.getElementById('users');
     let numUsers = document.getElementById('numUsers');
+    let startGameButton = document.getElementById('start-game');
     let input = document.getElementById('m');
     let user = null;
     let typing = new Set();
+    let numPlayers = 0;
 
     const colorInput = document.getElementById('colorPick');
     colorInput.addEventListener('change', updateColor);
 
+    const startGame = () => {
+      if (numPlayers < 2) {
+        alert("you need more than 1 player to play. sry :p")
+        return;
+      }
+      socket.emit('start new game');
+      socket.emit('next turn');
+    }
 
     function updateColor() {
       socket.emit('colorChange', {user, color: this.value});
-      console.log(this.value);
     }
 
     function isTyping() {
@@ -101,7 +111,6 @@
     }
 
     socket.on('chat message', function(msgObj){
-      console.log(msgObj);
       let msg = msgObj.msg;
       let newMsg = document.createElement("li");
       let txt = document.createTextNode(msg);
@@ -132,14 +141,16 @@
         document.getElementById('colorDiv').className="";
         colorInput.value = usernames.color[user];
       }
-      numUsers.innerHTML = `Current Users: ${usernames.users.length}`;
+      numPlayers = usernames.users.length;
+      numUsers.innerHTML = `Current Users: ${numPlayers}`;
+      startGameButton.innerHTML = `Start game with ${numPlayers} player(s)`;
       onlineUsers.innerHTML = "";
       usernames.users.map((username)=> {
           let newUser = document.createElement("li");
-          newUser.onclick = () => {
-            makeCall(username);
-          };
-          let userNode = document.createTextNode(username + "  🎥");
+          // newUser.onclick = () => {
+          //   makeCall(username);
+          // };
+          let userNode = document.createTextNode(username);
           newUser.appendChild(userNode);
           if (usernames.color[username] === "#000000") {
             newUser.style=`background: ${usernames.color[username]}; color: white`;
