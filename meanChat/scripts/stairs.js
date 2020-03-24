@@ -115,6 +115,7 @@ socket.on('start new round', function(deck, playerInfo, playerCards){
     selectedCard.className = '';
     selectedCard.innerHTML = '';
     discardPile.className = 'empty';
+    discardPile.innerHTML = '';
     player1.className = 'playerArea';
     player2.className = 'playerArea';
     const players = Object.keys(playerInfo);
@@ -161,7 +162,8 @@ socket.on('flip card', function(targetId, selection){
 });
 
 socket.on('change board color', function(playerInfo){
-    setupBoard(playerInfo);
+    const players = Object.keys(playerInfo);
+    setupBoard(playerInfo, players);
 });
 
 socket.on('next turn', function(player){

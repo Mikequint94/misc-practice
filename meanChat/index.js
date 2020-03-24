@@ -17,21 +17,22 @@ app.get('/', function(req, res){
 });
 
 let people = {};
-let playerCards = {}; // ex. {'mike': 13, 'chy': 12}
 let colors = {};
+
+let playerCards = {}; // ex. {'mike': 13, 'chy': 12}
 let currentPlayer = '';
 let currentPlayerIdx = -1;
+let deck = [];
+
 let allColors = ['#6EEB83', '#911CFF', '#E4FF1A', '#E8AA14', '#FF5714', '#EA6ED7', '#99FF14' ];
-function getRandomColor() {
+const getRandomColor = () => {
   if (allColors.length > 0) {
     return allColors.splice(Math.floor(Math.random()*allColors.length), 1);
   } else {
     allColors = ['#6EEB83', '#911CFF', '#E4FF1A', '#E8AA14', '#FF5714', '#EA6ED7', '#99FF14' ];
     return ['#6EEA8D'];
   }
-}
-
-let deck = [];
+};
 const createDeck = () => {
   const suits = ['♥', '♠', '♣', '♦'];
   const values = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
@@ -48,6 +49,13 @@ const stackShuffle = () => {
       deck.push(deck.splice(Math.floor(Math.random() * count), 1)[0]);
       count -= 1;
   }
+};
+const resetAndMakeDeck = () => {
+  currentPlayer = '';
+  currentPlayerIdx = -1;
+  deck = [];
+  createDeck();
+  stackShuffle();
 };
 
 io.on('connection', function(socket){
@@ -75,8 +83,8 @@ io.on('connection', function(socket){
   });
 
   socket.on('start new game', function(){
-    createDeck();
-    stackShuffle();
+    playerCards = {}; 
+    resetAndMakeDeck();
     Object.keys(colors).forEach((user) => {
       playerCards[user] = 13;
     })
@@ -93,11 +101,7 @@ io.on('connection', function(socket){
     io.emit('discard card');
   });
   socket.on('start new round', function(){
-    deck = [];
-    createDeck();
-    stackShuffle();
-    currentPlayer = '';
-    currentPlayerIdx = 0;
+    resetAndMakeDeck();
     io.emit('start new round', deck, colors, playerCards);
   });
   socket.on('win round', function(user){
@@ -131,6 +135,7 @@ io.on('connection', function(socket){
     delete people[socket.id];
     io.emit('all users', {users: Object.values(people), color: colors});
     if (user) {
+      delete colors[user];
       io.emit('chat message', {msg: user + " has left the chat.", color: colors[user] });
     }
   });
