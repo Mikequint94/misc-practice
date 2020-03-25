@@ -8,42 +8,42 @@
     let selfVisible = false;
 
     function login(username) {
-      let phone = window.phone = PHONE({
-          number        : username || "Anonymous", // listen on username line else Anonymous
-          publish_key   : 'pub-c-76391d4d-2a6b-439e-af52-759abb173a04',
-          subscribe_key : 'sub-c-e64c6e00-6bd4-11ea-a7c4-5e95b827fd71',
-          ssl : (('https:' == document.location.protocol) ? true : false)
-      });
-      let ctrl = window.ctrl = CONTROLLER(phone);
-      ctrl.ready(function(){
-        console.log("logged in", username);
-      });
-      ctrl.receive(function(session){
-        console.log(session);
-        if (!selfVisible) {
-          selfVisible = true;
-          ctrl.addLocalStream(vidThumb);
-        }
-          session.connected(function(sesh) {
-            chatBox.className="vid";
-            let hangupButton = document.createElement('button');
-            hangupButton.innerHTML = 'Hang Up';
-            hangupButton.onclick = () => end.apply(hangupButton);
-            hangupButton.className = "show";
-            hangupButton.id = sesh.number;
-            videoOut.append(hangupButton);
+      // let phone = window.phone = PHONE({
+      //     number        : username || "Anonymous", // listen on username line else Anonymous
+      //     publish_key   : 'pub-c-7d2c619e-2eb6-4c74-bb2b-7143d574f799',
+      //     subscribe_key : 'sub-c-f3466d92-6e5c-11ea-8eaf-9ea4064cf66f',
+      //     ssl : (('https:' == document.location.protocol) ? true : false)
+      // });
+      // let ctrl = window.ctrl = CONTROLLER(phone);
+      // ctrl.ready(function(){
+      //   console.log("logged in", username);
+      // });
+      // ctrl.receive(function(session){
+      //   console.log(session);
+      //   if (!selfVisible) {
+      //     selfVisible = true;
+      //     ctrl.addLocalStream(vidThumb);
+      //   }
+      //     session.connected(function(sesh) {
+      //       chatBox.className="vid";
+      //       let hangupButton = document.createElement('button');
+      //       hangupButton.innerHTML = 'Hang Up';
+      //       hangupButton.onclick = () => end.apply(hangupButton);
+      //       hangupButton.className = "show";
+      //       hangupButton.id = sesh.number;
+      //       videoOut.append(hangupButton);
 
-            videoOut.appendChild(sesh.video);
-          });
-          session.ended(function(sesh) {
-            ctrl.getVideoElement(sesh.number).remove();
-            console.log(sesh);
-            vidThumb.innerHTML='';
-            document.getElementById(`${sesh.number}`).remove();
-            chatBox.className="no-vid";
-            selfVisible = false;
-          });
-      });
+      //       videoOut.appendChild(sesh.video);
+      //     });
+      //     session.ended(function(sesh) {
+      //       ctrl.getVideoElement(sesh.number).remove();
+      //       console.log(sesh);
+      //       vidThumb.innerHTML='';
+      //       document.getElementById(`${sesh.number}`).remove();
+      //       chatBox.className="no-vid";
+      //       selfVisible = false;
+      //     });
+      // });
       return false; 	// So the form does not submit.
     }
     // function makeCall(username){
@@ -100,7 +100,7 @@
       socket.emit('stoptyping', user);
       input.value = '';
       } else if (input.value.length > 0){
-        login(input.value);
+        // login(input.value);
         socket.emit('set user', input.value);
         document.getElementById('title').className = "hidden2";
         document.getElementById('button').innerHTML = "Send";

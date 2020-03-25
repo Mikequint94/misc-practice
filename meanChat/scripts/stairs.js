@@ -1,12 +1,3 @@
-const deckOfCards = document.getElementById('deckOfCards');
-const discardPile = document.getElementById('discardPile');
-const deckSection = document.getElementById('deckSection');
-const player1 = document.getElementById('player1');
-const player1cards = document.getElementById('player1cards');
-const player2 = document.getElementById('player2');
-const numDeckCards = document.getElementById('numDeckCards');
-const turnDisplay = document.getElementById('turnDisplay');
-const selectedCard = document.getElementById('selectedCard');
 let gameDeck = [];
 let currentPlayer = '';
 let currentSelection = '';
@@ -38,6 +29,10 @@ const setupBoard = (playerInfo, players) => {
     player1.style.background = playerInfo[players[0]]
     player2.querySelector('p').innerHTML=players[1];
     player2.style.background = playerInfo[players[1]]
+    if (players.length > 2) {
+        player3.querySelector('p').innerHTML=players[2];
+        player3.style.background = playerInfo[players[2]]
+    }
 };
 
 const clickCard = (e) => {
@@ -53,31 +48,35 @@ const clickCard = (e) => {
     }
 }
 
+const createNewCard = async (playerIdx, cardIdx, players) => {
+    let card = document.createElement('div');
+    card.dataset.value = gameDeck.pop();
+    card.dataset.user = players[playerIdx];
+    card.id = `${players[playerIdx]}-${cardIdx}`;
+    card.addEventListener("click", clickCard);
+    card.dataset.position = positionMapper[cardIdx];
+    numDeckCards.innerHTML = gameDeck.length;
+    await sleep(100);
+    return card;
+};
+
 const dealCards = async (playerCards, players) => {
     player1cards.innerHTML = '';
     player2cards.innerHTML = '';
+    player3cards.innerHTML = '';
     for (let i = 0; i < playerCards[players[0]]; i++) {
-        let card = document.createElement('div');
-        card.dataset.value = gameDeck.pop();
-        card.dataset.user = players[0];
-        card.id = `${players[0]}-${i}`;
-        card.addEventListener("click", clickCard);
-        card.dataset.position = positionMapper[i];
-        numDeckCards.innerHTML = gameDeck.length;
+        let card = await createNewCard(0, i, players);
         player1cards.appendChild(card);
-        await sleep(100);
     }
     await sleep(500);
     for (let i = 0; i < playerCards[players[1]]; i++) {
-        let card = document.createElement('div');
-        card.dataset.value = gameDeck.pop();
-        card.dataset.user = players[1];
-        card.id = `${players[1]}-${i}`;
-        card.addEventListener("click", clickCard);
-        card.dataset.position = positionMapper[i];
-        numDeckCards.innerHTML = gameDeck.length;
+        let card = await createNewCard(1, i, players);
         player2cards.appendChild(card);
-        await sleep(100);
+    }
+    await sleep(500);
+    for (let i = 0; i < playerCards[players[2]]; i++) {
+        let card = await createNewCard(2, i, players);
+        player3cards.appendChild(card);
     }
 };
 
@@ -119,6 +118,9 @@ socket.on('start new round', function(deck, playerInfo, playerCards){
     player1.className = 'playerArea';
     player2.className = 'playerArea';
     const players = Object.keys(playerInfo);
+    if (players.length > 2) {
+        player3.className = 'playerArea';
+    }
     setupBoard(playerInfo, players);
     dealCards(playerCards, players);
     numToFlip = playerCards[user];
