@@ -18,11 +18,13 @@ app.get('/', function(req, res){
 
 let people = {};
 let colors = {};
+let gameColors = {};
 
 let playerCards = {}; // ex. {'mike': 13, 'chy': 12}
 let currentPlayer = '';
 let currentPlayerIdx = -1;
 let deck = [];
+let startingCardNum = 13;
 
 let allColors = ['#6EEB83', '#911CFF', '#E4FF1A', '#E8AA14', '#FF5714', '#EA6ED7', '#99FF14' ];
 const getRandomColor = () => {
@@ -63,6 +65,9 @@ io.on('connection', function(socket){
   let user = null;
 
   socket.on('chat message', function(chatMsg){
+    if (chatMsg === 'Billie Jeilish') {
+      startingCardNum = 11;
+    }
     io.emit('chat message', {msg: user + " : " + chatMsg, color: colors[user]});
   });
 
@@ -85,10 +90,11 @@ io.on('connection', function(socket){
   socket.on('start new game', function(){
     playerCards = {}; 
     resetAndMakeDeck();
-    Object.keys(colors).forEach((user) => {
-      playerCards[user] = 13;
+    gameColors = Object.assign({}, colors);
+    Object.keys(gameColors).forEach((user) => {
+      playerCards[user] = startingCardNum;
     })
-    io.emit('start new round', deck, colors, playerCards);
+    io.emit('start new round', deck, gameColors, playerCards);
     io.emit('chat message', {msg: '~~~ ' + user + " has started a new game! ~~~", color: 'white' });
   });
   socket.on('pick from deck', function(){
@@ -102,7 +108,7 @@ io.on('connection', function(socket){
   });
   socket.on('start new round', function(){
     resetAndMakeDeck();
-    io.emit('start new round', deck, colors, playerCards);
+    io.emit('start new round', deck, gameColors, playerCards);
   });
   socket.on('win round', function(user){
     playerCards[user] -= 1;
@@ -116,7 +122,7 @@ io.on('connection', function(socket){
     io.emit('pick from discard');
   });
   socket.on('next turn', function(startingUser){
-    const players = Object.keys(colors);
+    const players = Object.keys(gameColors);
     currentPlayerIdx = (currentPlayerIdx + 1) % players.length;
     if (startingUser) {
       currentPlayerIdx = players.indexOf(startingUser);
@@ -127,8 +133,11 @@ io.on('connection', function(socket){
 
   socket.on('colorChange', function(userColor){
     colors[userColor.user] = userColor.color;
+    if (gameColors[userColor.user]) {
+      gameColors[userColor.user] = userColor.color;
+    }
     io.emit('all users', {users: Object.values(people), color: colors});
-    io.emit('change board color', colors);
+    io.emit('change board color', gameColors);
   });
 
   socket.on('disconnect', function(){

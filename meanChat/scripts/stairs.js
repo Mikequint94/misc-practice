@@ -1,4 +1,5 @@
 let gameDeck = [];
+let discardDeck = [];
 let currentPlayer = '';
 let currentSelection = '';
 let previousDiscard = '';
@@ -127,8 +128,19 @@ socket.on('start new round', function(deck, playerInfo, playerCards){
 });
 
 socket.on('pick from deck', function(){
-    selectedCard.className = 'selected';
+    if (gameDeck.length < 1) {
+        alert('Out of cards. Shuffling discard into deck!');
+        gameDeck = discardDeck;
+        discardDeck = [];
+        discardPile.innerHTML = '';
+        previousDiscard = '';
+        discardPile.className = 'empty';
+    }
     selectedCard.innerHTML = gameDeck.pop();
+    selectedCard.className = 'selected';
+    if (['♥', '♦'].includes(selectedCard.innerHTML.split(' ')[1])) {
+        selectedCard.classList.add('red');
+    }
     numDeckCards.innerHTML = gameDeck.length;
     currentSelection = selectedCard.innerHTML;
 });
@@ -139,6 +151,9 @@ socket.on('pick from discard', function(){
     }
     selectedCard.className = 'selected';
     selectedCard.innerHTML = discardPile.innerHTML;
+    if (['♥', '♦'].includes(selectedCard.innerHTML.split(' ')[1])) {
+        selectedCard.classList.add('red');
+    }
     currentSelection = selectedCard.innerHTML;
     discardPile.innerHTML = previousDiscard;
     if (!previousDiscard) {
@@ -147,9 +162,13 @@ socket.on('pick from discard', function(){
 });
 
 socket.on('discard card', function(){
+    discardDeck.unshift(selectedCard.innerHTML);
     previousDiscard = discardPile.innerHTML;
     discardPile.className = '';
     discardPile.innerHTML = selectedCard.innerHTML;
+    if (['♥', '♦'].includes(discardPile.innerHTML.split(' ')[1])) {
+        discardPile.classList.add('red');
+    }
     selectedCard.innerHTML = '';
     selectedCard.className = '';
 });
@@ -158,7 +177,15 @@ socket.on('flip card', function(targetId, selection){
     const target = document.getElementById(targetId);
     target.classList = 'front';
     target.innerHTML = selection;
+    if (['♥', '♦'].includes(target.innerHTML.split(' ')[1])) {
+        target.classList.add('red');
+    }
     selectedCard.innerHTML = target.dataset.value;
+    if (['♥', '♦'].includes(selectedCard.innerHTML.split(' ')[1])) {
+        selectedCard.classList.add('red');
+    } else {
+        selectedCard.className = 'selected';
+    }
     target.dataset.value = ''
     currentSelection = selectedCard.innerHTML;
 });

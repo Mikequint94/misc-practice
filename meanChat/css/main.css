@@ -31,11 +31,14 @@ body {
   background: none;
 }
 #selectedCard.selected {
-  padding: 0 10px;
-  font-size: 4em;
+  padding: 10px 22px;
+  font-size: 4.5em;
   text-align: center;
   border: 3px solid white;
   background: linear-gradient(white, lime);
+}
+.red {
+  color: red;
 }
 #discardPile {
   position: relative; 
