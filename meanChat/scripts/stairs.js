@@ -196,8 +196,8 @@ socket.on('change board color', function(playerInfo){
 });
 
 socket.on('next turn', function(player){
-    currentPlayer = player;
     currentSelection = '';
+    currentPlayer = player;
     turnDisplay.innerHTML = `${currentPlayer}'s turn!`
 });
 

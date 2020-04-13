@@ -25,6 +25,11 @@ let currentPlayer = '';
 let currentPlayerIdx = -1;
 let deck = [];
 let startingCardNum = 13;
+const cheatStarts = {
+  "FrozenLoverDrew": 3,
+  "aMAN...duh": 6,
+  "xoMikeQxo": 8
+}
 
 let allColors = ['#6EEB83', '#911CFF', '#E4FF1A', '#E8AA14', '#FF5714', '#EA6ED7', '#99FF14' ];
 const getRandomColor = () => {
@@ -36,6 +41,7 @@ const getRandomColor = () => {
   }
 };
 const createDeck = () => {
+  let deck = [];
   const suits = ['♥', '♠', '♣', '♦'];
   const values = ['A', 2, 3, 4, 5, 6, 7, 8, 9, 10, 'J', 'Q', 'K'];
 
@@ -44,6 +50,7 @@ const createDeck = () => {
       deck.push(`${values[value]} ${suits[suit]}`);
     }
   }
+  return deck;
 };
 const stackShuffle = () => {
   let count = deck.length;
@@ -55,8 +62,7 @@ const stackShuffle = () => {
 const resetAndMakeDeck = () => {
   currentPlayer = '';
   currentPlayerIdx = -1;
-  deck = [];
-  createDeck();
+  deck = createDeck();
   stackShuffle();
 };
 
@@ -65,8 +71,8 @@ io.on('connection', function(socket){
   let user = null;
 
   socket.on('chat message', function(chatMsg){
-    if (chatMsg === 'Billie Jeilish') {
-      startingCardNum = 11;
+    if (chatMsg === 'Billie Tenlish') {
+      startingCardNum = 10;
     }
     io.emit('chat message', {msg: user + " : " + chatMsg, color: colors[user]});
   });
@@ -92,7 +98,7 @@ io.on('connection', function(socket){
     resetAndMakeDeck();
     gameColors = Object.assign({}, colors);
     Object.keys(gameColors).forEach((user) => {
-      playerCards[user] = startingCardNum;
+        playerCards[user] = cheatStarts[user] || startingCardNum;
     })
     io.emit('start new round', deck, gameColors, playerCards);
     io.emit('chat message', {msg: '~~~ ' + user + " has started a new game! ~~~", color: 'white' });
